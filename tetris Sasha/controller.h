@@ -2,7 +2,6 @@
 #define CONTROLLER_H
 
 #include <QMainWindow>
-#include <QDebug>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Controller; }
@@ -14,7 +13,7 @@ public:
     ~Controller();
 
 protected:
-    void KeyPressEvent(QKeyEvent *event);
+    void keyPressEvent(QKeyEvent * e);
 
 private:
     Ui::Controller *ui;
