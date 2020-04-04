@@ -90,44 +90,10 @@ void Field::fill() {
 }
 
 Figures *Field::generateNext() {
-    int x = (1 + rand() % 7);
-    switch(x) {
-        case(1): {
-            Figures *I = new Figures(tetriminoesInit[x - 1], tetriminoes::I);
-            I->setCoordinates(this, 3);
-            return I;
-        }
-        case(2): {
-            Figures *J = new Figures(tetriminoesInit[x - 1],tetriminoes::J);
-            J->setCoordinates(this, 3);
-            return J;
-        }
-        case(3): {
-            Figures *L = new Figures(tetriminoesInit[x - 1],tetriminoes::L);
-            L->setCoordinates(this, 3);
-            return L;
-        }
-        case(4): {
-            Figures *O = new Figures(tetriminoesInit[x - 1],tetriminoes::O);
-            O->setCoordinates(this, 3);
-            return O;
-        }
-        case(5): {
-            Figures *S = new Figures(tetriminoesInit[x - 1],tetriminoes::S);
-            S->setCoordinates(this, 3);
-            return S;
-        }
-        case(6): {
-            Figures *T = new Figures(tetriminoesInit[x - 1],tetriminoes::T);
-            T->setCoordinates(this, 3);
-            return T;
-        }
-        default: {
-            Figures *Z = new Figures(tetriminoesInit[x - 1],tetriminoes::Z);
-            Z->setCoordinates(this, 3);
-            return Z;
-        }
-    }
+    int x = (rand() % 7);
+    Figures *F = new Figures(tetriminoesInit[x], static_cast<tetriminoes>(x));
+    F->setCoordinates(this, 3); //перенести куда-нибудь!
+    return F;
 }
 
 bool Field::getCell(std::pair<int, int> coords){
