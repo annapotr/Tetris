@@ -70,12 +70,11 @@ void Field::checkRow() {
 }
 
 bool Field::doCollision() {
-   std::array<bool, 4> coords;
-   coords.fill(false);
+   bool hasFilled = false;
    for (size_t i = 0; i < currentTetrimino->items.size(); i++) {
-       coords[i] = getCell({currentTetrimino->items[i].first + 1, currentTetrimino->items[i].second});
+       hasFilled |= getCell({currentTetrimino->items[i].first + 1, currentTetrimino->items[i].second});
    }
-   return any_of(coords.begin(), coords.end(), [](bool i){return i;});
+   return hasFilled;
 }
 
 void Field::fill() {
