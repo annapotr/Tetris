@@ -17,6 +17,7 @@ game::game(Field *f, QWidget *parent) :
     ui->setupUi(this);
     scene = new QGraphicsScene(this);
 
+
     
     ui->graphicsView->setScene(scene);
     ui->graphicsView->setRenderHint(QPainter::Antialiasing);
@@ -60,5 +61,6 @@ game::~game()
 {
     delete ui;
 }
+
 
 

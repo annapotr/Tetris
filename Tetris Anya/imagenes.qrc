@@ -6,6 +6,7 @@
         <file>background1.png</file>
         <file>close.png</file>
         <file>high_score.png</file>
+        <file>pause.png</file>
         <file>score.png</file>
     </qresource>
     <qresource prefix="/nq">
