@@ -58,11 +58,11 @@ void Field::checkRow() {
         if (row) {
             cnt++;
             _field[i].fill(false);
-            std::array<bool, FIELD_W > tmp = move(_field[i]);
             for (size_t j = i - 1; j >= highestNotEmpty; j--) {
                 _field[j + 1] = move(_field[j]);
             }
-            _field[highestNotEmpty] = move(tmp);
+            _field[highestNotEmpty].fill(false);
+            highestNotEmpty++;
             calculateScore(cnt);
             std::cout << '\n';
         }
