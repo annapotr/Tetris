@@ -4,36 +4,37 @@
 #include <QGraphicsScene>
 #include <QPainter>
 #include <QGraphicsItem>
+#include <QPointF>
+#include <vector>
+#include <utility>
 #include "field.h"
 
 class Field;
 
 const std::size_t NUM_OF_BLOCKS = 4;
-extern std::array<std::array<int, 4>, 7> tetriminoesInit;
+extern std::vector<std::vector<int>> tetriminoesInit;
 enum class tetriminoes: int {
-    I = 1,
-    J = 2,
-    L = 3,
-    O = 4,
-    S = 5,
-    T = 6,
-    Z = 7
+    I = 0,
+    J = 1,
+    L = 2,
+    O = 3,
+    S = 4,
+    T = 5,
+    Z = 6
 };
 
 QColor make_color(tetriminoes t);
 
-class Figures : public QGraphicsItem
-{
+class Tetrimino : public QGraphicsItem {
 public:
-    Figures(std::array<int, NUM_OF_BLOCKS> blocks, tetriminoes type);
+    Tetrimino(std::vector<int> blocks, tetriminoes type, Field *f);
 
-    void falling();
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
-    void setCoordinates(Field *f, int start);
+    void setCoordinates(int start);
 
-    bool isFalling = true;
-    std::array<std::pair<float,float>, 4> items;
+    std::vector<std::pair<int, int>> _blocks;
+    QPointF highLeftCorner;
 
 protected:
     void advance(int phase) override;
@@ -42,13 +43,15 @@ protected:
 private:
     static const std::size_t BLOCK_H = 2;
     static const std::size_t BLOCK_W = 4;
+    static const int BLOCK_PX = 25;
+    static const int PADDING = 5;
 
-    std::array<std::array<bool, BLOCK_W>, BLOCK_H> _blocks;
+
     tetriminoes type_;
     QColor color_;
+    Field *field;
 
-    qreal angle;
-    qreal speed;
+    qreal angle, speed;
 };
 
 #endif // FIGURES_H

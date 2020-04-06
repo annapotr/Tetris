@@ -1,16 +1,16 @@
 #include "field.h"
 #include "figures.h"
 #include <iostream>
-#include <cmath>
 #include <array>
 #include <utility>
-#include <algorithm>
 
 using std::move;
-using std::any_of;
 using std::size_t;
 
-Field::Field(int level):  gameState(true), curLevel(level), score(0), highestNotEmpty(FIELD_Ht - 1) {
+std::vector<int> points = {40, 100, 300, 1200};
+
+Field::Field(int level)
+    : gameState(gameStates::INPROCESS), curLevel(level), score(0), highestNotEmpty(FIELD_Ht - 1) {
     for (size_t i = 0; i < FIELD_Ht; i++) {
         _field[i].fill(false);
     }
@@ -28,24 +28,8 @@ void Field::printFieldTmp() const {
 }
 
 void Field::calculateScore(int cnt) {
-    switch(cnt) {
-        case(1): {
-            score += 40 * (curLevel + 1);
-            return;
-        }
-        case(2): {
-            score += 100 * (curLevel + 1);
-            return;
-        }
-        case(3): {
-            score += 300 * (curLevel + 1);
-            return;
-        }
-        default: {
-            score += 1200 * (curLevel + 1);
-            return;
-        }
-    }
+    if (cnt > 4) cnt = 4;
+    score += points[cnt - 1] * (curLevel + 1);
 }
 
 void Field::checkRow() {
@@ -58,56 +42,55 @@ void Field::checkRow() {
         if (row) {
             cnt++;
             _field[i].fill(false);
-            for (size_t j = i - 1; j >= highestNotEmpty; j--) {
+            for (int j = i - 1; j >= highestNotEmpty; j--) {
                 _field[j + 1] = move(_field[j]);
             }
             _field[highestNotEmpty].fill(false);
             highestNotEmpty++;
             calculateScore(cnt);
-            std::cout << '\n';
         }
     }
 }
 
 bool Field::doCollision() {
    bool hasFilled = false;
-   for (size_t i = 0; i < currentTetrimino->items.size(); i++) {
-       hasFilled |= getCell({currentTetrimino->items[i].first + 1, currentTetrimino->items[i].second});
+   for (auto &item: currentTetrimino->_blocks) {
+       hasFilled |= getCell({currentTetrimino->highLeftCorner.ry() + item.first + 1, \
+                             currentTetrimino->highLeftCorner.rx() + item.second});
    }
    return hasFilled;
 }
 
 void Field::fill() {
-    while (!doCollision()) {
-        currentTetrimino->falling();
-    }
-    currentTetrimino->isFalling = false;
-    for (size_t i = 0; i  < currentTetrimino->items.size(); i++) {
-        setCell(currentTetrimino->items[i]);
-        if (highestNotEmpty > currentTetrimino->items[i].first) highestNotEmpty = currentTetrimino->items[i].first;
+    for (auto &item: currentTetrimino->_blocks) {
+        int x = currentTetrimino->highLeftCorner.ry() + item.first;
+        int y = START_POS + item.second;
+        setCell({x, y});
+        if (highestNotEmpty > x) highestNotEmpty = x;
     }
 }
 
-Figures *Field::generateNext() {
+Tetrimino *Field::generateNext() {
     int x = (rand() % 7);
-    Figures *F = new Figures(tetriminoesInit[x], static_cast<tetriminoes>(x));
-    F->setCoordinates(this, 3); //перенести куда-нибудь!
+    Tetrimino *F = new Tetrimino(tetriminoesInit[x], static_cast<tetriminoes>(x), this);
+    F->setCoordinates(START_POS); //перенести куда-нибудь!
     return F;
 }
 
-bool Field::getCell(std::pair<int, int> coords){
+bool Field::getCell(std::pair<int, int> coords) {
     return _field[coords.first][coords.second];
 }
 
-bool Field::getState() {
-    if (highestNotEmpty == 0) gameState = false;
+gameStates Field::getState() {
+    if (highestNotEmpty == 0) gameState = gameStates::GAMEOVER;
+    // PAUSED;
     return gameState;
 }
 
-void Field::setCell(std::pair<int, int> coords){
+void Field::setCell(std::pair<int, int> coords) {
     _field[coords.first][coords.second] = true;
 }
 
-int Field::getScore(){
+int Field::getScore() {
     return score;
 }

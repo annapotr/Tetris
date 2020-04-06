@@ -4,10 +4,18 @@
 #include "figures.h"
 #include <QObject>
 #include <iosfwd>
-#include <array>
+#include <vector>
 #include <utility>
 
-class Figures;
+class Tetrimino;
+
+enum class gameStates {
+    INPROCESS,
+    GAMEOVER,
+    PAUSED
+};
+
+extern std::vector<int> points;
 
 class Field {
 public:
@@ -16,7 +24,7 @@ public:
     bool getCell(std::pair<int, int> coords);
     void setCell(std::pair<int, int> coords);
     int getScore();
-    bool getState();
+    gameStates getState();
 
     void printFieldTmp() const;
 
@@ -24,17 +32,18 @@ public:
     void calculateScore(int cnt);
     void fill();
     bool doCollision();
-    Figures *generateNext();
+    Tetrimino *generateNext();
 
-    Figures *currentTetrimino;
+    Tetrimino *currentTetrimino;
 
 private:
     static const std::size_t FIELD_Ht = 20;
     static const std::size_t FIELD_W = 10;
+    static const int START_POS = 3;
 
-    bool gameState;
+    gameStates gameState;
     int curLevel, score;
-    std::size_t highestNotEmpty;
+    int highestNotEmpty;
     std::array<std::array<bool, FIELD_W>, FIELD_Ht + 1> _field;
 };
 
