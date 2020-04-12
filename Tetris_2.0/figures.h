@@ -1,5 +1,6 @@
 #ifndef FIGURES_H
 #define FIGURES_H
+
 #include <QColor>
 #include <QGraphicsScene>
 #include <QPainter>
@@ -27,14 +28,16 @@ QColor make_color(tetriminoes t);
 
 class Tetrimino : public QGraphicsItem {
 public:
-    Tetrimino(std::vector<int> blocks, tetriminoes type, Field *f);
+    Tetrimino(std::vector<int> blocks, tetriminoes type, Field *f, QGraphicsScene *scene);//, QGraphicsScene *scene);
 
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
     void setCoordinates(int start);
+    void left();
+    void right();
 
     std::vector<std::pair<int, int>> _blocks;
-    QPointF highLeftCorner;
+    QPointF topLeftCorner;
 
 protected:
     void advance(int phase) override;
@@ -46,10 +49,13 @@ private:
     static const int BLOCK_PX = 25;
     static const int PADDING = 5;
 
-
     tetriminoes type_;
     QColor color_;
     Field *field;
+    QGraphicsScene *scene_;
+
+    QRect boundingRectangale;
+    std::size_t max_x = 0, max_y = 0;
 
     qreal angle, speed;
 };
