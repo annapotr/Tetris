@@ -50,16 +50,43 @@ void Tetrimino::setCoordinates(int start) {
 }
 
 QRectF Tetrimino::boundingRect() const {
-    return QRectF(0, 0, 100, 50);
+    return QRectF(75, 5*1.5, 75, 50);
 }
 
 void Tetrimino::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
     QBrush Brush(color_);
     for (auto &item: _blocks) {
-        QRectF rec = QRectF(3.0 * BLOCK_PX + BLOCK_PX * item.second, \
+        QRectF rec = QRectF(3.0 * BLOCK_PX + BLOCK_PX * item.second,
                             1.5 * PADDING + BLOCK_PX * item.first, BLOCK_PX, BLOCK_PX);
         painter->fillRect(rec,Brush);
         painter->drawRect(rec);
+    }
+}
+
+int Tetrimino::maxParm(bool parm) {
+    int maxCol = 0, maxRow = 0;
+
+    for (std::size_t i = 0; i < _blocks.size(); i++) {
+        maxCol = std::max(maxCol, _blocks[i].first);
+        maxRow = std::max(maxRow, _blocks[i].second);
+    }
+
+    return parm ? (maxRow + 1) : (maxCol + 1);
+}
+
+void Tetrimino::turn90back() {
+    int W = maxParm(1);
+
+    for (std::size_t i = 0; i < _blocks.size(); i++) {
+        _blocks[i] = {W - _blocks[i].second - 1, _blocks[i].first};
+    }
+}
+
+void Tetrimino::turn90up() {
+    int H = maxParm(0);
+
+    for (std::size_t i = 0; i < _blocks.size(); i++) {
+        _blocks[i] = {_blocks[i].second, H - _blocks[i].first - 1};
     }
 }
 
@@ -73,43 +100,8 @@ void Tetrimino::advance(int phase) {
        field->fill();
        speed = 0;
        cnt++;
-       field->printFieldTmp();
-       std::cout << "cnt: " << cnt << '\n';
+       //field->printFieldTmp();
+       //std::cout << "cnt: " << cnt << '\n';
        return;
     }
 }
-
-void Tetrimino::keyPressEvent(QKeyEvent *event) {
-
-    if (event->key() == Qt::Key_Up) {
-        //calling the function of turning to 90 degrees onward
-        //
-        qDebug() << "Turn 90 onward!";
-    }
-
-    if (event->key() == Qt::Key_Down) {
-        //calling the function of turning to 90 degrees backward
-        //
-        qDebug() << "Turn 90 backward!";
-    }
-
-    if (event->key() == Qt::Key_Left) {
-        //calling the function of left moving
-        //
-        qDebug() << "Left!";
-    }
-
-    if (event->key() == Qt::Key_Right) {
-        //calling the function of right moving
-        //
-        qDebug() << "Right!";
-    }
-
-    if (event->key() == Qt::Key_Space) {
-        qDebug() << "Fast landing!";
-    }
-}
-
-
-
-

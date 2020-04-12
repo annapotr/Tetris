@@ -55,8 +55,8 @@ void Field::checkRow() {
 bool Field::doCollision() {
    bool hasFilled = false;
    for (auto &item: currentTetrimino->_blocks) {
-       hasFilled |= getCell({currentTetrimino->highLeftCorner.ry() + item.first + 1, \
-                             currentTetrimino->highLeftCorner.rx() + item.second});
+       hasFilled |= getCell({currentTetrimino->highLeftCorner.ry() + item.first + 1, // строка
+                             currentTetrimino->highLeftCorner.rx() + item.second}); // столбец
    }
    return hasFilled;
 }

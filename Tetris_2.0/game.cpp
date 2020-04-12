@@ -1,3 +1,4 @@
+#include "iostream"
 #include "game.h"
 #include "ui_game.h"
 #include "myitem.h"
@@ -67,4 +68,33 @@ game::game(Field *f, QWidget *parent) :
 game::~game()
 {
     delete ui;
+}
+
+void game::keyPressEvent(QKeyEvent *event) {
+
+    if (event->key() == Qt::Key_U) {
+        std::cout << "Up!\n";
+        //f->currentTetrimino->turn90up();
+    }
+
+    if (event->key() == Qt::Key_D) {
+        std::cout << "Back!\n";
+        //uturn90back();
+    }
+
+    if (event->key() == Qt::Key_L) {
+        //calling the function of left moving
+        //
+        qDebug() << "Left!\n";
+    }
+
+    if (event->key() == Qt::Key_R) {
+        //calling the function of right moving
+        //
+        qDebug() << "Right!\n";
+    }
+
+    if (event->key() == Qt::Key_Space) {
+        qDebug() << "Fast landing!\n";
+    }
 }

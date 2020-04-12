@@ -36,16 +36,19 @@ public:
     std::vector<std::pair<int, int>> _blocks;
     QPointF highLeftCorner;
 
+    int maxParm(bool parm);
+    void turn90back();
+    void turn90up();
+
 protected:
     void advance(int phase) override;
-    void keyPressEvent(QKeyEvent *event) override;
+    //void keyPressEvent(QKeyEvent *event) override;
 
 private:
     static const std::size_t BLOCK_H = 2;
     static const std::size_t BLOCK_W = 4;
     static const int BLOCK_PX = 25;
     static const int PADDING = 5;
-
 
     tetriminoes type_;
     QColor color_;
