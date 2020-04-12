@@ -17,7 +17,6 @@ public:
     explicit game(Field *f, QWidget *parent = nullptr);
     ~game();
 
-private:
     Ui::game *ui;
     QGraphicsPixmapItem *item;
     QGraphicsScene *scene;
