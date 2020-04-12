@@ -1,8 +1,9 @@
-#ifndef FIEND_H
-#define FIEND_H
+#ifndef FIELD_H
+#define FIELD_H
 
 #include "figures.h"
 #include <QObject>
+#include <QColor>
 #include <iosfwd>
 #include <vector>
 #include <utility>
@@ -22,7 +23,7 @@ public:
     explicit Field(int level);
 
     bool getCell(std::pair<int, int> coords);
-    void setCell(std::pair<int, int> coords);
+    void setCell(std::pair<int, int> coords, QColor color);
     int getScore();
     gameStates getState();
 
@@ -30,9 +31,9 @@ public:
 
     void checkRow();
     void calculateScore(int cnt);
-    void fill();
+    void fill(QColor color);
     bool doCollision();
-    Tetrimino *generateNext();
+    Tetrimino *generateNext(QGraphicsScene *scene);
 
     Tetrimino *currentTetrimino;
 
@@ -44,7 +45,7 @@ private:
     gameStates gameState;
     int curLevel, score;
     int highestNotEmpty;
-    std::array<std::array<bool, FIELD_W>, FIELD_Ht + 1> _field;
+    std::array<std::array<QColor, FIELD_W>, FIELD_Ht + 1> _field;
 };
 
-#endif // FIEND_H
+#endif // FIELD_H

@@ -37,27 +37,32 @@ QColor make_color(tetriminoes t) {
     }
 }
 
-Tetrimino::Tetrimino(std::vector<int> blocks, tetriminoes type, Field *f)
-    : type_(type), color_(make_color(type_)), field(f), speed(5) {
+Tetrimino::Tetrimino(std::vector<int> blocks, tetriminoes type, Field *f, QGraphicsScene *scene)
+    : type_(type), color_(make_color(type_)), field(f), scene_(scene),
+      speed(5) {
     for (auto &k: blocks) {
         _blocks.push_back({k / BLOCK_W, k % BLOCK_W});
+        if (max_y < k / BLOCK_W) max_y = k / BLOCK_W;
+        if (max_x < k % BLOCK_W) max_x = k % BLOCK_W;
     }
 }
 
 void Tetrimino::setCoordinates(int start) {
-    highLeftCorner.rx() += start;
-    highLeftCorner.ry() += PADDING/BLOCK_PX;
+    topLeftCorner.rx() += start;
+    topLeftCorner.ry() += PADDING/BLOCK_PX;
+    setPos(topLeftCorner.rx() * BLOCK_PX, PADDING * 1.5);
+    boundingRectangale.setRect(0, 0, BLOCK_PX * (max_x + 1), BLOCK_PX * (max_y + 1));
 }
 
 QRectF Tetrimino::boundingRect() const {
-    return QRectF(75, 5*1.5, 75, 50);
+    return boundingRectangale;
 }
 
 void Tetrimino::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
     QBrush Brush(color_);
     for (auto &item: _blocks) {
-        QRectF rec = QRectF(3.0 * BLOCK_PX + BLOCK_PX * item.second,
-                            1.5 * PADDING + BLOCK_PX * item.first, BLOCK_PX, BLOCK_PX);
+        QRectF rec = QRectF(BLOCK_PX * item.second,
+                            BLOCK_PX * item.first, BLOCK_PX, BLOCK_PX);
         painter->fillRect(rec,Brush);
         painter->drawRect(rec);
     }
@@ -70,8 +75,29 @@ int Tetrimino::maxParm(bool parm) {
         maxCol = std::max(maxCol, _blocks[i].first);
         maxRow = std::max(maxRow, _blocks[i].second);
     }
-
     return parm ? (maxRow + 1) : (maxCol + 1);
+}
+
+void Tetrimino::left() {
+    topLeftCorner.rx()--;
+}
+void Tetrimino::right() {
+    topLeftCorner.rx()++;
+}
+
+void Tetrimino::advance(int phase) {
+    if(!phase) return;
+    setPos(mapToParent(0,speed));
+    topLeftCorner.ry() += speed/25;
+
+    if (field->doCollision()) {
+       field->fill(color_);
+       speed = 0;
+       scene_->removeItem(this);
+       //field->generateNext(scene_);
+
+       field->printFieldTmp();
+    }
 }
 
 void Tetrimino::turn90back() {
@@ -87,21 +113,5 @@ void Tetrimino::turn90up() {
 
     for (std::size_t i = 0; i < _blocks.size(); i++) {
         _blocks[i] = {_blocks[i].second, H - _blocks[i].first - 1};
-    }
-}
-
-void Tetrimino::advance(int phase) {
-    if(!phase) return;
-    setPos(mapToParent(0,speed));
-    highLeftCorner.ry() += speed/25;
-
-    int cnt = 0;
-    if (field->doCollision()) {
-       field->fill();
-       speed = 0;
-       cnt++;
-       //field->printFieldTmp();
-       //std::cout << "cnt: " << cnt << '\n';
-       return;
     }
 }
