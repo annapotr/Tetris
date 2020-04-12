@@ -12,15 +12,15 @@ std::vector<int> points = {40, 100, 300, 1200};
 Field::Field(int level)
     : gameState(gameStates::INPROCESS), curLevel(level), score(0), highestNotEmpty(FIELD_Ht - 1) {
     for (size_t i = 0; i < FIELD_Ht; i++) {
-        _field[i].fill(false);
+        _field[i].fill(QColor());
     }
-    _field[FIELD_Ht].fill(true);
+    _field[FIELD_Ht].fill(Qt::black);
 }
 
 void Field::printFieldTmp() const {
     for (size_t i = 0; i < FIELD_Ht; i++) {
         for (size_t j = 0; j < FIELD_W; j++) {
-            std::cout << _field[i][j] << ' ';
+            std::cout << _field[i][j].isValid() << ' ';
         }
         std::cout << '\n';
     }
@@ -37,15 +37,15 @@ void Field::checkRow() {
     for (size_t i = highestNotEmpty; i < FIELD_Ht; i++) {
         bool row = true;
         for (auto &cell: _field[i]) {
-            row &= cell;
+            row &= cell.isValid();
         }
         if (row) {
             cnt++;
-            _field[i].fill(false);
+            _field[i].fill(QColor());
             for (int j = i - 1; j >= highestNotEmpty; j--) {
                 _field[j + 1] = move(_field[j]);
             }
-            _field[highestNotEmpty].fill(false);
+            _field[highestNotEmpty].fill(QColor());
             highestNotEmpty++;
             calculateScore(cnt);
         }
@@ -55,30 +55,30 @@ void Field::checkRow() {
 bool Field::doCollision() {
    bool hasFilled = false;
    for (auto &item: currentTetrimino->_blocks) {
-       hasFilled |= getCell({currentTetrimino->highLeftCorner.ry() + item.first + 1, \
-                             currentTetrimino->highLeftCorner.rx() + item.second});
+       hasFilled |= getCell({currentTetrimino->topLeftCorner.ry() + item.first + 1, \
+                             currentTetrimino->topLeftCorner.rx() + item.second});
    }
    return hasFilled;
 }
 
-void Field::fill() {
+void Field::fill(QColor color) {
     for (auto &item: currentTetrimino->_blocks) {
-        int x = currentTetrimino->highLeftCorner.ry() + item.first;
+        int x = currentTetrimino->topLeftCorner.ry() + item.first;
         int y = START_POS + item.second;
-        setCell({x, y});
+        setCell({x, y}, color);
         if (highestNotEmpty > x) highestNotEmpty = x;
     }
 }
 
-Tetrimino *Field::generateNext() {
+Tetrimino *Field::generateNext(QGraphicsScene *scene) {
     int x = (rand() % 7);
-    Tetrimino *F = new Tetrimino(tetriminoesInit[x], static_cast<tetriminoes>(x), this);
+    Tetrimino *F = new Tetrimino(tetriminoesInit[x], static_cast<tetriminoes>(x), this, scene);
     F->setCoordinates(START_POS); //перенести куда-нибудь!
     return F;
 }
 
 bool Field::getCell(std::pair<int, int> coords) {
-    return _field[coords.first][coords.second];
+    return _field[coords.first][coords.second].isValid();
 }
 
 gameStates Field::getState() {
@@ -87,8 +87,8 @@ gameStates Field::getState() {
     return gameState;
 }
 
-void Field::setCell(std::pair<int, int> coords) {
-    _field[coords.first][coords.second] = true;
+void Field::setCell(std::pair<int, int> coords, QColor color) {
+    _field[coords.first][coords.second] = QColor(color);
 }
 
 int Field::getScore() {
