@@ -7,18 +7,18 @@
 #include <array>
 #include <iostream>
 
-using std::array;
+using std::vector;
 using std::size_t;
 
-array<array<int, 4>, 7> tetriminoesInit = {
+vector<vector<int>> tetriminoesInit = {
     {
         {0, 1, 2, 3},
-        {1, 5, 6, 7},
-        {3, 5, 6, 7},
-        {1, 2, 5, 6},
-        {2, 3, 5, 6},
-        {1, 2, 3, 6},
-        {1, 2, 6, 7}
+        {0, 4, 5, 6},
+        {2, 4, 5, 6},
+        {0, 1, 4, 5},
+        {1, 2, 4, 5},
+        {0, 1, 2, 5},
+        {0, 1, 5, 6}
     }
 };
 
@@ -37,135 +37,81 @@ QColor make_color(tetriminoes t) {
     }
 }
 
-Figures::Figures(std::array<int, NUM_OF_BLOCKS> blocks, tetriminoes type): type_(type), color_(make_color(type_)), speed(5) {
-    //int st = 3;
-    for (auto &row: _blocks) {
-        row.fill(false);
-    }
+Tetrimino::Tetrimino(std::vector<int> blocks, tetriminoes type, Field *f, QGraphicsScene *scene)
+    : type_(type), color_(make_color(type_)), field(f), scene_(scene),
+      speed(5) {
     for (auto &k: blocks) {
-        _blocks[k / BLOCK_W][k % BLOCK_W] = true;
-    }
-
-    //setPos(mapToParent(5 + st * 25, 5));
-}
-
-void Figures::setCoordinates(Field *f, int start) {
-    size_t item = 0;
-    for (size_t i = 0; i < BLOCK_H; i++) {
-        for (size_t j = start; j <= start + BLOCK_W; j++) {
-            if (f->getCell({i, j}) || _blocks[i][j - start]) {
-                items[item] = {i, j};
-                item++;
-            }
-        }
+        _blocks.push_back({k / BLOCK_W, k % BLOCK_W});
+        if (max_y < k / BLOCK_W) max_y = k / BLOCK_W;
+        if (max_x < k % BLOCK_W) max_x = k % BLOCK_W;
     }
 }
 
-QRectF Figures::boundingRect() const
-{
-    return QRectF(0,0,100,50);
+void Tetrimino::setCoordinates(int start) {
+    topLeftCorner.rx() += start;
+    topLeftCorner.ry() += PADDING/BLOCK_PX;
+    setPos(topLeftCorner.rx() * BLOCK_PX, PADDING * 1.5);
+    boundingRectangale.setRect(0, 0, BLOCK_PX * (max_x + 1), BLOCK_PX * (max_y + 1));
 }
 
-void Figures::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
-{
-    if(!isFalling) {
-       speed = 0;
-       setPos(mapToParent(0,-20));
+QRectF Tetrimino::boundingRect() const {
+    return boundingRectangale;
+}
 
-            //Figures *figure = new Figures(type_,f);
-            //scene()->addItem(figure);
-    }
-        QRectF rec = QRectF(0,0,25,25);
-        QBrush Brush(color_);
+void Tetrimino::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
+    QBrush Brush(color_);
+    for (auto &item: _blocks) {
+        QRectF rec = QRectF(BLOCK_PX * item.second,
+                            BLOCK_PX * item.first, BLOCK_PX, BLOCK_PX);
         painter->fillRect(rec,Brush);
         painter->drawRect(rec);
-        QRectF rec1 = QRectF(25,25,25,25);
-        QBrush Brush1(color_);
-        painter->fillRect(rec1,Brush1);
-        painter->drawRect(rec1);
-        QRectF rec2 = QRectF(25,0,25,25);
-        QBrush Brush2(color_);
-        painter->fillRect(rec2,Brush2);
-        painter->drawRect(rec2);
-        QRectF rec3 = QRectF(50,25,25,25);
-        QBrush Brush3(color_);
-        painter->fillRect(rec3,Brush3);
-        painter->drawRect(rec3);
-
-
-    }
-//    else if((int)type_ == 6){
-//        if(DoCollision() && flag) {
-//            speed = 0;
-//            setPos(mapToParent(0,-20));
-//            fill();
-//            flag = false;
-//            Figures *figure = new Figures(type_,f);
-//            scene()->addItem(figure);
-//        }
-//        QRectF rec = QRectF(0,0,25,25);
-//        QBrush Brush(color_);
-//        painter->fillRect(rec,Brush);
-//        painter->drawRect(rec);
-//        QRectF rec1 = QRectF(25,25,25,25);
-//        QBrush Brush1(color_);
-//        painter->fillRect(rec1,Brush1);
-//        painter->drawRect(rec1);
-//        QRectF rec2 = QRectF(25,0,25,25);
-//        QBrush Brush2(color_);
-//        painter->fillRect(rec2,Brush2);
-//        painter->drawRect(rec2);
-//        QRectF rec3 = QRectF(50,0,25,25);
-//        QBrush Brush3(color_);
-//        painter->fillRect(rec3,Brush3);
-//        painter->drawRect(rec3);
-//    }
-
-void Figures::falling() {
-    for (size_t i = 0; i < items.size(); i++) {
-        items[i].first++;
     }
 }
 
-void Figures::advance(int phase) {
+int Tetrimino::maxParm(bool parm) {
+    int maxCol = 0, maxRow = 0;
+
+    for (std::size_t i = 0; i < _blocks.size(); i++) {
+        maxCol = std::max(maxCol, _blocks[i].first);
+        maxRow = std::max(maxRow, _blocks[i].second);
+    }
+    return parm ? (maxRow + 1) : (maxCol + 1);
+}
+
+void Tetrimino::left() {
+    topLeftCorner.rx()--;
+}
+void Tetrimino::right() {
+    topLeftCorner.rx()++;
+}
+
+void Tetrimino::advance(int phase) {
     if(!phase) return;
     setPos(mapToParent(0,speed));
-    for (size_t i = 0; i < items.size(); i++) {
-        items[i].first += speed/25;
+    topLeftCorner.ry() += speed/25;
+
+    if (field->doCollision()) {
+       field->fill(color_);
+       speed = 0;
+       scene_->removeItem(this);
+       //field->generateNext(scene_);
+
+       field->printFieldTmp();
     }
 }
 
-void Figures::keyPressEvent(QKeyEvent *event) {
+void Tetrimino::turn90back() {
+    int W = maxParm(1);
 
-    if (event->key() == Qt::Key_Up) {
-        //calling the function of turning to 90 degrees onward
-        //
-        qDebug() << "Turn 90 onward!";
-    }
-
-    if (event->key() == Qt::Key_Down) {
-        //calling the function of turning to 90 degrees backward
-        //
-        qDebug() << "Turn 90 backward!";
-    }
-
-    if (event->key() == Qt::Key_Left) {
-        //calling the function of left moving
-        //
-        qDebug() << "Left!";
-    }
-
-    if (event->key() == Qt::Key_Right) {
-        //calling the function of right moving
-        //
-        qDebug() << "Right!";
-    }
-
-    if (event->key() == Qt::Key_Space) {
-        qDebug() << "Fast landing!";
+    for (std::size_t i = 0; i < _blocks.size(); i++) {
+        _blocks[i] = {W - _blocks[i].second - 1, _blocks[i].first};
     }
 }
 
+void Tetrimino::turn90up() {
+    int H = maxParm(0);
 
-
-
+    for (std::size_t i = 0; i < _blocks.size(); i++) {
+        _blocks[i] = {_blocks[i].second, H - _blocks[i].first - 1};
+    }
+}

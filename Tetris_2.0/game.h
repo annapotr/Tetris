@@ -2,6 +2,7 @@
 #define GAME_H
 
 #include <QDialog>
+#include <QKeyEvent>
 #include <QGraphicsView>
 #include <QWidget>
 #include <QGraphicsScene>
@@ -17,12 +18,15 @@ public:
     explicit game(Field *f, QWidget *parent = nullptr);
     ~game();
 
-private:
     Ui::game *ui;
     QGraphicsPixmapItem *item;
     QGraphicsScene *scene;
     QTimer *timer;
     Field *f;
+
+protected:
+    void keyPressEvent(QKeyEvent *event);
+
 };
 
 #endif // GAME_H

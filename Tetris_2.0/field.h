@@ -1,41 +1,51 @@
-#ifndef FIEND_H
-#define FIEND_H
+#ifndef FIELD_H
+#define FIELD_H
 
 #include "figures.h"
 #include <QObject>
+#include <QColor>
 #include <iosfwd>
-#include <array>
+#include <vector>
 #include <utility>
 
-class Figures;
+class Tetrimino;
+
+enum class gameStates {
+    INPROCESS,
+    GAMEOVER,
+    PAUSED
+};
+
+extern std::vector<int> points;
 
 class Field {
 public:
     explicit Field(int level);
 
     bool getCell(std::pair<int, int> coords);
-    void setCell(std::pair<int, int> coords);
+    void setCell(std::pair<int, int> coords, QColor color);
     int getScore();
-    bool getState();
+    gameStates getState();
 
     void printFieldTmp() const;
 
     void checkRow();
     void calculateScore(int cnt);
-    void fill();
+    void fill(QColor color);
     bool doCollision();
-    Figures *generateNext();
+    Tetrimino *generateNext(QGraphicsScene *scene);
 
-    Figures *currentTetrimino;
+    Tetrimino *currentTetrimino;
 
 private:
     static const std::size_t FIELD_Ht = 20;
     static const std::size_t FIELD_W = 10;
+    static const int START_POS = 3;
 
-    bool gameState;
+    gameStates gameState;
     int curLevel, score;
-    std::size_t highestNotEmpty;
-    std::array<std::array<bool, FIELD_W>, FIELD_Ht + 1> _field;
+    int highestNotEmpty;
+    std::array<std::array<QColor, FIELD_W>, FIELD_Ht + 1> _field;
 };
 
-#endif // FIEND_H
+#endif // FIELD_H

@@ -1,15 +1,14 @@
+#include "iostream"
 #include "game.h"
 #include "ui_game.h"
 #include "myitem.h"
 #include "figures.h"
-#include "field.h"
 #include <QTimer>
 #include <QElapsedTimer>
 #include <QApplication>
 #include <QKeyEvent>
 #include <QDebug>
 #include <QIcon>
-#include <iostream>
 
 
 game::game(Field *f, QWidget *parent) :
@@ -19,7 +18,6 @@ game::game(Field *f, QWidget *parent) :
     ui->setupUi(this);
     scene = new QGraphicsScene(this);
 
-    
     ui->graphicsView->setScene(scene);
     ui->graphicsView->setRenderHint(QPainter::Antialiasing);
     scene->setSceneRect(0,0,260,520);
@@ -29,23 +27,47 @@ game::game(Field *f, QWidget *parent) :
     plt.setBrush(QPalette::Background, br);
     this->setPalette(plt);
 
-    srand(time(NULL));
-    while(f->getState()) {
-        f->currentTetrimino = f->generateNext();
+    //while(f->getState() == gameStates::INPROCESS) {
+        //timer->stop();
+        f->currentTetrimino = f->generateNext(scene); // можно написать любую цифру из [1,5] в зависимоости от фигуры
         scene->addItem(f->currentTetrimino);
-        f->fill();
-    }
 
-//    timer = new QTimer(this);
-//    connect(timer, SIGNAL(), scene, SLOT(advance()));
-//    timer->start(50);
+        timer = new QTimer(this);
+        connect(timer, SIGNAL(timeout()), scene, SLOT(advance()));
+        timer->start(100);
+    //}
 
-    f-> printFieldTmp();
 }
 
-game::~game()
-{
+game::~game() {
     delete ui;
 }
 
+void game::keyPressEvent(QKeyEvent *event) {
 
+    if (event->key() == Qt::Key_U) {
+        std::cout << "Up!\n";
+        //f->currentTetrimino->turn90up();
+    }
+
+    if (event->key() == Qt::Key_D) {
+        std::cout << "Back!\n";
+        //uturn90back();
+    }
+
+    if (event->key() == Qt::Key_L) {
+        //calling the function of left moving
+        //
+        qDebug() << "Left!\n";
+    }
+
+    if (event->key() == Qt::Key_R) {
+        //calling the function of right moving
+        //
+        qDebug() << "Right!\n";
+    }
+
+    if (event->key() == Qt::Key_Space) {
+        qDebug() << "Fast landing!\n";
+    }
+}
