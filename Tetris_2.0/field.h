@@ -7,6 +7,7 @@
 #include <iosfwd>
 #include <vector>
 #include <utility>
+#include <array>
 
 class Tetrimino;
 
