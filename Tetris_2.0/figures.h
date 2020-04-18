@@ -39,13 +39,13 @@ public:
     std::vector<std::pair<int, int>> _blocks;
     QPointF topLeftCorner;
 
-    int maxParm(bool parm);
+    int maxParam(bool param);
+    int minParam(bool param);
     void turn90back();
     void turn90up();
 
 protected:
     void advance(int phase) override;
-    //void keyPressEvent(QKeyEvent *event) override;
 
 private:
     static const std::size_t BLOCK_H = 2;
@@ -59,7 +59,9 @@ private:
     QGraphicsScene *scene_;
 
     QRect boundingRectangale;
-    std::size_t max_x = 0, max_y = 0;
+    std::size_t max_col = 0, max_row = 0;
+
+    bool isVertical = 0;
 
     qreal angle, speed;
 };

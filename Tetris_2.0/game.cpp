@@ -10,11 +10,13 @@
 #include <QKeyEvent>
 #include <QDebug>
 #include <QIcon>
+#include <random>
 
 
 Game::Game(Field *f, QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::Game)
+    ui(new Ui::Game),
+    f(f)
 {
     ui->setupUi(this);
     scene = new QGraphicsScene(this);
@@ -32,13 +34,14 @@ Game::Game(Field *f, QWidget *parent) :
         //timer->stop();
         f->currentTetrimino = f->generateNext(scene);
         f->currentFallen = f->generateFallen(scene);
+
         scene->addItem(f->currentTetrimino);
         scene->addItem(f->currentFallen);
 
 
         timer = new QTimer(this);
         connect(timer, SIGNAL(timeout()), scene, SLOT(advance()));
-        timer->start(25);
+        timer->start(120);
     //}
 
 }
@@ -49,20 +52,21 @@ Game::~Game() {
 
 void Game::keyPressEvent(QKeyEvent *event) {
 
+    //qDebug() << "In KPE\n" << "f->currentTetrimino: " << f->currentTetrimino << "currT->field->currentTetrimino: " << currT->field->currentTetrimino << ", currT: " << currT << ", currT->field: " << currT->field << '\n';
+
     if (event->key() == Qt::Key_U) {
-        std::cout << "Up!\n";
-        //f->currentTetrimino->turn90up();
+        qDebug() << "Up!\n";
+        f->currentTetrimino->turn90up();
     }
 
     if (event->key() == Qt::Key_D) {
-        std::cout << "Back!\n";
-        //uturn90back();
+        qDebug() << "Back!\n";
+        f->currentTetrimino->turn90back();
     }
 
     if (event->key() == Qt::Key_L) {
-        //calling the function of left moving
-        //
         qDebug() << "Left!\n";
+        //f->currentTetrimino->left();
     }
 
     if (event->key() == Qt::Key_R) {

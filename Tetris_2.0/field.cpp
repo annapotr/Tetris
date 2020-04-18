@@ -66,10 +66,10 @@ bool Field::doCollision() {
 
 void Field::fill(QColor color) {
     for (auto &item: currentTetrimino->_blocks) {
-        int x = currentTetrimino->topLeftCorner.ry() + item.first;
-        int y = START_POS + item.second;
-        setCell({x, y}, color);
-        if (highestNotEmpty > x) highestNotEmpty = x;
+        int row = currentTetrimino->topLeftCorner.ry() + item.first;
+        int col = START_POS + item.second;
+        setCell({row, col}, color);
+        if (highestNotEmpty > row) highestNotEmpty = row;
     }
 }
 
