@@ -1,11 +1,13 @@
 #include "figures.h"
 #include "field.h"
+#include "fallen.h"
 #include "game.h"
 #include <QColor>
 #include <QDebug>
 #include <QKeyEvent>
 #include <array>
 #include <iostream>
+#include <QPainter>
 
 using std::vector;
 using std::size_t;
@@ -66,6 +68,7 @@ void Tetrimino::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
         painter->fillRect(rec,Brush);
         painter->drawRect(rec);
     }
+
 }
 
 int Tetrimino::maxParm(bool parm) {
@@ -94,9 +97,10 @@ void Tetrimino::advance(int phase) {
        field->fill(color_);
        speed = 0;
        scene_->removeItem(this);
-       //field->generateNext(scene_);
-
        field->printFieldTmp();
+       field->currentTetrimino = field->generateNext(scene_);
+       scene_->addItem(field->currentTetrimino);
+
     }
 }
 

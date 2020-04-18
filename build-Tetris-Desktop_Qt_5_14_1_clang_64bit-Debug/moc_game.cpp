@@ -21,25 +21,25 @@
 QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
-struct qt_meta_stringdata_game_t {
+struct qt_meta_stringdata_Game_t {
     QByteArrayData data[1];
     char stringdata0[5];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
-    qptrdiff(offsetof(qt_meta_stringdata_game_t, stringdata0) + ofs \
+    qptrdiff(offsetof(qt_meta_stringdata_Game_t, stringdata0) + ofs \
         - idx * sizeof(QByteArrayData)) \
     )
-static const qt_meta_stringdata_game_t qt_meta_stringdata_game = {
+static const qt_meta_stringdata_Game_t qt_meta_stringdata_Game = {
     {
-QT_MOC_LITERAL(0, 0, 4) // "game"
+QT_MOC_LITERAL(0, 0, 4) // "Game"
 
     },
-    "game"
+    "Game"
 };
 #undef QT_MOC_LITERAL
 
-static const uint qt_meta_data_game[] = {
+static const uint qt_meta_data_Game[] = {
 
  // content:
        8,       // revision
@@ -55,7 +55,7 @@ static const uint qt_meta_data_game[] = {
        0        // eod
 };
 
-void game::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+void Game::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     Q_UNUSED(_o);
     Q_UNUSED(_id);
@@ -63,30 +63,30 @@ void game::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void *
     Q_UNUSED(_a);
 }
 
-QT_INIT_METAOBJECT const QMetaObject game::staticMetaObject = { {
+QT_INIT_METAOBJECT const QMetaObject Game::staticMetaObject = { {
     QMetaObject::SuperData::link<QDialog::staticMetaObject>(),
-    qt_meta_stringdata_game.data,
-    qt_meta_data_game,
+    qt_meta_stringdata_Game.data,
+    qt_meta_data_Game,
     qt_static_metacall,
     nullptr,
     nullptr
 } };
 
 
-const QMetaObject *game::metaObject() const
+const QMetaObject *Game::metaObject() const
 {
     return QObject::d_ptr->metaObject ? QObject::d_ptr->dynamicMetaObject() : &staticMetaObject;
 }
 
-void *game::qt_metacast(const char *_clname)
+void *Game::qt_metacast(const char *_clname)
 {
     if (!_clname) return nullptr;
-    if (!strcmp(_clname, qt_meta_stringdata_game.stringdata0))
+    if (!strcmp(_clname, qt_meta_stringdata_Game.stringdata0))
         return static_cast<void*>(this);
     return QDialog::qt_metacast(_clname);
 }
 
-int game::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int Game::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QDialog::qt_metacall(_c, _id, _a);
     return _id;

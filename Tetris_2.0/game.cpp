@@ -3,6 +3,7 @@
 #include "ui_game.h"
 #include "myitem.h"
 #include "figures.h"
+#include "fallen.h"
 #include <QTimer>
 #include <QElapsedTimer>
 #include <QApplication>
@@ -11,9 +12,9 @@
 #include <QIcon>
 
 
-game::game(Field *f, QWidget *parent) :
+Game::Game(Field *f, QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::game)
+    ui(new Ui::Game)
 {
     ui->setupUi(this);
     scene = new QGraphicsScene(this);
@@ -29,21 +30,24 @@ game::game(Field *f, QWidget *parent) :
 
     //while(f->getState() == gameStates::INPROCESS) {
         //timer->stop();
-        f->currentTetrimino = f->generateNext(scene); // можно написать любую цифру из [1,5] в зависимоости от фигуры
+        f->currentTetrimino = f->generateNext(scene);
+        f->currentFallen = f->generateFallen(scene);
         scene->addItem(f->currentTetrimino);
+        scene->addItem(f->currentFallen);
+
 
         timer = new QTimer(this);
         connect(timer, SIGNAL(timeout()), scene, SLOT(advance()));
-        timer->start(100);
+        timer->start(25);
     //}
 
 }
 
-game::~game() {
+Game::~Game() {
     delete ui;
 }
 
-void game::keyPressEvent(QKeyEvent *event) {
+void Game::keyPressEvent(QKeyEvent *event) {
 
     if (event->key() == Qt::Key_U) {
         std::cout << "Up!\n";

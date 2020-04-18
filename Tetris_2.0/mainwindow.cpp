@@ -20,7 +20,7 @@ void MainWindow::on_play_clicked()
 {
     hide();
     Field *f = new Field(0);
-    game game(f);
+    Game game(f);
     game.setModal(true);
     game.setStyleSheet("background-color:black;");
     game.exec();

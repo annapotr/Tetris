@@ -3,14 +3,17 @@
 #include <iostream>
 #include <array>
 #include <utility>
+#include <QDebug>
+#include <QPainter>
+#include <QAbstractScrollArea>
 
 using std::move;
 using std::size_t;
 
 std::vector<int> points = {40, 100, 300, 1200};
 
-Field::Field(int level)
-    : gameState(gameStates::INPROCESS), curLevel(level), score(0), highestNotEmpty(FIELD_Ht - 1) {
+Field::Field(int level) :
+    gameState(gameStates::INPROCESS), curLevel(level), score(0), highestNotEmpty(FIELD_Ht - 1) {
     for (size_t i = 0; i < FIELD_Ht; i++) {
         _field[i].fill(QColor());
     }
@@ -77,6 +80,11 @@ Tetrimino *Field::generateNext(QGraphicsScene *scene) {
     return F;
 }
 
+Fallen *Field::generateFallen(QGraphicsScene *scene) {
+    Fallen *F = new Fallen(this, scene);
+    return F;
+}
+
 bool Field::getCell(std::pair<int, int> coords) {
     return _field[coords.first][coords.second].isValid();
 }
@@ -94,3 +102,16 @@ void Field::setCell(std::pair<int, int> coords, QColor color) {
 int Field::getScore() {
     return score;
 }
+
+QColor Field::get(int x, int y) {
+    return _field[x][y];
+}
+
+std::size_t Field::getFIELD_Ht(){
+    return FIELD_Ht;
+}
+
+std::size_t Field::getFIELD_W(){
+    return FIELD_W;
+}
+

@@ -1,6 +1,6 @@
 #ifndef FIELD_H
 #define FIELD_H
-
+#include "QGraphicsItem"
 #include "figures.h"
 #include <QObject>
 #include <QColor>
@@ -8,8 +8,13 @@
 #include <vector>
 #include <utility>
 #include <array>
+#include <QWidget>
+#include <QPainter>
+#include <fallen.h>
 
 class Tetrimino;
+
+class Fallen;
 
 enum class gameStates {
     INPROCESS,
@@ -35,8 +40,15 @@ public:
     void fill(QColor color);
     bool doCollision();
     Tetrimino *generateNext(QGraphicsScene *scene);
+    Fallen *generateFallen(QGraphicsScene *scene);
 
     Tetrimino *currentTetrimino;
+    Fallen *currentFallen;
+
+    QColor get(int x, int y);
+    std::size_t getFIELD_Ht();
+    std::size_t getFIELD_W();
+
 
 private:
     static const std::size_t FIELD_Ht = 20;

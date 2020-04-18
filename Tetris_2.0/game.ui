@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>game</class>
- <widget class="QDialog" name="game">
+ <class>Game</class>
+ <widget class="QDialog" name="Game">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -45,10 +45,10 @@ border: none;</string>
   <widget class="QPushButton" name="Close_game">
    <property name="geometry">
     <rect>
-     <x>320</x>
+     <x>319</x>
      <y>20</y>
-     <width>170</width>
-     <height>60</height>
+     <width>171</width>
+     <height>61</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -129,7 +129,7 @@ border: none;</string>
   <connection>
    <sender>Close_game</sender>
    <signal>clicked()</signal>
-   <receiver>game</receiver>
+   <receiver>Game</receiver>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">

@@ -9,16 +9,16 @@
 #include "field.h"
 
 namespace Ui {
-    class game;
+    class Game;
 }
 
-class game : public QDialog {
+class Game : public QDialog {
     Q_OBJECT
 public:
-    explicit game(Field *f, QWidget *parent = nullptr);
-    ~game();
+    explicit Game(Field *f, QWidget *parent = nullptr);
+    ~Game();
 
-    Ui::game *ui;
+    Ui::Game *ui;
     QGraphicsPixmapItem *item;
     QGraphicsScene *scene;
     QTimer *timer;
