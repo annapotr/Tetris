@@ -8,6 +8,14 @@
         <file>close.png</file>
         <file>high_score.png</file>
         <file>pause.png</file>
+        <file>red_block.png</file>
+        <file>blue.png</file>
+        <file>blue1.png</file>
+        <file>red1.png</file>
+        <file>orange.png</file>
+        <file>yellow.png</file>
+        <file>green.png</file>
+        <file>purple.png</file>
     </qresource>
     <qresource prefix="/nq">
         <file>IMG_7403.jpg</file>

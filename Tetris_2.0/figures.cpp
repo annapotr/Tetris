@@ -8,6 +8,7 @@
 #include <array>
 #include <iostream>
 #include <QPainter>
+#include <iostream>
 
 using std::vector;
 using std::size_t;
@@ -24,23 +25,41 @@ vector<vector<int>> tetriminoesInit = {
     }
 };
 
-QColor make_color(tetriminoes t) {
+QPixmap make_pix(tetriminoes t) {
     switch(t) {
-        case(tetriminoes::I): return Qt::cyan;
-        case(tetriminoes::J): return Qt::blue;
-        case(tetriminoes::L): {
-            QColor orange(255,165,0);
-            return orange;
+        case(tetriminoes::I):{
+            QPixmap pix(":/red1.png");
+            return pix;
         }
-        case(tetriminoes::O): return Qt::yellow;
-        case(tetriminoes::S): return Qt::red;
-        case(tetriminoes::T): return Qt::darkMagenta;
-        default: return Qt::green;
+        case(tetriminoes::J):{
+            QPixmap pix(":/orange.png");
+            return pix;
+        }
+        case(tetriminoes::L):{
+            QPixmap pix(":/yellow.png");
+            return pix;
+        }
+        case(tetriminoes::O):{
+            QPixmap pix(":/green.png");
+            return pix;
+        }
+        case(tetriminoes::S): {
+            QPixmap pix(":/blue.png");
+            return pix;
+        }
+        case(tetriminoes::T): {
+            QPixmap pix(":/blue1.png");
+            return pix;
+        }
+        case(tetriminoes::Z): {
+            QPixmap pix(":/purple.png");
+            return pix;
+        }
     }
 }
 
 Tetrimino::Tetrimino(std::vector<int> blocks, tetriminoes type, Field *f, QGraphicsScene *scene)
-    : type_(type), color_(make_color(type_)), field(f), scene_(scene),
+    : type_(type), pix_(make_pix(type_)), field(f), scene_(scene),
       speed(5) {
     for (auto &k: blocks) {
         _blocks.push_back({k / BLOCK_W, k % BLOCK_W});
@@ -71,11 +90,11 @@ QRectF Tetrimino::boundingRect() const {
 }
 
 void Tetrimino::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
-    QBrush Brush(color_);
+    QPixmap pix(pix_);
     for (auto &item: _blocks) {
         QRectF rec = QRectF(BLOCK_PX * item.second,
                             BLOCK_PX * item.first, BLOCK_PX, BLOCK_PX);
-        painter->fillRect(rec,Brush);
+        painter->fillRect(rec,pix);
         painter->drawRect(rec);
     }
 
@@ -122,13 +141,18 @@ void Tetrimino::advance(int phase) {
     topLeftCorner.ry() += speed/25;
 
     if (field->doCollision()) {
-       field->fill(color_);
+       field->fill(pix_);
        speed = 0;
        scene_->removeItem(this);
        field->printFieldTmp();
        field->currentTetrimino = field->generateNext(scene_);
        scene_->addItem(field->currentTetrimino);
-
+    }
+    if(field->isEnd()) {
+        //игра закончилась
+        //окно вы проиграли
+        std::cout << "Game end" << std::endl;
+        //Game::doEnd();
     }
 }
 

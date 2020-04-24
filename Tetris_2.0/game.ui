@@ -45,8 +45,8 @@ border: none;</string>
   <widget class="QPushButton" name="Close_game">
    <property name="geometry">
     <rect>
-     <x>319</x>
-     <y>20</y>
+     <x>320</x>
+     <y>10</y>
      <width>171</width>
      <height>61</height>
     </rect>
@@ -65,7 +65,7 @@ border: none;
    <property name="geometry">
     <rect>
      <x>320</x>
-     <y>260</y>
+     <y>330</y>
      <width>170</width>
      <height>60</height>
     </rect>
@@ -87,30 +87,11 @@ border: none;</string>
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QLabel" name="label_high_score">
-   <property name="geometry">
-    <rect>
-     <x>320</x>
-     <y>110</y>
-     <width>170</width>
-     <height>60</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-image: url(:/high_score.png);</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-  </widget>
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>320</x>
-     <y>460</y>
+     <x>310</x>
+     <y>470</y>
      <width>170</width>
      <height>60</height>
     </rect>
@@ -118,6 +99,73 @@ border: none;</string>
    <property name="styleSheet">
     <string notr="true">background-image: url(:/pause.png);
 border: none;</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>320</x>
+     <y>80</y>
+     <width>170</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>170</width>
+     <height>50</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>170</width>
+     <height>50</height>
+    </size>
+   </property>
+   <property name="text">
+    <string>Level</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_figure">
+   <property name="geometry">
+    <rect>
+     <x>320</x>
+     <y>190</y>
+     <width>170</width>
+     <height>100</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>170</width>
+     <height>100</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>179</width>
+     <height>100</height>
+    </size>
+   </property>
+   <property name="text">
+    <string>Отображение фигурки</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_score_numbers">
+   <property name="geometry">
+    <rect>
+     <x>330</x>
+     <y>400</y>
+     <width>151</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 36pt &quot;Optima&quot;;
+color:rgb(0, 225, 216);</string>
    </property>
    <property name="text">
     <string/>

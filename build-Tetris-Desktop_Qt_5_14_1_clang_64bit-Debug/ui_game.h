@@ -24,8 +24,10 @@ public:
     QGraphicsView *graphicsView;
     QPushButton *Close_game;
     QLabel *label_score;
-    QLabel *label_high_score;
     QPushButton *pushButton;
+    QLabel *label;
+    QLabel *label_figure;
+    QLabel *label_score_numbers;
 
     void setupUi(QDialog *Game)
     {
@@ -42,28 +44,38 @@ public:
 "border: none;"));
         Close_game = new QPushButton(Game);
         Close_game->setObjectName(QString::fromUtf8("Close_game"));
-        Close_game->setGeometry(QRect(319, 20, 171, 61));
+        Close_game->setGeometry(QRect(320, 10, 171, 61));
         Close_game->setStyleSheet(QString::fromUtf8("background-image: url(:/close.png);\n"
 "border: none;\n"
 "\n"
 ""));
         label_score = new QLabel(Game);
         label_score->setObjectName(QString::fromUtf8("label_score"));
-        label_score->setGeometry(QRect(320, 260, 170, 60));
+        label_score->setGeometry(QRect(320, 330, 170, 60));
         label_score->setMaximumSize(QSize(170, 200));
         label_score->setStyleSheet(QString::fromUtf8("background-image: url(:/score.png);\n"
 "border: none;"));
         label_score->setAlignment(Qt::AlignCenter);
-        label_high_score = new QLabel(Game);
-        label_high_score->setObjectName(QString::fromUtf8("label_high_score"));
-        label_high_score->setGeometry(QRect(320, 110, 170, 60));
-        label_high_score->setStyleSheet(QString::fromUtf8("background-image: url(:/high_score.png);"));
-        label_high_score->setAlignment(Qt::AlignCenter);
         pushButton = new QPushButton(Game);
         pushButton->setObjectName(QString::fromUtf8("pushButton"));
-        pushButton->setGeometry(QRect(320, 460, 170, 60));
+        pushButton->setGeometry(QRect(310, 470, 170, 60));
         pushButton->setStyleSheet(QString::fromUtf8("background-image: url(:/pause.png);\n"
 "border: none;"));
+        label = new QLabel(Game);
+        label->setObjectName(QString::fromUtf8("label"));
+        label->setGeometry(QRect(320, 80, 170, 50));
+        label->setMinimumSize(QSize(170, 50));
+        label->setMaximumSize(QSize(170, 50));
+        label_figure = new QLabel(Game);
+        label_figure->setObjectName(QString::fromUtf8("label_figure"));
+        label_figure->setGeometry(QRect(320, 190, 170, 100));
+        label_figure->setMinimumSize(QSize(170, 100));
+        label_figure->setMaximumSize(QSize(179, 100));
+        label_score_numbers = new QLabel(Game);
+        label_score_numbers->setObjectName(QString::fromUtf8("label_score_numbers"));
+        label_score_numbers->setGeometry(QRect(330, 400, 151, 41));
+        label_score_numbers->setStyleSheet(QString::fromUtf8("font: 36pt \"Optima\";\n"
+"color:rgb(0, 225, 216);"));
 
         retranslateUi(Game);
         QObject::connect(Close_game, SIGNAL(clicked()), Game, SLOT(close()));
@@ -76,8 +88,10 @@ public:
         Game->setWindowTitle(QCoreApplication::translate("Game", "Dialog", nullptr));
         Close_game->setText(QString());
         label_score->setText(QString());
-        label_high_score->setText(QString());
         pushButton->setText(QString());
+        label->setText(QCoreApplication::translate("Game", "Level", nullptr));
+        label_figure->setText(QCoreApplication::translate("Game", "\320\236\321\202\320\276\320\261\321\200\320\260\320\266\320\265\320\275\320\270\320\265 \321\204\320\270\320\263\321\203\321\200\320\272\320\270", nullptr));
+        label_score_numbers->setText(QString());
     } // retranslateUi
 
 };

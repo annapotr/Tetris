@@ -29,7 +29,7 @@ public:
     explicit Field(int level);
 
     bool getCell(std::pair<int, int> coords);
-    void setCell(std::pair<int, int> coords, QColor color);
+    void setCell(std::pair<int, int> coords, QPixmap pix);
     int getScore();
     gameStates getState();
 
@@ -37,17 +37,20 @@ public:
 
     void checkRow();
     void calculateScore(int cnt);
-    void fill(QColor color);
+    void fill(QPixmap pix);
     bool doCollision();
     Tetrimino *generateNext(QGraphicsScene *scene);
     Fallen *generateFallen(QGraphicsScene *scene);
 
+    bool isEnd();
+
     Tetrimino *currentTetrimino;
     Fallen *currentFallen;
 
-    QColor get(int x, int y);
+    QPixmap get(int x, int y);
     std::size_t getFIELD_Ht();
     std::size_t getFIELD_W();
+    int getNextFigure();
 
 
 private:
@@ -58,7 +61,8 @@ private:
     gameStates gameState;
     int curLevel, score;
     int highestNotEmpty;
-    std::array<std::array<QColor, FIELD_W>, FIELD_Ht + 1> _field;
+    int nowFigure = 0, nextFigure;
+    std::array<std::array<QPixmap, FIELD_W>, FIELD_Ht + 1> _field;
 };
 
 #endif // FIELD_H

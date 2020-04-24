@@ -709,11 +709,19 @@ qrc_imagenes.o: ../Tetris_2.0/imagenes.qrc \
 		../../../Desktop/Tetris/5.14.1/clang_64/bin/rcc \
 		../Tetris_2.0/close.png \
 		../Tetris_2.0/5.pdf \
+		../Tetris_2.0/red1.png \
+		../Tetris_2.0/green.png \
 		../Tetris_2.0/menu.png \
 		../Tetris_2.0/background.png \
 		../Tetris_2.0/background1.png \
+		../Tetris_2.0/blue.png \
+		../Tetris_2.0/blue1.png \
+		../Tetris_2.0/yellow.png \
 		../Tetris_2.0/high_score.png \
+		../Tetris_2.0/purple.png \
 		../Tetris_2.0/score.png \
+		../Tetris_2.0/orange.png \
+		../Tetris_2.0/red_block.png \
 		../Tetris_2.0/pause.png \
 		../Tetris_2.0/IMG_7403.jpg
 	/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/bin/rcc -name imagenes ../Tetris_2.0/imagenes.qrc -pass 1 -o ./qrc_imagenes.cpp 
@@ -792,18 +800,18 @@ compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_heade
 ####### Compile
 
 fallen.o: ../Tetris_2.0/fallen.cpp ../Tetris_2.0/fallen.h \
-		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/QGraphicsItem \
-		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/qgraphicsitem.h \
-		../Tetris_2.0/field.h \
-		../Tetris_2.0/figures.h \
-		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtGui.framework/Headers/QColor \
-		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtGui.framework/Headers/qcolor.h \
 		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/QGraphicsScene \
 		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/qgraphicsscene.h \
 		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtGui.framework/Headers/QPainter \
 		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtGui.framework/Headers/qpainter.h \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/QGraphicsItem \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/qgraphicsitem.h \
 		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtCore.framework/Headers/QPointF \
 		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtCore.framework/Headers/qpoint.h \
+		../Tetris_2.0/field.h \
+		../Tetris_2.0/figures.h \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtGui.framework/Headers/QColor \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtGui.framework/Headers/qcolor.h \
 		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtCore.framework/Headers/QObject \
 		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtCore.framework/Headers/qobject.h \
 		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/QWidget \
