@@ -58,8 +58,13 @@ void Field::checkRow() {
 bool Field::doCollision() {
    bool hasFilled = false;
    for (auto &item: currentTetrimino->_blocks) {
-       hasFilled |= getCell({currentTetrimino->topLeftCorner.ry() + item.first + 1,
-                             currentTetrimino->topLeftCorner.rx() + item.second});
+       hasFilled |= getCell({(int)(currentTetrimino->topLeftCorner.ry() + item.first + 1),
+                             (int)(currentTetrimino->topLeftCorner.rx() + item.second)});
+
+       if (hasFilled) {
+          qDebug() << "collision Y: " << (currentTetrimino->topLeftCorner.ry()+item.first + 1) << " collision X: " << (currentTetrimino->topLeftCorner.rx()+item.second);
+       }
+
    }
    return hasFilled;
 }

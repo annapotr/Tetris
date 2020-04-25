@@ -118,18 +118,21 @@ void Tetrimino::right() {
 
 void Tetrimino::advance(int phase) {
     if(!phase) return;
-    setPos(mapToParent(0,speed));
-    topLeftCorner.ry() += speed/25;
+    qDebug() << "X of tLC: " << topLeftCorner.rx() << "Y of tLC: " << topLeftCorner.ry();
 
     if (field->doCollision()) {
        field->fill(color_);
        speed = 0;
        scene_->removeItem(this);
-       field->printFieldTmp();
+       //field->printFieldTmp();
+       if (field->getState() == gameStates::GAMEOVER) return;
        field->currentTetrimino = field->generateNext(scene_);
        scene_->addItem(field->currentTetrimino);
 
     }
+
+    setPos(mapToParent(0,speed));
+    topLeftCorner.ry() += speed/25;
 }
 
 void Tetrimino::turn90back() {
@@ -145,16 +148,16 @@ void Tetrimino::turn90back() {
     max_col = maxParam(1);
 
     /*topLeftCorner.ry() = ;
-    topLeftCorner.rx() = ;
+    topLeftCorner.rx() = ;*/
 
-    if (!isVertical) { // Wait for some seconds before turn!
-        topLeftCorner.ry() -= 1;
-        topLeftCorner.rx() += 1;
+    /*if (!isVertical) { // Wait for some seconds before turn!
         isVertical = 1;
+        topLeftCorner.ry() -= (1 + speed/25);
+        //topLeftCorner.rx() += 1;
     } else {
-        topLeftCorner.ry() += 1;
-        topLeftCorner.rx() -= 1;
         isVertical = 0;
+        topLeftCorner.ry() += (1 + speed/25);
+        //topLeftCorner.rx() -= 1;
     }*/
 
     setPos(mapToParent(0, speed));

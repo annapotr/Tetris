@@ -41,7 +41,7 @@ Game::Game(Field *f, QWidget *parent) :
 
         timer = new QTimer(this);
         connect(timer, SIGNAL(timeout()), scene, SLOT(advance()));
-        timer->start(120);
+        timer->start(25);
     //}
 
 }
@@ -55,7 +55,7 @@ void Game::keyPressEvent(QKeyEvent *event) {
     //qDebug() << "In KPE\n" << "f->currentTetrimino: " << f->currentTetrimino << "currT->field->currentTetrimino: " << currT->field->currentTetrimino << ", currT: " << currT << ", currT->field: " << currT->field << '\n';
 
     if (event->key() == Qt::Key_U) {
-        qDebug() << "Up!\n";
+        //qDebug() << "Up!\n";
         f->currentTetrimino->turn90up();
     }
 
