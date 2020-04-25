@@ -15,9 +15,11 @@ void Fallen::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QW
     for (size_t i = 0; i < field->getFIELD_Ht(); i++) {
         for (size_t j = 0; j < field->getFIELD_W(); j++) {
             QRectF rec = QRectF(25 * j, 25 * i+10, 25, 25);
-            if (field->get(i,j).isValid()) {
-                QBrush Brush(field->get(i,j));
-                painter->fillRect(rec,Brush);
+            if (!field->get(i,j).isNull()) {
+                //QPixmap pix(":/red_block.png");
+                QPixmap pix(field->get(i,j));
+                //QBrush Brush(field->get(i,j));
+                painter->fillRect(rec,pix);
                 painter->drawRect(rec);
             }
         }

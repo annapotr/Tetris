@@ -54,7 +54,8 @@ private:
     static const int PADDING = 5;
 
     tetriminoes type_;
-    QColor color_;
+    QPixmap pix_;
+    //QColor color_;
     Field *field;
     QGraphicsScene *scene_;
 

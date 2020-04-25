@@ -6,6 +6,10 @@
 #include <QDebug>
 #include <QPainter>
 #include <QAbstractScrollArea>
+#include <random>
+
+#define SEED 12345
+std::mt19937 getRand(SEED);
 
 using std::move;
 using std::size_t;
@@ -15,20 +19,22 @@ std::vector<int> points = {40, 100, 300, 1200};
 Field::Field(int level) :
     gameState(gameStates::INPROCESS), curLevel(level), score(0), highestNotEmpty(FIELD_Ht - 1) {
     for (size_t i = 0; i < FIELD_Ht; i++) {
-        _field[i].fill(QColor());
+        _field[i].fill(QPixmap());
     }
-    _field[FIELD_Ht].fill(Qt::black);
+    QPixmap pix(":/red_block.png");
+    _field[FIELD_Ht].fill(pix);
 }
 
 void Field::printFieldTmp() const {
     for (size_t i = 0; i < FIELD_Ht; i++) {
         for (size_t j = 0; j < FIELD_W; j++) {
-            std::cout << _field[i][j].isValid() << ' ';
+            std::cout << !(_field[i][j].isNull()) << ' ';
         }
-        std::cout << '\n';
+        std::cout << '\n' ;
     }
     std::cout << '\n';
 }
+
 
 void Field::calculateScore(int cnt) {
     if (cnt > 4) cnt = 4;
@@ -40,15 +46,15 @@ void Field::checkRow() {
     for (size_t i = highestNotEmpty; i < FIELD_Ht; i++) {
         bool row = true;
         for (auto &cell: _field[i]) {
-            row &= cell.isValid();
+            row &= !(cell.isNull());
         }
         if (row) {
             cnt++;
-            _field[i].fill(QColor());
+            _field[i].fill(QPixmap());
             for (int j = i - 1; j >= highestNotEmpty; j--) {
                 _field[j + 1] = move(_field[j]);
             }
-            _field[highestNotEmpty].fill(QColor());
+            _field[highestNotEmpty].fill(QPixmap());
             highestNotEmpty++;
             calculateScore(cnt);
         }
@@ -69,20 +75,33 @@ bool Field::doCollision() {
    return hasFilled;
 }
 
-void Field::fill(QColor color) {
+bool Field::isEnd(){
+    bool end = false;
+    for(auto &cell: _field[0]){
+        end |= !(cell.isNull());
+    }
+    return end;
+}
+
+void Field::fill(QPixmap pix) {
     for (auto &item: currentTetrimino->_blocks) {
         int row = currentTetrimino->topLeftCorner.ry() + item.first;
         int col = START_POS + item.second;
-        setCell({row, col}, color);
+        setCell({row, col}, pix);
         if (highestNotEmpty > row) highestNotEmpty = row;
     }
 }
 
 Tetrimino *Field::generateNext(QGraphicsScene *scene) {
-    int x = (rand() % 7);
-    Tetrimino *F = new Tetrimino(tetriminoesInit[x], static_cast<tetriminoes>(x), this, scene);
+    nextFigure = ((getRand() + 54321) % 7); //для отображения следующей фигурки
+    Tetrimino *F = new Tetrimino(tetriminoesInit[nowFigure], static_cast<tetriminoes>(nowFigure), this, scene);
     F->setCoordinates(START_POS); //перенести куда-нибудь!
+    nowFigure = nextFigure;
     return F;
+}
+
+int Field::getNextFigure(){
+    return nextFigure;
 }
 
 Fallen *Field::generateFallen(QGraphicsScene *scene) {
@@ -91,7 +110,7 @@ Fallen *Field::generateFallen(QGraphicsScene *scene) {
 }
 
 bool Field::getCell(std::pair<int, int> coords) {
-    return _field[coords.first][coords.second].isValid();
+    return !(_field[coords.first][coords.second].isNull());
 }
 
 gameStates Field::getState() {
@@ -100,15 +119,15 @@ gameStates Field::getState() {
     return gameState;
 }
 
-void Field::setCell(std::pair<int, int> coords, QColor color) {
-    _field[coords.first][coords.second] = QColor(color);
+void Field::setCell(std::pair<int, int> coords, QPixmap pix) {
+    _field[coords.first][coords.second] = QPixmap(pix);
 }
 
 int Field::getScore() {
     return score;
 }
 
-QColor Field::get(int x, int y) {
+QPixmap Field::get(int x, int y) {
     return _field[x][y];
 }
 
@@ -119,4 +138,5 @@ std::size_t Field::getFIELD_Ht(){
 std::size_t Field::getFIELD_W(){
     return FIELD_W;
 }
+
 

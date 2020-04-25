@@ -32,6 +32,7 @@ Game::Game(Field *f, QWidget *parent) :
 
     //while(f->getState() == gameStates::INPROCESS) {
         //timer->stop();
+
         f->currentTetrimino = f->generateNext(scene);
         f->currentFallen = f->generateFallen(scene);
 
@@ -42,9 +43,28 @@ Game::Game(Field *f, QWidget *parent) :
         timer = new QTimer(this);
         connect(timer, SIGNAL(timeout()), scene, SLOT(advance()));
         timer->start(25);
+
     //}
+    ui->label_score_numbers->setNum(f->getScore());
+    ui->label_score_numbers->setAlignment(Qt::AlignCenter);
+    /*switch(f->getNextFigure()) {
+        case(0): ui->label_figure->setPixmap();
+        case(1): ui->label_figure->setPixmap();
+        case(2): ui->label_figure->setPixmap();
+        case(3): ui->label_figure->setPixmap();
+        case(4): ui->label_figure->setPixmap();
+        case(5): ui->label_figure->setPixmap();
+        case(6): ui->label_figure->setPixmap();
+    }*/
+    QPixmap pix(":/red_block.png");
+    ui->label_figure->setPixmap(pix);
 
 }
+/*
+void Game::doEnd(){
+    timer->stop();
+}*/
+
 
 Game::~Game() {
     delete ui;

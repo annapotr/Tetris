@@ -18,11 +18,14 @@ public:
     explicit Game(Field *f, QWidget *parent = nullptr);
     ~Game();
 
+    //static void doEnd();
+
     Ui::Game *ui;
     QGraphicsPixmapItem *item;
     QGraphicsScene *scene;
     QTimer *timer;
     Field *f;
+
 
 protected:
     void keyPressEvent(QKeyEvent *event);
