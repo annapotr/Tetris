@@ -78,7 +78,7 @@ Tetrimino::Tetrimino(std::vector<int> blocks, tetriminoes type, Field *f, QGraph
 
 void Tetrimino::setCoordinates(int start) {
     topLeftCorner.rx() += start;
-    topLeftCorner.ry() += PADDING/BLOCK_PX;
+    //topLeftCorner.ry() += PADDING/BLOCK_PX;//wtf!?
     setPos(topLeftCorner.rx() * BLOCK_PX, PADDING * 1.5);
     boundingRectangale.setRect(0, 0, BLOCK_PX * (max_col + 1), BLOCK_PX * (max_row + 1));
 
@@ -130,20 +130,23 @@ int Tetrimino::minParam(bool param) {
 
 void Tetrimino::left() {
     topLeftCorner.rx()--;
+    qDebug() << "BR coords (x, than y): " << boundingRectangale.x() - 1 << ' ' << boundingRectangale.y();
+    boundingRectangale.setRect(-1, 0, BLOCK_PX * (max_col + 1), BLOCK_PX * (max_row + 1));
 }
+
 void Tetrimino::right() {
     topLeftCorner.rx()++;
 }
 
 void Tetrimino::advance(int phase) {
     if(!phase) return;
-    qDebug() << "X of tLC: " << topLeftCorner.rx() << "Y of tLC: " << topLeftCorner.ry();
+    //qDebug() << "X of tLC: " << topLeftCorner.rx() << "Y of tLC: " << topLeftCorner.ry();
 
     if (field->doCollision()) {
        field->fill(pix_);
        speed = 0;
        scene_->removeItem(this);
-       //field->printFieldTmp();
+       field->printFieldTmp();
        if (field->getState() == gameStates::GAMEOVER) return;
        field->currentTetrimino = field->generateNext(scene_);
        scene_->addItem(field->currentTetrimino);
@@ -160,9 +163,7 @@ void Tetrimino::advance(int phase) {
 }
 
 void Tetrimino::turn90back() {
-
-    //qDebug() << "max_y of 'L' is " << max_y << '\n';
-    //qDebug() << "max_x of 'L' is " << max_x << '\n';
+    //забанить повороты после коллизии
 
     for (std::size_t i = 0; i < _blocks.size(); i++) {
         _blocks[i] = {max_col - _blocks[i].second, _blocks[i].first};
@@ -171,27 +172,11 @@ void Tetrimino::turn90back() {
     max_row = maxParam(0);
     max_col = maxParam(1);
 
-    /*topLeftCorner.ry() = ;
-    topLeftCorner.rx() = ;*/
-
-    /*if (!isVertical) { // Wait for some seconds before turn!
-        isVertical = 1;
-        topLeftCorner.ry() -= (1 + speed/25);
-        //topLeftCorner.rx() += 1;
-    } else {
-        isVertical = 0;
-        topLeftCorner.ry() += (1 + speed/25);
-        //topLeftCorner.rx() -= 1;
-    }*/
-
-    setPos(mapToParent(0, speed));
     boundingRectangale.setRect(0, 0, BLOCK_PX * (max_col + 1), BLOCK_PX * (max_row + 1));
 }
 
 void Tetrimino::turn90up() {
-
-    //qDebug() << "max_y of 'L' is " << max_row << '\n';
-    //qDebug() << "max_x of 'L' is " << max_col << '\n';
+    //забанить повороты после коллизии
 
     for (std::size_t i = 0; i < _blocks.size(); i++) {
         _blocks[i] = {_blocks[i].second, max_row - _blocks[i].first};
@@ -200,6 +185,5 @@ void Tetrimino::turn90up() {
     max_row = maxParam(0);
     max_col = maxParam(1);
 
-    setPos(mapToParent(0, speed));
     boundingRectangale.setRect(0, 0, BLOCK_PX * (max_col + 1), BLOCK_PX * (max_row + 1));
 }

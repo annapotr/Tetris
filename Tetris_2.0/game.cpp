@@ -86,7 +86,7 @@ void Game::keyPressEvent(QKeyEvent *event) {
 
     if (event->key() == Qt::Key_L) {
         qDebug() << "Left!\n";
-        //f->currentTetrimino->left();
+        f->currentTetrimino->left();
     }
 
     if (event->key() == Qt::Key_R) {

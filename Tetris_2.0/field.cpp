@@ -8,7 +8,7 @@
 #include <QAbstractScrollArea>
 #include <random>
 
-#define SEED 12345
+unsigned int SEED =  std::chrono::system_clock::now().time_since_epoch().count();
 std::mt19937 getRand(SEED);
 
 using std::move;
@@ -67,9 +67,9 @@ bool Field::doCollision() {
        hasFilled |= getCell({(int)(currentTetrimino->topLeftCorner.ry() + item.first + 1),
                              (int)(currentTetrimino->topLeftCorner.rx() + item.second)});
 
-       if (hasFilled) {
+       /*if (hasFilled) {
           qDebug() << "collision Y: " << (currentTetrimino->topLeftCorner.ry()+item.first + 1) << " collision X: " << (currentTetrimino->topLeftCorner.rx()+item.second);
-       }
+       }*/
 
    }
    return hasFilled;
@@ -86,17 +86,21 @@ bool Field::isEnd(){
 void Field::fill(QPixmap pix) {
     for (auto &item: currentTetrimino->_blocks) {
         int row = currentTetrimino->topLeftCorner.ry() + item.first;
-        int col = START_POS + item.second;
+        int col = currentTetrimino->topLeftCorner.rx() + item.second;
+        //int col = START_POS + item.second;
         setCell({row, col}, pix);
         if (highestNotEmpty > row) highestNotEmpty = row;
     }
 }
 
+//should divide generateNext into 2 functions (random type & figure + field)
+
 Tetrimino *Field::generateNext(QGraphicsScene *scene) {
-    nextFigure = ((getRand() + 54321) % 7); //для отображения следующей фигурки
+    //if (getState() == gameStates::GAMEOVER) return;
+    nextFigure = ((getRand() + 54321) % 7); //для отображения следующей фигурки, strange constant
     Tetrimino *F = new Tetrimino(tetriminoesInit[nowFigure], static_cast<tetriminoes>(nowFigure), this, scene);
     F->setCoordinates(START_POS); //перенести куда-нибудь!
-    nowFigure = nextFigure;
+    nowFigure = nextFigure;//nextFigure нигде больше не хранится => local var?, For what???? Think about it! Is both necessary?
     return F;
 }
 
