@@ -13,6 +13,9 @@
 using std::vector;
 using std::size_t;
 
+int BLOCK_PX = 25;
+int PADDING = 5;
+
 vector<vector<int>> tetriminoesInit = {
     {
         {0, 1, 2, 3},
@@ -78,11 +81,8 @@ Tetrimino::Tetrimino(std::vector<int> blocks, tetriminoes type, Field *f, QGraph
 
 void Tetrimino::setCoordinates(int start) {
     topLeftCorner.rx() += start;
-    topLeftCorner.ry() += PADDING/BLOCK_PX;
     setPos(topLeftCorner.rx() * BLOCK_PX, PADDING * 1.5);
     boundingRectangale.setRect(0, 0, BLOCK_PX * (max_col + 1), BLOCK_PX * (max_row + 1));
-
-    //qDebug() << "top Left Corner's X: " << topLeftCorner.rx() << " Y: " << topLeftCorner.ry() << '\n';
 }
 
 QRectF Tetrimino::boundingRect() const {
@@ -110,7 +110,6 @@ int Tetrimino::maxParam(bool param) {
             maxP = std::max(maxP, _blocks[i].second);//Cols
         }
     }
-
     return maxP;
 }
 
@@ -124,7 +123,6 @@ int Tetrimino::minParam(bool param) {
             minP = std::max(minP, _blocks[i].second);//Cols
         }
     }
-
     return minP;
 }
 
@@ -148,13 +146,6 @@ void Tetrimino::advance(int phase) {
        field->currentTetrimino = field->generateNext(scene_);
        scene_->addItem(field->currentTetrimino);
     }
-    if(field->isEnd()) {
-        //игра закончилась
-        //окно вы проиграли
-        std::cout << "Game end" << std::endl;
-        //Game::doEnd();
-    }
-
     setPos(mapToParent(0,speed));
     topLeftCorner.ry() += speed/25;
 }

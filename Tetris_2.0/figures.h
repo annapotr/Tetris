@@ -12,7 +12,11 @@
 
 class Field;
 
-const std::size_t NUM_OF_BLOCKS = 4;
+extern int BLOCK_PX;
+extern int PADDING;
+
+constexpr std::size_t NUM_OF_BLOCKS = 4;
+
 extern std::vector<std::vector<int>> tetriminoesInit;
 enum class tetriminoes: int {
     I = 0,
@@ -50,8 +54,6 @@ protected:
 private:
     static const std::size_t BLOCK_H = 2;
     static const std::size_t BLOCK_W = 4;
-    static const int BLOCK_PX = 25;
-    static const int PADDING = 5;
 
     tetriminoes type_;
     QPixmap pix_;
