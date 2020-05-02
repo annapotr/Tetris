@@ -23,7 +23,7 @@ Game::Game(Field *f, QWidget *parent) :
 
     ui->graphicsView->setScene(scene);
     ui->graphicsView->setRenderHint(QPainter::Antialiasing);
-    scene->setSceneRect(0,0,260,520);
+    scene->setSceneRect(BLOCK_PX, BLOCK_PX, 260, 520);
 
     QBrush br(QImage(":\background.png"));
     QPalette plt = this->palette();
@@ -42,7 +42,7 @@ Game::Game(Field *f, QWidget *parent) :
 
         timer = new QTimer(this);
         connect(timer, SIGNAL(timeout()), scene, SLOT(advance()));
-        timer->start(25);
+        timer->start(10);
 
     //}
     ui->label_score_numbers->setNum(f->getScore());

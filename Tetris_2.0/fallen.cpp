@@ -8,7 +8,7 @@ Fallen::Fallen(Field *f, QGraphicsScene *scene)
 }
 
 QRectF Fallen::boundingRect() const {
-    return QRectF(0, 25, BLOCK_PX * field->getFIELD_Ht(), BLOCK_PX * field->getFIELD_W());
+    return QRectF(BLOCK_PX, BLOCK_PX, BLOCK_PX * field->getFIELD_Ht(), BLOCK_PX * field->getFIELD_W());
 }
 
 void Fallen::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
