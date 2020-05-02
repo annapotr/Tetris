@@ -23,6 +23,8 @@ Field::Field(int level) :
     }
     QPixmap pix(":/red_block.png");
     _field[FIELD_Ht + 1].fill(pix);
+
+    generateNextId();
 }
 
 void Field::printFieldTmp() const {
@@ -79,25 +81,20 @@ void Field::fill(QPixmap pix) {
     for (auto &item: currentTetrimino->_blocks) {
         int row = currentTetrimino->topLeftCorner.ry() + item.first;
         int col = currentTetrimino->topLeftCorner.rx() + item.second;
-        //int col = START_POS + item.second;
         setCell({row, col}, pix);
         if (highestNotEmpty > row) highestNotEmpty = row;
     }
 }
 
-//should divide generateNext into 2 functions (random type & figure + field)
-
-Tetrimino *Field::generateNext(QGraphicsScene *scene) {
-    //if (getState() == gameStates::GAMEOVER) return;
-    nextFigure = getRand() % tetriminoesInit.size(); //для отображения следующей фигурки, strange constant
-    Tetrimino *F = new Tetrimino(tetriminoesInit[nowFigure], static_cast<tetriminoes>(nowFigure), this, scene);
-    F->setCoordinates(START_POS); //перенести куда-нибудь!
-    nowFigure = nextFigure;//nextFigure нигде больше не хранится => local var?, For what???? Think about it! Is both necessary?
-    return F;
+void Field::generateNextId() {
+    nextFigure = getRand() % tetriminoesInit.size();
 }
 
-int Field::getNextFigure(){
-    return nextFigure;
+Tetrimino *Field::generateNext(QGraphicsScene *scene) {
+    Tetrimino *F = new Tetrimino(tetriminoesInit[nextFigure], static_cast<tetriminoes>(nextFigure), this, scene);
+    F->setCoordinates(START_POS);
+    generateNextId();
+    return F;
 }
 
 Fallen *Field::generateFallen(QGraphicsScene *scene) {
