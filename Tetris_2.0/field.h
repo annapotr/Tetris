@@ -62,7 +62,7 @@ private:
     int curLevel, score;
     int highestNotEmpty;
     int nowFigure = 0, nextFigure;
-    std::array<std::array<QPixmap, FIELD_W>, FIELD_Ht + 1> _field;
+    std::array<std::array<QPixmap, FIELD_W + 2>, FIELD_Ht + 2> _field;
 };
 
 #endif // FIELD_H
