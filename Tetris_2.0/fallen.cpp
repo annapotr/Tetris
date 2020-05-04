@@ -13,7 +13,7 @@ QRectF Fallen::boundingRect() const {
 
 void Fallen::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
     for (size_t i = 0; i <= field->getFIELD_Ht(); i++) {
-        for (size_t j = 0; j < field->getFIELD_W(); j++) {
+        for (size_t j = 0; j <= field->getFIELD_W(); j++) {
             QRectF rec = QRectF(BLOCK_PX * j, BLOCK_PX * i + 10, BLOCK_PX, BLOCK_PX);
             if (!field->get(i,j).isNull()) {
                 //QPixmap pix(":/red_block.png");

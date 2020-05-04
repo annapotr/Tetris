@@ -127,13 +127,19 @@ int Tetrimino::minParam(bool param) {
 }
 
 void Tetrimino::left() {
-    topLeftCorner.rx()--;
-    qDebug() << "BR coords (x, than y): " << boundingRectangale.x() - 1 << ' ' << boundingRectangale.y();
-    boundingRectangale.setRect(-1, 0, BLOCK_PX * (max_col + 1), BLOCK_PX * (max_row + 1));
+    if (topLeftCorner.rx() > 1){
+        topLeftCorner.rx()--;
+        setPos(mapToScene(-BLOCK_PX, 0));
+    }
+    return;
 }
 
 void Tetrimino::right() {
-    topLeftCorner.rx()++;
+    if (topLeftCorner.rx() + max_col < field->getFIELD_W()){
+        topLeftCorner.rx()++;
+        setPos(mapToScene(BLOCK_PX, 0));
+    }
+    return;
 }
 
 void Tetrimino::advance(int phase) {
