@@ -39,7 +39,7 @@ public:
         Game->setStyleSheet(QString::fromUtf8("background-image: url(:/background1.png);"));
         graphicsView = new QGraphicsView(Game);
         graphicsView->setObjectName(QString::fromUtf8("graphicsView"));
-        graphicsView->setGeometry(QRect(20, 10, 265, 525));
+        graphicsView->setGeometry(QRect(20, 14, 261, 521));
         graphicsView->setStyleSheet(QString::fromUtf8("background-image: url(:/background.png);\n"
 "border: none;"));
         Close_game = new QPushButton(Game);
@@ -66,11 +66,12 @@ public:
         label->setGeometry(QRect(320, 80, 170, 50));
         label->setMinimumSize(QSize(170, 50));
         label->setMaximumSize(QSize(170, 50));
+        label->setStyleSheet(QString::fromUtf8("background-image: url(:/level.png);"));
         label_figure = new QLabel(Game);
         label_figure->setObjectName(QString::fromUtf8("label_figure"));
-        label_figure->setGeometry(QRect(320, 190, 170, 100));
-        label_figure->setMinimumSize(QSize(170, 100));
-        label_figure->setMaximumSize(QSize(179, 100));
+        label_figure->setGeometry(QRect(350, 200, 150, 100));
+        label_figure->setMinimumSize(QSize(150, 100));
+        label_figure->setMaximumSize(QSize(150, 100));
         label_score_numbers = new QLabel(Game);
         label_score_numbers->setObjectName(QString::fromUtf8("label_score_numbers"));
         label_score_numbers->setGeometry(QRect(330, 400, 151, 41));
@@ -89,8 +90,8 @@ public:
         Close_game->setText(QString());
         label_score->setText(QString());
         pushButton->setText(QString());
-        label->setText(QCoreApplication::translate("Game", "Level", nullptr));
-        label_figure->setText(QCoreApplication::translate("Game", "\320\236\321\202\320\276\320\261\321\200\320\260\320\266\320\265\320\275\320\270\320\265 \321\204\320\270\320\263\321\203\321\200\320\272\320\270", nullptr));
+        label->setText(QString());
+        label_figure->setText(QString());
         label_score_numbers->setText(QString());
     } // retranslateUi
 

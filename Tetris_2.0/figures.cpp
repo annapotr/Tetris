@@ -9,6 +9,7 @@
 #include <iostream>
 #include <QPainter>
 #include <iostream>
+#include "gameover.h"
 
 using std::vector;
 using std::size_t;
@@ -31,7 +32,7 @@ vector<vector<int>> tetriminoesInit = {
 QPixmap make_pix(tetriminoes t) {
     switch(t) {
         case(tetriminoes::I):{
-            QPixmap pix(":/red1.png");
+            QPixmap pix(":/reddd.png");
             return pix;
         }
         case(tetriminoes::J):{
@@ -39,23 +40,23 @@ QPixmap make_pix(tetriminoes t) {
             return pix;
         }
         case(tetriminoes::L):{
-            QPixmap pix(":/yellow.png");
+            QPixmap pix(":/yellow_block.png");
             return pix;
         }
         case(tetriminoes::O):{
-            QPixmap pix(":/green.png");
+            QPixmap pix(":/green_block.png");
             return pix;
         }
         case(tetriminoes::S): {
-            QPixmap pix(":/blue.png");
+            QPixmap pix(":/blue_blue_block.png");
             return pix;
         }
         case(tetriminoes::T): {
-            QPixmap pix(":/blue1.png");
+            QPixmap pix(":/blue_block.png");
             return pix;
         }
         case(tetriminoes::Z): {
-            QPixmap pix(":/purple.png");
+            QPixmap pix(":/pink_block.png");
             return pix;
         }
     }
@@ -145,7 +146,13 @@ void Tetrimino::advance(int phase) {
        speed = 0;
        scene_->removeItem(this);
        field->printFieldTmp();
-       if (field->getState() == gameStates::GAMEOVER) return;
+       if (field->getState() == gameStates::GAMEOVER) {
+           hide();
+           GameOver gameover;
+           gameover.setModal(true);
+           gameover.exec();
+           return;
+       }
        field->currentTetrimino = field->generateNext(scene_);
        scene_->addItem(field->currentTetrimino);
     }

@@ -98,6 +98,7 @@ void Field::fill(QPixmap pix) {
 Tetrimino *Field::generateNext(QGraphicsScene *scene) {
     //if (getState() == gameStates::GAMEOVER) return;
     nextFigure = ((getRand() + 54321) % 7); //для отображения следующей фигурки, strange constant
+    changeImage(nextFigure);
     Tetrimino *F = new Tetrimino(tetriminoesInit[nowFigure], static_cast<tetriminoes>(nowFigure), this, scene);
     F->setCoordinates(START_POS); //перенести куда-нибудь!
     nowFigure = nextFigure;//nextFigure нигде больше не хранится => local var?, For what???? Think about it! Is both necessary?
@@ -141,6 +142,11 @@ std::size_t Field::getFIELD_Ht(){
 
 std::size_t Field::getFIELD_W(){
     return FIELD_W;
+}
+
+void Field::changeImage(int nextFigure) {
+    QPixmap pix(ImgSrc[nextFigure].c_str());
+    _lf->setPixmap(pix);
 }
 
 

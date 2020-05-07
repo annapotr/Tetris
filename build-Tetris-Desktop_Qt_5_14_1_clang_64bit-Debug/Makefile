@@ -56,17 +56,21 @@ SOURCES       = ../Tetris_2.0/fallen.cpp \
 		../Tetris_2.0/field.cpp \
 		../Tetris_2.0/figures.cpp \
 		../Tetris_2.0/game.cpp \
+		../Tetris_2.0/gameover.cpp \
 		../Tetris_2.0/main.cpp \
 		../Tetris_2.0/mainwindow.cpp moc_game.cpp \
+		moc_gameover.cpp \
 		moc_mainwindow.cpp
 OBJECTS       = qrc_imagenes.o \
 		fallen.o \
 		field.o \
 		figures.o \
 		game.o \
+		gameover.o \
 		main.o \
 		mainwindow.o \
 		moc_game.o \
+		moc_gameover.o \
 		moc_mainwindow.o
 DIST          = ../../../Desktop/Tetris/5.14.1/clang_64/mkspecs/features/spec_pre.prf \
 		../../../Desktop/Tetris/5.14.1/clang_64/mkspecs/qdevice.pri \
@@ -249,10 +253,12 @@ DIST          = ../../../Desktop/Tetris/5.14.1/clang_64/mkspecs/features/spec_pr
 		../Tetris_2.0/field.h \
 		../Tetris_2.0/figures.h \
 		../Tetris_2.0/game.h \
+		../Tetris_2.0/gameover.h \
 		../Tetris_2.0/mainwindow.h ../Tetris_2.0/fallen.cpp \
 		../Tetris_2.0/field.cpp \
 		../Tetris_2.0/figures.cpp \
 		../Tetris_2.0/game.cpp \
+		../Tetris_2.0/gameover.cpp \
 		../Tetris_2.0/main.cpp \
 		../Tetris_2.0/mainwindow.cpp
 QMAKE_TARGET  = Tetris
@@ -273,7 +279,7 @@ include /Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/mkspecs/features/m
 first: all
 ####### Build rules
 
-Tetris.app/Contents/MacOS/Tetris: ui_game.h ui_mainwindow.h $(OBJECTS)  
+Tetris.app/Contents/MacOS/Tetris: ui_game.h ui_gameover.h ui_mainwindow.h $(OBJECTS)  
 	@test -d Tetris.app/Contents/MacOS/ || mkdir -p Tetris.app/Contents/MacOS/
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
@@ -673,9 +679,9 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../Tetris_2.0/imagenes.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../Desktop/Tetris/5.14.1/clang_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../Tetris_2.0/fallen.h ../Tetris_2.0/field.h ../Tetris_2.0/figures.h ../Tetris_2.0/game.h ../Tetris_2.0/mainwindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../Tetris_2.0/fallen.cpp ../Tetris_2.0/field.cpp ../Tetris_2.0/figures.cpp ../Tetris_2.0/game.cpp ../Tetris_2.0/main.cpp ../Tetris_2.0/mainwindow.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../Tetris_2.0/game.ui ../Tetris_2.0/mainwindow.ui $(DISTDIR)/
+	$(COPY_FILE) --parents ../Tetris_2.0/fallen.h ../Tetris_2.0/field.h ../Tetris_2.0/figures.h ../Tetris_2.0/game.h ../Tetris_2.0/gameover.h ../Tetris_2.0/mainwindow.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../Tetris_2.0/fallen.cpp ../Tetris_2.0/field.cpp ../Tetris_2.0/figures.cpp ../Tetris_2.0/game.cpp ../Tetris_2.0/gameover.cpp ../Tetris_2.0/main.cpp ../Tetris_2.0/mainwindow.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../Tetris_2.0/game.ui ../Tetris_2.0/gameover.ui ../Tetris_2.0/mainwindow.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -707,22 +713,46 @@ compiler_rcc_clean:
 	-$(DEL_FILE) qrc_imagenes.cpp qrc_imagenes.tmp.o
 qrc_imagenes.o: ../Tetris_2.0/imagenes.qrc \
 		../../../Desktop/Tetris/5.14.1/clang_64/bin/rcc \
-		../Tetris_2.0/close.png \
-		../Tetris_2.0/5.pdf \
-		../Tetris_2.0/red1.png \
 		../Tetris_2.0/green.png \
-		../Tetris_2.0/menu.png \
-		../Tetris_2.0/background.png \
-		../Tetris_2.0/background1.png \
-		../Tetris_2.0/blue.png \
-		../Tetris_2.0/blue1.png \
+		../Tetris_2.0/greenBlocks.png \
+		../Tetris_2.0/redBlocks.png \
 		../Tetris_2.0/yellow.png \
+		../Tetris_2.0/dackk.png \
+		../Tetris_2.0/blue_blue_block.png \
+		../Tetris_2.0/pink_block.png \
 		../Tetris_2.0/high_score.png \
-		../Tetris_2.0/purple.png \
+		../Tetris_2.0/orangeBlocks.png \
+		../Tetris_2.0/redBlockss.png \
+		../Tetris_2.0/blue_block.png \
+		../Tetris_2.0/5.pdf \
+		../Tetris_2.0/background1.png \
+		../Tetris_2.0/yellow_block.png \
+		../Tetris_2.0/restart1.png \
+		../Tetris_2.0/gameooover.png \
+		../Tetris_2.0/reddd.png \
+		../Tetris_2.0/menu.png \
+		../Tetris_2.0/yellowBlocks.png \
+		../Tetris_2.0/darck.png \
+		../Tetris_2.0/blueBlockss.png \
+		../Tetris_2.0/blue1.png \
 		../Tetris_2.0/score.png \
+		../Tetris_2.0/close_gameover.png \
+		../Tetris_2.0/background.png \
+		../Tetris_2.0/red1.png \
 		../Tetris_2.0/orange.png \
-		../Tetris_2.0/red_block.png \
 		../Tetris_2.0/pause.png \
+		../Tetris_2.0/pinkBlockss.png \
+		../Tetris_2.0/BlueBlocks.png \
+		../Tetris_2.0/level.png \
+		../Tetris_2.0/pinkBlocks.png \
+		../Tetris_2.0/purple.png \
+		../Tetris_2.0/close.png \
+		../Tetris_2.0/green_block.png \
+		../Tetris_2.0/red_block.png \
+		../Tetris_2.0/yellowBlockss.png \
+		../Tetris_2.0/blue.png \
+		../Tetris_2.0/gggameover.png \
+		../Tetris_2.0/blueblueBlocks.png \
 		../Tetris_2.0/IMG_7403.jpg
 	/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/bin/rcc -name imagenes ../Tetris_2.0/imagenes.qrc -pass 1 -o ./qrc_imagenes.cpp 
 	 /Library/Developer/CommandLineTools/usr/bin/clang++ $(CXXFLAGS) -c ./qrc_imagenes.cpp -o ./qrc_imagenes.tmp.o 
@@ -734,9 +764,9 @@ compiler_moc_predefs_clean:
 moc_predefs.h: ../../../Desktop/Tetris/5.14.1/clang_64/mkspecs/features/data/dummy.cpp
 	/Library/Developer/CommandLineTools/usr/bin/clang++ -pipe -stdlib=libc++ -g -std=gnu++11 $(EXPORT_ARCH_ARGS) -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk -mmacosx-version-min=10.13 -Wall -Wextra -dM -E -o moc_predefs.h ../../../Desktop/Tetris/5.14.1/clang_64/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_game.cpp moc_mainwindow.cpp
+compiler_moc_header_make_all: moc_game.cpp moc_gameover.cpp moc_mainwindow.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_game.cpp moc_mainwindow.cpp
+	-$(DEL_FILE) moc_game.cpp moc_gameover.cpp moc_mainwindow.cpp
 moc_game.cpp: ../Tetris_2.0/game.h \
 		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/QDialog \
 		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
@@ -761,9 +791,19 @@ moc_game.cpp: ../Tetris_2.0/game.h \
 		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtCore.framework/Headers/QObject \
 		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtCore.framework/Headers/qobject.h \
 		../Tetris_2.0/fallen.h \
+		../Tetris_2.0/game.h \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/QLabel \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/qlabel.h \
 		moc_predefs.h \
 		../../../Desktop/Tetris/5.14.1/clang_64/bin/moc
 	/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/bin/moc $(DEFINES) --include /Users/annapotryasaeva/CLionProjects/Tetris/build-Tetris-Desktop_Qt_5_14_1_clang_64bit-Debug/moc_predefs.h -I/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/mkspecs/macx-clang -I/Users/annapotryasaeva/CLionProjects/Tetris/Tetris_2.0 -I/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers -I/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/lib/QtGui.framework/Headers -I/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/lib/QtCore.framework/Headers -I. -I/Library/Developer/CommandLineTools/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/10.0.0/include -I/Library/Developer/CommandLineTools/usr/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include -F/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/lib ../Tetris_2.0/game.h -o moc_game.cpp
+
+moc_gameover.cpp: ../Tetris_2.0/gameover.h \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/QDialog \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
+		moc_predefs.h \
+		../../../Desktop/Tetris/5.14.1/clang_64/bin/moc
+	/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/bin/moc $(DEFINES) --include /Users/annapotryasaeva/CLionProjects/Tetris/build-Tetris-Desktop_Qt_5_14_1_clang_64bit-Debug/moc_predefs.h -I/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/mkspecs/macx-clang -I/Users/annapotryasaeva/CLionProjects/Tetris/Tetris_2.0 -I/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers -I/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/lib/QtGui.framework/Headers -I/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/lib/QtCore.framework/Headers -I. -I/Library/Developer/CommandLineTools/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/10.0.0/include -I/Library/Developer/CommandLineTools/usr/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include -F/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/lib ../Tetris_2.0/gameover.h -o moc_gameover.cpp
 
 moc_mainwindow.cpp: ../Tetris_2.0/mainwindow.h \
 		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
@@ -776,12 +816,16 @@ compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_game.h ui_mainwindow.h
+compiler_uic_make_all: ui_game.h ui_gameover.h ui_mainwindow.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_game.h ui_mainwindow.h
+	-$(DEL_FILE) ui_game.h ui_gameover.h ui_mainwindow.h
 ui_game.h: ../Tetris_2.0/game.ui \
 		../../../Desktop/Tetris/5.14.1/clang_64/bin/uic
 	/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/bin/uic ../Tetris_2.0/game.ui -o ui_game.h
+
+ui_gameover.h: ../Tetris_2.0/gameover.ui \
+		../../../Desktop/Tetris/5.14.1/clang_64/bin/uic
+	/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/bin/uic ../Tetris_2.0/gameover.ui -o ui_gameover.h
 
 ui_mainwindow.h: ../Tetris_2.0/mainwindow.ui \
 		../../../Desktop/Tetris/5.14.1/clang_64/bin/uic
@@ -816,6 +860,15 @@ fallen.o: ../Tetris_2.0/fallen.cpp ../Tetris_2.0/fallen.h \
 		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtCore.framework/Headers/qobject.h \
 		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/QWidget \
 		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		../Tetris_2.0/game.h \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/QDialog \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtGui.framework/Headers/QKeyEvent \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtGui.framework/Headers/qevent.h \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/QGraphicsView \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/qgraphicsview.h \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/QLabel \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/qlabel.h \
 		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtGui.framework/Headers/QBrush \
 		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtGui.framework/Headers/qbrush.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o fallen.o ../Tetris_2.0/fallen.cpp
@@ -837,6 +890,15 @@ field.o: ../Tetris_2.0/field.cpp ../Tetris_2.0/field.h \
 		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/QWidget \
 		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
 		../Tetris_2.0/fallen.h \
+		../Tetris_2.0/game.h \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/QDialog \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtGui.framework/Headers/QKeyEvent \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtGui.framework/Headers/qevent.h \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/QGraphicsView \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/qgraphicsview.h \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/QLabel \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/qlabel.h \
 		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtCore.framework/Headers/QDebug \
 		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtCore.framework/Headers/qdebug.h \
 		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/QAbstractScrollArea \
@@ -867,8 +929,11 @@ figures.o: ../Tetris_2.0/figures.cpp ../Tetris_2.0/figures.h \
 		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtGui.framework/Headers/qevent.h \
 		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/QGraphicsView \
 		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/qgraphicsview.h \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/QLabel \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/qlabel.h \
 		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtCore.framework/Headers/QDebug \
-		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtCore.framework/Headers/qdebug.h
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtCore.framework/Headers/qdebug.h \
+		../Tetris_2.0/gameover.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o figures.o ../Tetris_2.0/figures.cpp
 
 game.o: ../Tetris_2.0/game.cpp ../Tetris_2.0/game.h \
@@ -895,6 +960,8 @@ game.o: ../Tetris_2.0/game.cpp ../Tetris_2.0/game.h \
 		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtCore.framework/Headers/QObject \
 		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtCore.framework/Headers/qobject.h \
 		../Tetris_2.0/fallen.h \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/QLabel \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/qlabel.h \
 		ui_game.h \
 		../Tetris_2.0/myitem.h \
 		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtCore.framework/Headers/QTimer \
@@ -908,6 +975,38 @@ game.o: ../Tetris_2.0/game.cpp ../Tetris_2.0/game.h \
 		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtGui.framework/Headers/QIcon \
 		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtGui.framework/Headers/qicon.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o game.o ../Tetris_2.0/game.cpp
+
+gameover.o: ../Tetris_2.0/gameover.cpp ../Tetris_2.0/gameover.h \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/QDialog \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
+		ui_gameover.h \
+		../Tetris_2.0/game.h \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtGui.framework/Headers/QKeyEvent \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtGui.framework/Headers/qevent.h \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/QGraphicsView \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/qgraphicsview.h \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/QWidget \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/QGraphicsScene \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/qgraphicsscene.h \
+		../Tetris_2.0/field.h \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/QGraphicsItem \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/qgraphicsitem.h \
+		../Tetris_2.0/figures.h \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtGui.framework/Headers/QColor \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtGui.framework/Headers/qcolor.h \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtGui.framework/Headers/QPainter \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtGui.framework/Headers/qpainter.h \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtCore.framework/Headers/QPointF \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtCore.framework/Headers/qpoint.h \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtCore.framework/Headers/QObject \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtCore.framework/Headers/qobject.h \
+		../Tetris_2.0/fallen.h \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/QLabel \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/qlabel.h \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/QApplication \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/qapplication.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o gameover.o ../Tetris_2.0/gameover.cpp
 
 main.o: ../Tetris_2.0/main.cpp ../Tetris_2.0/mainwindow.h \
 		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
@@ -945,11 +1044,16 @@ mainwindow.o: ../Tetris_2.0/mainwindow.cpp ../Tetris_2.0/mainwindow.h \
 		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtCore.framework/Headers/qpoint.h \
 		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtCore.framework/Headers/QObject \
 		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtCore.framework/Headers/qobject.h \
-		../Tetris_2.0/fallen.h
+		../Tetris_2.0/fallen.h \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/QLabel \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/qlabel.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../Tetris_2.0/mainwindow.cpp
 
 moc_game.o: moc_game.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_game.o moc_game.cpp
+
+moc_gameover.o: moc_gameover.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_gameover.o moc_gameover.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp

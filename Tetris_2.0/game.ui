@@ -32,9 +32,9 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>10</y>
-     <width>265</width>
-     <height>525</height>
+     <y>14</y>
+     <width>261</width>
+     <height>521</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -125,33 +125,36 @@ border: none;</string>
      <height>50</height>
     </size>
    </property>
+   <property name="styleSheet">
+    <string notr="true">background-image: url(:/level.png);</string>
+   </property>
    <property name="text">
-    <string>Level</string>
+    <string/>
    </property>
   </widget>
   <widget class="QLabel" name="label_figure">
    <property name="geometry">
     <rect>
-     <x>320</x>
-     <y>190</y>
-     <width>170</width>
+     <x>350</x>
+     <y>200</y>
+     <width>150</width>
      <height>100</height>
     </rect>
    </property>
    <property name="minimumSize">
     <size>
-     <width>170</width>
+     <width>150</width>
      <height>100</height>
     </size>
    </property>
    <property name="maximumSize">
     <size>
-     <width>179</width>
+     <width>150</width>
      <height>100</height>
     </size>
    </property>
    <property name="text">
-    <string>Отображение фигурки</string>
+    <string/>
    </property>
   </widget>
   <widget class="QLabel" name="label_score_numbers">

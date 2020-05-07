@@ -18,6 +18,8 @@ public:
     explicit Game(Field *f, QWidget *parent = nullptr);
     ~Game();
 
+    void changeImage(int nextFigure);
+
     //static void doEnd();
 
     Ui::Game *ui;

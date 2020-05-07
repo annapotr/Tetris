@@ -32,13 +32,13 @@ Game::Game(Field *f, QWidget *parent) :
 
     //while(f->getState() == gameStates::INPROCESS) {
         //timer->stop();
+        f->_lf = ui->label_figure;
 
         f->currentTetrimino = f->generateNext(scene);
         f->currentFallen = f->generateFallen(scene);
 
         scene->addItem(f->currentTetrimino);
         scene->addItem(f->currentFallen);
-
 
         timer = new QTimer(this);
         connect(timer, SIGNAL(timeout()), scene, SLOT(advance()));
@@ -47,19 +47,42 @@ Game::Game(Field *f, QWidget *parent) :
     //}
     ui->label_score_numbers->setNum(f->getScore());
     ui->label_score_numbers->setAlignment(Qt::AlignCenter);
-    /*switch(f->getNextFigure()) {
-        case(0): ui->label_figure->setPixmap();
-        case(1): ui->label_figure->setPixmap();
-        case(2): ui->label_figure->setPixmap();
-        case(3): ui->label_figure->setPixmap();
-        case(4): ui->label_figure->setPixmap();
-        case(5): ui->label_figure->setPixmap();
-        case(6): ui->label_figure->setPixmap();
+    /*
+    switch(f->getNextFigure()) {
+        case(0): {
+            QPixmap pix(":/redBlocks.png");
+            ui->label_figure->setPixmap(pix);
+        }
+        case(1): {
+            QPixmap pix(":/yellowBlocks.png");
+            ui->label_figure->setPixmap(pix);
+        }
+        case(2): {
+            QPixmap pix(":/blueBlocks.png");
+            ui->label_figure->setPixmap(pix);
+        }
+        case(3): {
+            QPixmap pix(":/pinkBlocks.png");
+            ui->label_figure->setPixmap(pix);
+        }
+        case(4): {
+            QPixmap pix(":/redBlocks.png");
+            ui->label_figure->setPixmap(pix);
+        }
+        case(5): {
+            QPixmap pix(":/redBlocks.png");
+            ui->label_figure->setPixmap(pix);
+        }
+        case(6): {
+            QPixmap pix(":/redBlocks.png");
+            ui->label_figure->setPixmap(pix);
+        }
     }*/
-    QPixmap pix(":/red_block.png");
-    ui->label_figure->setPixmap(pix);
+
+
 
 }
+
 /*
 void Game::doEnd(){
     timer->stop();
@@ -99,3 +122,5 @@ void Game::keyPressEvent(QKeyEvent *event) {
         qDebug() << "Fast landing!\n";
     }
 }
+
+
