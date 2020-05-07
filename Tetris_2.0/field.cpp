@@ -17,16 +17,18 @@ using std::size_t;
 std::vector<int> points = {40, 100, 300, 1200};
 
 Field::Field(int level) :
-    gameState(gameStates::INPROCESS), curLevel(level), score(0), highestNotEmpty(FIELD_Ht - 1) {
-    for (size_t i = 0; i < FIELD_Ht; i++) {
+    gameState(gameStates::INPROCESS), curLevel(level), score(0), highestNotEmpty(FIELD_Ht) {
+    for (size_t i = 0; i <= FIELD_Ht; i++) {
         _field[i].fill(QPixmap());
     }
     QPixmap pix(":/red_block.png");
-    _field[FIELD_Ht].fill(pix);
+    _field[FIELD_Ht + 1].fill(pix);
+
+    generateNextId();
 }
 
 void Field::printFieldTmp() const {
-    for (size_t i = 0; i < FIELD_Ht; i++) {
+    for (size_t i = 0; i <= FIELD_Ht; i++) {
         for (size_t j = 0; j < FIELD_W; j++) {
             std::cout << !(_field[i][j].isNull()) << ' ';
         }
@@ -43,7 +45,7 @@ void Field::calculateScore(int cnt) {
 
 void Field::checkRow() {
     int cnt = 0;
-    for (size_t i = highestNotEmpty; i < FIELD_Ht; i++) {
+    for (size_t i = highestNotEmpty; i <= FIELD_Ht; i++) {
         bool row = true;
         for (auto &cell: _field[i]) {
             row &= !(cell.isNull());
@@ -75,25 +77,18 @@ bool Field::doCollision() {
    return hasFilled;
 }
 
-bool Field::isEnd(){
-    bool end = false;
-    for(auto &cell: _field[0]){
-        end |= !(cell.isNull());
-    }
-    return end;
-}
-
 void Field::fill(QPixmap pix) {
     for (auto &item: currentTetrimino->_blocks) {
         int row = currentTetrimino->topLeftCorner.ry() + item.first;
         int col = currentTetrimino->topLeftCorner.rx() + item.second;
-        //int col = START_POS + item.second;
         setCell({row, col}, pix);
         if (highestNotEmpty > row) highestNotEmpty = row;
     }
 }
 
-//should divide generateNext into 2 functions (random type & figure + field)
+void Field::generateNextId() {
+    nextFigure = getRand() % tetriminoesInit.size();
+}
 
 Tetrimino *Field::generateNext(QGraphicsScene *scene) {
     //if (getState() == gameStates::GAMEOVER) return;
@@ -103,10 +98,6 @@ Tetrimino *Field::generateNext(QGraphicsScene *scene) {
     F->setCoordinates(START_POS); //перенести куда-нибудь!
     nowFigure = nextFigure;//nextFigure нигде больше не хранится => local var?, For what???? Think about it! Is both necessary?
     return F;
-}
-
-int Field::getNextFigure(){
-    return nextFigure;
 }
 
 Fallen *Field::generateFallen(QGraphicsScene *scene) {
@@ -119,7 +110,7 @@ bool Field::getCell(std::pair<int, int> coords) {
 }
 
 gameStates Field::getState() {
-    if (highestNotEmpty == 0) gameState = gameStates::GAMEOVER;
+    if (highestNotEmpty <= 1) gameState = gameStates::GAMEOVER;
     // PAUSED;
     return gameState;
 }

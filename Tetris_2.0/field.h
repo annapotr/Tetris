@@ -30,10 +30,14 @@ class Field {
 public:
     explicit Field(int level);
 
-    bool getCell(std::pair<int, int> coords);
     void setCell(std::pair<int, int> coords, QPixmap pix);
+    bool getCell(std::pair<int, int> coords);
     int getScore();
     gameStates getState();
+    QPixmap get(int x, int y);
+    std::size_t getFIELD_Ht();
+    std::size_t getFIELD_W();
+    //int getNextFigure();
 
     void printFieldTmp() const;
 
@@ -43,15 +47,11 @@ public:
     bool doCollision();
     Tetrimino *generateNext(QGraphicsScene *scene);
     Fallen *generateFallen(QGraphicsScene *scene);
-
-    bool isEnd();
+    void generateNextId();
 
     Tetrimino *currentTetrimino;
     Fallen *currentFallen;
 
-    QPixmap get(int x, int y);
-    std::size_t getFIELD_Ht();
-    std::size_t getFIELD_W();
     int getNextFigure();
 
     QLabel* _lf;
@@ -65,10 +65,8 @@ private:
     static const int START_POS = 3;
 
     gameStates gameState;
-    int curLevel, score;
-    int highestNotEmpty;
-    int nowFigure = 0, nextFigure;
-    std::array<std::array<QPixmap, FIELD_W>, FIELD_Ht + 1> _field;
+    int curLevel, score, highestNotEmpty, nextFigure, nowFigure = 0;
+    std::array<std::array<QPixmap, FIELD_W + 2>, FIELD_Ht + 2> _field;
 };
 
 #endif // FIELD_H
