@@ -23,7 +23,7 @@ Game::Game(Field *f, QWidget *parent) :
 
     ui->graphicsView->setScene(scene);
     ui->graphicsView->setRenderHint(QPainter::Antialiasing);
-    scene->setSceneRect(0,0,260,520);
+    scene->setSceneRect(0,25,260,520);
 
     QBrush br(QImage(":\background.png"));
     QPalette plt = this->palette();
