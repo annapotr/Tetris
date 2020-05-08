@@ -3,10 +3,14 @@
 #include "game.h"
 #include <iostream>
 #include <QApplication>
+#include <QGraphicsScene>
+#include <QTimer>
 
-GameOver::GameOver(QWidget *parent) :
+GameOver::GameOver(Field *f, QGraphicsScene *scene, QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::GameOver)
+    f(f),
+    ui(new Ui::GameOver),
+    scene_(scene)
 {
     ui->setupUi(this);
 }
@@ -19,11 +23,18 @@ GameOver::~GameOver()
 void GameOver::on_pushButton_clicked()
 {
     close();
-    hide();
-    Field *f = new Field(0);
-    Game game(f);
-    game.setModal(true);
-    game.exec();
+    f->updateField(0);
+
+    f->currentTetrimino = f->generateNext(scene_);
+    f->currentFallen = f->generateFallen(scene_);
+
+    scene_->addItem(f->currentTetrimino);
+    scene_->addItem(f->currentFallen);
+
+    timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), scene_, SLOT(advance()));
+    timer->start(25);
+
 }
 
 void GameOver::on_pushButton_2_clicked()

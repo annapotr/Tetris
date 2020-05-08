@@ -60,6 +60,8 @@ public:
 
     gameStates gameState;
 
+    void updateField(int level);
+
 private:
     static const std::size_t FIELD_Ht = 20;
     static const std::size_t FIELD_W = 10;

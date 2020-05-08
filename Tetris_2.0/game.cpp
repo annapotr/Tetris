@@ -97,7 +97,6 @@ void Game::on_pushButton_clicked()
 {
     if(f->getState() == gameStates::PAUSED) {
         f->gameState = gameStates::INPROCESS;
-        timer->start(25);
     } else {
         f->gameState = gameStates::PAUSED;
     }

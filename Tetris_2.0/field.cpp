@@ -27,6 +27,17 @@ Field::Field(int level) :
     generateNextId();
 }
 
+void Field::updateField(int level) {
+    gameState = gameStates::INPROCESS, curLevel = level , score = 0 , highestNotEmpty = FIELD_Ht;
+    for (size_t i = 0; i <= FIELD_Ht; i++) {
+        _field[i].fill(QPixmap());
+    }
+    QPixmap pix(":/red_block.png");
+    _field[FIELD_Ht + 1].fill(pix);
+
+    generateNextId();
+}
+
 void Field::printFieldTmp() const {
     for (size_t i = 0; i <= FIELD_Ht; i++) {
         for (size_t j = 0; j < FIELD_W; j++) {
@@ -91,12 +102,10 @@ void Field::generateNextId() {
 }
 
 Tetrimino *Field::generateNext(QGraphicsScene *scene) {
-    //if (getState() == gameStates::GAMEOVER) return;
-    nextFigure = ((getRand() + 54321) % 7); //для отображения следующей фигурки, strange constant
+    Tetrimino *F = new Tetrimino(tetriminoesInit[nextFigure], static_cast<tetriminoes>(nextFigure), this, scene);
+    F->setCoordinates(START_POS);
+    generateNextId();
     changeImage(nextFigure);
-    Tetrimino *F = new Tetrimino(tetriminoesInit[nowFigure], static_cast<tetriminoes>(nowFigure), this, scene);
-    F->setCoordinates(START_POS); //перенести куда-нибудь!
-    nowFigure = nextFigure;//nextFigure нигде больше не хранится => local var?, For what???? Think about it! Is both necessary?
     return F;
 }
 
@@ -111,7 +120,6 @@ bool Field::getCell(std::pair<int, int> coords) {
 
 gameStates Field::getState() {
     if (highestNotEmpty <= 1) gameState = gameStates::GAMEOVER;
-    // PAUSED;
     return gameState;
 }
 

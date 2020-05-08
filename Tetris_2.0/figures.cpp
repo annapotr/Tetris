@@ -158,7 +158,7 @@ void Tetrimino::advance(int phase) {
        field->printFieldTmp();
        if (field->getState() == gameStates::GAMEOVER) {
            hide();
-           GameOver gameover;
+           GameOver gameover(field,scene_);
            gameover.setModal(true);
            gameover.exec();
            return;
