@@ -4,6 +4,7 @@
 #include "myitem.h"
 #include "figures.h"
 #include "fallen.h"
+#include "field.h"
 #include <QTimer>
 #include <QElapsedTimer>
 #include <QApplication>
@@ -47,39 +48,6 @@ Game::Game(Field *f, QWidget *parent) :
     //}
     ui->label_score_numbers->setNum(f->getScore());
     ui->label_score_numbers->setAlignment(Qt::AlignCenter);
-    /*
-    switch(f->getNextFigure()) {
-        case(0): {
-            QPixmap pix(":/redBlocks.png");
-            ui->label_figure->setPixmap(pix);
-        }
-        case(1): {
-            QPixmap pix(":/yellowBlocks.png");
-            ui->label_figure->setPixmap(pix);
-        }
-        case(2): {
-            QPixmap pix(":/blueBlocks.png");
-            ui->label_figure->setPixmap(pix);
-        }
-        case(3): {
-            QPixmap pix(":/pinkBlocks.png");
-            ui->label_figure->setPixmap(pix);
-        }
-        case(4): {
-            QPixmap pix(":/redBlocks.png");
-            ui->label_figure->setPixmap(pix);
-        }
-        case(5): {
-            QPixmap pix(":/redBlocks.png");
-            ui->label_figure->setPixmap(pix);
-        }
-        case(6): {
-            QPixmap pix(":/redBlocks.png");
-            ui->label_figure->setPixmap(pix);
-        }
-    }*/
-
-
 
 }
 
@@ -124,3 +92,13 @@ void Game::keyPressEvent(QKeyEvent *event) {
 }
 
 
+
+void Game::on_pushButton_clicked()
+{
+    if(f->getState() == gameStates::PAUSED) {
+        f->gameState = gameStates::INPROCESS;
+        timer->start(25);
+    } else {
+        f->gameState = gameStates::PAUSED;
+    }
+}

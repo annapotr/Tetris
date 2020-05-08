@@ -67,7 +67,7 @@ private:
 
     bool isVertical = 0;
 
-    qreal angle, speed;
+    qreal angle, speed, paused_speed;
 };
 
 #endif // FIGURES_H

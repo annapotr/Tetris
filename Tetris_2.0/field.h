@@ -58,13 +58,13 @@ public:
     void changeImage(int nextFigure);
     std::string ImgSrc[7] = {":/redBlockss.png",":/orangeBlocks.png",":/yellowBlockss.png",":/greenBlocks.png",":/blueBlockss.png",":/blueblueBlocks.png",":/pinkBlockss.png"};
 
+    gameStates gameState;
 
 private:
     static const std::size_t FIELD_Ht = 20;
     static const std::size_t FIELD_W = 10;
     static const int START_POS = 3;
 
-    gameStates gameState;
     int curLevel, score, highestNotEmpty, nextFigure, nowFigure = 0;
     std::array<std::array<QPixmap, FIELD_W + 2>, FIELD_Ht + 2> _field;
 };

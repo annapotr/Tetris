@@ -32,6 +32,9 @@ public:
 protected:
     void keyPressEvent(QKeyEvent *event);
 
+private slots:
+    void on_pushButton_clicked();
+
 };
 
 #endif // GAME_H
