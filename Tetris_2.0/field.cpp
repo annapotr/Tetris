@@ -18,12 +18,16 @@ std::vector<int> points = {40, 100, 300, 1200};
 
 Field::Field(int level) :
     gameState(gameStates::INPROCESS), curLevel(level), score(0), highestNotEmpty(FIELD_Ht) {
-    for (size_t i = 0; i <= FIELD_Ht; i++) {
-        _field[i].fill(QPixmap());
-    }
     QPixmap pix(":/red_block.png");
-    _field[FIELD_Ht + 1].fill(pix);
 
+    _field.resize(FIELD_Ht + 2, std::vector<QPixmap>(FIELD_W + 2));
+
+    for (size_t i = 0; i <= FIELD_Ht; i++) {
+        std::fill(_field[i].begin() + 1, _field[i].end() - 1, QPixmap());
+        _field[i][0] = pix;
+        _field[i][FIELD_W + 1] = pix;
+    }
+    std::fill(_field[FIELD_Ht + 1].begin() + 1, _field[FIELD_Ht + 1].end() - 1, pix);
     generateNextId();
 }
 
@@ -31,18 +35,18 @@ void Field::updateField(int level,QGraphicsScene *scene) {
     gameState = gameStates::INPROCESS, curLevel = level , score = 0 , highestNotEmpty = FIELD_Ht;
     _blackImg->setStyleSheet("background: rgba(255, 255, 255, 0)");
     for (size_t i = 0; i <= FIELD_Ht; i++) {
-        _field[i].fill(QPixmap());
+        std::fill(_field[i].begin() + 1, _field[i].end() - 1, QPixmap());
     }
     QPixmap pix(":/red_block.png");
-    _field[FIELD_Ht + 1].fill(pix);
+    std::fill(_field[FIELD_Ht + 1].begin() + 1, _field[FIELD_Ht + 1].end() - 1, pix);
 
     generateNextId();
     currentTetrimino->updateTetrimino(tetriminoesInit[nextFigure], static_cast<tetriminoes>(nextFigure), this, scene);
 }
 
 void Field::printFieldTmp() const {
-    for (size_t i = 0; i <= FIELD_Ht; i++) {
-        for (size_t j = 0; j < FIELD_W; j++) {
+    for (size_t i = 1; i <= FIELD_Ht; i++) {
+        for (size_t j = 1; j <= FIELD_W; j++) {
             std::cout << !(_field[i][j].isNull()) << ' ';
         }
         std::cout << '\n' ;
@@ -57,6 +61,7 @@ void Field::calculateScore(int cnt) {
 }
 
 void Field::checkRow() {
+    QPixmap pix(":/red_block.png");
     int cnt = 0;
     for (size_t i = highestNotEmpty; i <= FIELD_Ht; i++) {
         bool row = true;
@@ -65,11 +70,11 @@ void Field::checkRow() {
         }
         if (row) {
             cnt++;
-            _field[i].fill(QPixmap());
+            std::fill(_field[i].begin() + 1, _field[i].end() - 1, QPixmap());
             for (int j = i - 1; j >= highestNotEmpty; j--) {
                 _field[j + 1] = move(_field[j]);
             }
-            _field[highestNotEmpty].fill(QPixmap());
+            std::fill(_field[i].begin() + 1, _field[i].end() - 1, QPixmap());
             highestNotEmpty++;
             calculateScore(cnt);
         }

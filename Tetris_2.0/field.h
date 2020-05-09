@@ -65,12 +65,13 @@ public:
     void updateField(int level,QGraphicsScene *scene);
 
 private:
-    static const std::size_t FIELD_Ht = 20;
-    static const std::size_t FIELD_W = 10;
-    static const int START_POS = 3;
+    static constexpr std::size_t FIELD_Ht = 20;
+    static constexpr std::size_t FIELD_W = 10;
+    static constexpr int START_POS = 4;
 
-    int curLevel, score, highestNotEmpty, nextFigure, nowFigure = 0;
-    std::array<std::array<QPixmap, FIELD_W + 2>, FIELD_Ht + 2> _field;
+    int curLevel, score, highestNotEmpty, nextFigure;
+    //std::array<std::array<QPixmap, FIELD_W + 2>, FIELD_Ht + 2> _field;
+    std::vector<std::vector<QPixmap>> _field;
 };
 
 #endif // FIELD_H

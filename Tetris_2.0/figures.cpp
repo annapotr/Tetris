@@ -13,19 +13,20 @@
 
 using std::vector;
 using std::size_t;
+using std::pair;
 
 int BLOCK_PX = 25;
 int PADDING = 5;
 
-vector<vector<int>> tetriminoesInit = {
+vector<vector<pair<int, int>>> tetriminoesInit = {
     {
-        {0, 1, 2, 3},
-        {0, 4, 5, 6},
-        {2, 4, 5, 6},
-        {0, 1, 4, 5},
-        {1, 2, 4, 5},
-        {0, 1, 2, 5},
-        {0, 1, 5, 6}
+        {{0, 0}, {0, 1}, {0, 2}, {0, 3}},
+        {{0, 0}, {1, 0}, {1, 1}, {1, 2}},
+        {{0, 2}, {1, 0}, {1, 1}, {1, 2}},
+        {{0, 0}, {0, 1}, {1, 0}, {1, 1}},
+        {{0, 1}, {0, 2}, {1, 0}, {1, 1}},
+        {{0, 0}, {0, 1}, {0, 2}, {1, 1}},
+        {{0, 0}, {0, 1}, {1, 1}, {1, 2}}
     }
 };
 
@@ -62,13 +63,13 @@ QPixmap make_pix(tetriminoes t) {
     }
 }
 
-Tetrimino::Tetrimino(std::vector<int> blocks, tetriminoes type, Field *f, QGraphicsScene *scene)
+Tetrimino::Tetrimino(std::vector<pair<int, int>> blocks, tetriminoes type, Field *f, QGraphicsScene *scene)
     : type_(type), pix_(make_pix(type_)), field(f), scene_(scene),
       speed(5), paused_speed(5) {
     for (auto &k: blocks) {
-        _blocks.push_back({k / BLOCK_W, k % BLOCK_W});
-        if (max_row < k / BLOCK_W) max_row = k / BLOCK_W;
-        if (max_col < k % BLOCK_W) max_col = k % BLOCK_W;
+        _blocks.push_back(k);
+        if (max_row < k.first) max_row = k.first;
+        if (max_col < k.second) max_col = k.second;
     }
 
     /*qDebug() << "L\n";
@@ -137,13 +138,19 @@ int Tetrimino::minParam(bool param) {
 }
 
 void Tetrimino::left() {
-    topLeftCorner.rx()--;
-    qDebug() << "BR coords (x, than y): " << boundingRectangale.x() - 1 << ' ' << boundingRectangale.y();
-    boundingRectangale.setRect(-1, 0, BLOCK_PX * (max_col + 1), BLOCK_PX * (max_row + 1));
+    if (topLeftCorner.rx() > 1){
+        topLeftCorner.rx()--;
+        setPos(mapToScene(-BLOCK_PX, 0));
+    }
+    return;
 }
 
 void Tetrimino::right() {
-    topLeftCorner.rx()++;
+    if (topLeftCorner.rx() + max_col < field->getFIELD_W()){
+        topLeftCorner.rx()++;
+        setPos(mapToScene(BLOCK_PX, 0));
+    }
+    return;
 }
 
 void Tetrimino::advance(int phase) {
