@@ -41,7 +41,6 @@ void Field::updateField(int level,QGraphicsScene *scene) {
     std::fill(_field[FIELD_Ht + 1].begin() + 1, _field[FIELD_Ht + 1].end() - 1, pix);
 
     generateNextId();
-    currentTetrimino->updateTetrimino(tetriminoesInit[nextFigure], static_cast<tetriminoes>(nextFigure), this, scene);
 }
 
 void Field::printFieldTmp() const {
