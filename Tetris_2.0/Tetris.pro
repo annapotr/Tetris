@@ -20,6 +20,7 @@ SOURCES += \
     field.cpp \
     figures.cpp \
     game.cpp \
+    gameover.cpp \
     main.cpp \
     mainwindow.cpp
 
@@ -28,10 +29,12 @@ HEADERS += \
     field.h \
     figures.h \
     game.h \
+    gameover.h \
     mainwindow.h
 
 FORMS += \
     game.ui \
+    gameover.ui \
     mainwindow.ui
 
 # Default rules for deployment.

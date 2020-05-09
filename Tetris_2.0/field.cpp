@@ -37,6 +37,18 @@ Field::Field(int level) :
     generateNextId();
 }
 
+void Field::updateField(int level) {
+    gameState = gameStates::INPROCESS, curLevel = level , score = 0 , highestNotEmpty = FIELD_Ht;
+    _blackImg->setStyleSheet("background: rgba(255, 255, 255, 0)");
+    for (size_t i = 0; i <= FIELD_Ht; i++) {
+        _field[i].fill(QPixmap());
+    }
+    QPixmap pix(":/red_block.png");
+    _field[FIELD_Ht + 1].fill(pix);
+
+    generateNextId();
+}
+
 void Field::printFieldTmp() const {
     for (size_t i = 0; i <= FIELD_Ht; i++) {
         for (size_t j = 0; j < FIELD_W; j++) {
@@ -110,6 +122,7 @@ Tetrimino *Field::generateNext(QGraphicsScene *scene) {
     Tetrimino *F = new Tetrimino(tetriminoesInit[nextFigure], static_cast<tetriminoes>(nextFigure), this, scene);
     F->setCoordinates(START_POS);
     generateNextId();
+    changeImage(nextFigure);
     return F;
 }
 
@@ -124,7 +137,6 @@ bool Field::getCell(std::pair<int, int> coords) {
 
 gameStates Field::getState() {
     if (highestNotEmpty <= 1) gameState = gameStates::GAMEOVER;
-    // PAUSED;
     return gameState;
 }
 
@@ -146,6 +158,18 @@ std::size_t Field::getFIELD_Ht(){
 
 std::size_t Field::getFIELD_W(){
     return FIELD_W;
+}
+
+void Field::changeImage(int nextFigure) {
+    QPixmap pix(ImgSrc[nextFigure].c_str());
+    _lf->setPixmap(pix);
+}
+
+void Field::changeBlackImg() {
+    QLabel* bblackImg = new QLabel();
+    bblackImg->resize(50,50);
+    bblackImg->setStyleSheet("background: rgba(188, 188, 188, 92)");
+    _blackImg = bblackImg;
 }
 
 

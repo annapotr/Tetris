@@ -9,6 +9,7 @@
 #include <iostream>
 #include <QPainter>
 #include <iostream>
+#include "gameover.h"
 
 using std::vector;
 using std::size_t;
@@ -31,7 +32,7 @@ vector<vector<int>> tetriminoesInit = {
 QPixmap make_pix(tetriminoes t) {
     switch(t) {
         case(tetriminoes::I):{
-            QPixmap pix(":/red1.png");
+            QPixmap pix(":/reddd.png");
             return pix;
         }
         case(tetriminoes::J):{
@@ -39,23 +40,23 @@ QPixmap make_pix(tetriminoes t) {
             return pix;
         }
         case(tetriminoes::L):{
-            QPixmap pix(":/yellow.png");
+            QPixmap pix(":/yellow_block.png");
             return pix;
         }
         case(tetriminoes::O):{
-            QPixmap pix(":/green.png");
+            QPixmap pix(":/green_block.png");
             return pix;
         }
         case(tetriminoes::S): {
-            QPixmap pix(":/blue.png");
+            QPixmap pix(":/blue_blue_block.png");
             return pix;
         }
         case(tetriminoes::T): {
-            QPixmap pix(":/blue1.png");
+            QPixmap pix(":/blue_block.png");
             return pix;
         }
         case(tetriminoes::Z): {
-            QPixmap pix(":/purple.png");
+            QPixmap pix(":/pink_block.png");
             return pix;
         }
     }
@@ -63,7 +64,7 @@ QPixmap make_pix(tetriminoes t) {
 
 Tetrimino::Tetrimino(std::vector<int> blocks, tetriminoes type, Field *f, QGraphicsScene *scene)
     : type_(type), pix_(make_pix(type_)), field(f), scene_(scene),
-      speed(5) {
+      speed(5), paused_speed(5) {
     for (auto &k: blocks) {
         _blocks.push_back({k / BLOCK_W, k % BLOCK_W});
         if (max_row < k / BLOCK_W) max_row = k / BLOCK_W;
@@ -146,12 +147,29 @@ void Tetrimino::advance(int phase) {
     if(!phase) return;
     //qDebug() << "X of tLC: " << topLeftCorner.rx() << "Y of tLC: " << topLeftCorner.ry();
 
+    if (field->getState() == gameStates::PAUSED) {
+        if(speed != 0) paused_speed = speed;
+        speed = 0;
+        return;
+    }
+
+    if (field->getState() == gameStates::INPROCESS) {
+        speed = paused_speed;
+    }
+
     if (field->doCollision()) {
        field->fill(pix_);
        speed = 0;
        scene_->removeItem(this);
        field->printFieldTmp();
-       if (field->getState() == gameStates::GAMEOVER) return;
+       if (field->getState() == gameStates::GAMEOVER) {
+           field->changeBlackImg();
+           hide();
+           GameOver gameover(field,scene_);
+           gameover.setModal(true);
+           gameover.exec();
+           return;
+       }
        field->currentTetrimino = field->generateNext(scene_);
        scene_->addItem(field->currentTetrimino);
     }
@@ -161,26 +179,28 @@ void Tetrimino::advance(int phase) {
 
 void Tetrimino::turn90back() {
     //забанить повороты после коллизии
+    if(field->getState() == gameStates::INPROCESS) {
+        for (std::size_t i = 0; i < _blocks.size(); i++) {
+            _blocks[i] = {max_col - _blocks[i].second, _blocks[i].first};
+        }
 
-    for (std::size_t i = 0; i < _blocks.size(); i++) {
-        _blocks[i] = {max_col - _blocks[i].second, _blocks[i].first};
+        max_row = maxParam(0);
+        max_col = maxParam(1);
+
+        boundingRectangale.setRect(0, 0, BLOCK_PX * (max_col + 1), BLOCK_PX * (max_row + 1));
     }
-
-    max_row = maxParam(0);
-    max_col = maxParam(1);
-
-    boundingRectangale.setRect(0, 0, BLOCK_PX * (max_col + 1), BLOCK_PX * (max_row + 1));
 }
 
 void Tetrimino::turn90up() {
     //забанить повороты после коллизии
+    if(field->getState() == gameStates::INPROCESS) {
+        for (std::size_t i = 0; i < _blocks.size(); i++) {
+            _blocks[i] = {_blocks[i].second, max_row - _blocks[i].first};
+        }
 
-    for (std::size_t i = 0; i < _blocks.size(); i++) {
-        _blocks[i] = {_blocks[i].second, max_row - _blocks[i].first};
+        max_row = maxParam(0);
+        max_col = maxParam(1);
+
+        boundingRectangale.setRect(0, 0, BLOCK_PX * (max_col + 1), BLOCK_PX * (max_row + 1));
     }
-
-    max_row = maxParam(0);
-    max_col = maxParam(1);
-
-    boundingRectangale.setRect(0, 0, BLOCK_PX * (max_col + 1), BLOCK_PX * (max_row + 1));
 }

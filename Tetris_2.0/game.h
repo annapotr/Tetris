@@ -18,8 +18,6 @@ public:
     explicit Game(Field *f, QWidget *parent = nullptr);
     ~Game();
 
-    //static void doEnd();
-
     Ui::Game *ui;
     QGraphicsPixmapItem *item;
     QGraphicsScene *scene;
@@ -30,6 +28,8 @@ public:
 protected:
     void keyPressEvent(QKeyEvent *event);
 
+private slots:
+    void on_pause_clicked();
 };
 
 #endif // GAME_H

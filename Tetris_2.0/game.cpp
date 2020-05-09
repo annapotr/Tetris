@@ -4,6 +4,7 @@
 #include "myitem.h"
 #include "figures.h"
 #include "fallen.h"
+#include "field.h"
 #include <QTimer>
 #include <QElapsedTimer>
 #include <QApplication>
@@ -21,9 +22,15 @@ Game::Game(Field *f, QWidget *parent) :
     ui->setupUi(this);
     scene = new QGraphicsScene(this);
 
+    ui->pause->setStyleSheet("border-image: url(:/pause.png) stretch;");
+
     ui->graphicsView->setScene(scene);
     ui->graphicsView->setRenderHint(QPainter::Antialiasing);
+<<<<<<< HEAD
     scene->setSceneRect(BLOCK_PX, BLOCK_PX, 260, 520);
+=======
+    scene->setSceneRect(0,25,260,520);
+>>>>>>> upstream/master
 
     QBrush br(QImage(":\background.png"));
     QPalette plt = this->palette();
@@ -32,13 +39,14 @@ Game::Game(Field *f, QWidget *parent) :
 
     //while(f->getState() == gameStates::INPROCESS) {
         //timer->stop();
+        f->_lf = ui->label_figure;
+        f->_blackImg = ui->blackImg;
 
         f->currentTetrimino = f->generateNext(scene);
         f->currentFallen = f->generateFallen(scene);
 
         scene->addItem(f->currentTetrimino);
         scene->addItem(f->currentFallen);
-
 
         timer = new QTimer(this);
         connect(timer, SIGNAL(timeout()), scene, SLOT(advance()));
@@ -47,19 +55,9 @@ Game::Game(Field *f, QWidget *parent) :
     //}
     ui->label_score_numbers->setNum(f->getScore());
     ui->label_score_numbers->setAlignment(Qt::AlignCenter);
-    /*switch(f->getNextFigure()) {
-        case(0): ui->label_figure->setPixmap();
-        case(1): ui->label_figure->setPixmap();
-        case(2): ui->label_figure->setPixmap();
-        case(3): ui->label_figure->setPixmap();
-        case(4): ui->label_figure->setPixmap();
-        case(5): ui->label_figure->setPixmap();
-        case(6): ui->label_figure->setPixmap();
-    }*/
-    QPixmap pix(":/red_block.png");
-    ui->label_figure->setPixmap(pix);
 
 }
+
 /*
 void Game::doEnd(){
     timer->stop();
@@ -98,5 +96,22 @@ void Game::keyPressEvent(QKeyEvent *event) {
 
     if (event->key() == Qt::Key_Space) {
         qDebug() << "Fast landing!\n";
+    }
+}
+
+
+void Game::on_pause_clicked()
+{
+    if(f->getState() == gameStates::PAUSED) {
+        ui->label_Tetris->clear();
+        ui->label_Tetris->setStyleSheet("background: rgba(255, 255, 255, 0)");
+        ui->pause->setStyleSheet("border-image: url(:/pause.png) stretch;");
+        f->gameState = gameStates::INPROCESS;
+    } else {
+        ui->label_Tetris->setStyleSheet("background: rgba(255, 255, 255, 255)");
+        QPixmap pix(":/tetris.png");
+        ui->label_Tetris->setPixmap(pix);
+        ui->pause->setStyleSheet("border-image: url(:/continue.png) stretch;");
+        f->gameState = gameStates::PAUSED;
     }
 }

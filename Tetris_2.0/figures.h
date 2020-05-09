@@ -48,6 +48,7 @@ public:
     void turn90back();
     void turn90up();
 
+
 protected:
     void advance(int phase) override;
 
@@ -66,7 +67,7 @@ private:
 
     bool isVertical = 0;
 
-    qreal angle, speed;
+    qreal angle, speed, paused_speed;
 };
 
 #endif // FIGURES_H

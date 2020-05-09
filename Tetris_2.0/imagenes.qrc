@@ -16,6 +16,32 @@
         <file>yellow.png</file>
         <file>green.png</file>
         <file>purple.png</file>
+        <file>restart1.png</file>
+        <file>gggameover.png</file>
+        <file>close_gameover.png</file>
+        <file>level.png</file>
+        <file>blue_block.png</file>
+        <file>blue_blue_block.png</file>
+        <file>yellow_block.png</file>
+        <file>green_block.png</file>
+        <file>pink_block.png</file>
+        <file>gameooover.png</file>
+        <file>reddd.png</file>
+        <file>dackk.png</file>
+        <file>darck.png</file>
+        <file>redBlocks.png</file>
+        <file>BlueBlocks.png</file>
+        <file>yellowBlocks.png</file>
+        <file>pinkBlocks.png</file>
+        <file>redBlockss.png</file>
+        <file>pinkBlockss.png</file>
+        <file>blueBlockss.png</file>
+        <file>blueblueBlocks.png</file>
+        <file>yellowBlockss.png</file>
+        <file>orangeBlocks.png</file>
+        <file>greenBlocks.png</file>
+        <file>tetris.png</file>
+        <file>continue.png</file>
     </qresource>
     <qresource prefix="/nq">
         <file>IMG_7403.jpg</file>

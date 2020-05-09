@@ -11,6 +11,8 @@
 #include <QWidget>
 #include <QPainter>
 #include <fallen.h>
+#include <game.h>
+#include <QLabel>
 
 class Tetrimino;
 
@@ -49,6 +51,18 @@ public:
 
     Tetrimino *currentTetrimino;
     Fallen *currentFallen;
+
+    int getNextFigure();
+
+    QLabel* _lf;
+    QLabel* _blackImg ;
+    void changeBlackImg();
+    void changeImage(int nextFigure);
+    std::string ImgSrc[7] = {":/redBlockss.png",":/orangeBlocks.png",":/yellowBlockss.png",":/greenBlocks.png",":/blueBlockss.png",":/blueblueBlocks.png",":/pinkBlockss.png"};
+
+    gameStates gameState;
+
+    void updateField(int level);
 
 private:
     static constexpr std::size_t FIELD_Ht = 20;
