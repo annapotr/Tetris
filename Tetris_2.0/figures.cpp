@@ -81,12 +81,12 @@ Tetrimino::Tetrimino(std::vector<pair<int, int>> blocks, tetriminoes type, Field
     qDebug() << "Max y & x: " << max_row << ' ' << max_col << '\n';*/
 }
 
-void Tetrimino::updateTetrimino(std::vector<int> blocks, tetriminoes type, Field *f, QGraphicsScene *scene) {
+void Tetrimino::updateTetrimino(vector<pair<int, int>> blocks, tetriminoes type, Field *f, QGraphicsScene *scene) {
     type_ = type, pix_ = make_pix(type_), field = f, scene_ = scene , speed = 5, paused_speed = 5;
     for (auto &k: blocks) {
-        _blocks.push_back({k / BLOCK_W, k % BLOCK_W});
-        if (max_row < k / BLOCK_W) max_row = k / BLOCK_W;
-        if (max_col < k % BLOCK_W) max_col = k % BLOCK_W;
+        _blocks.push_back(k);
+        if (max_row < k.first) max_row = k.first;
+        if (max_col < k.second) max_col = k.second;
     }
 }
 
