@@ -22,6 +22,8 @@ Game::Game(Field *f, QWidget *parent) :
     ui->setupUi(this);
     scene = new QGraphicsScene(this);
 
+    ui->pause->setStyleSheet("border-image: url(:/pause.png) stretch;");
+
     ui->graphicsView->setScene(scene);
     ui->graphicsView->setRenderHint(QPainter::Antialiasing);
     scene->setSceneRect(0,25,260,520);
@@ -34,6 +36,7 @@ Game::Game(Field *f, QWidget *parent) :
     //while(f->getState() == gameStates::INPROCESS) {
         //timer->stop();
         f->_lf = ui->label_figure;
+        f->_blackImg = ui->blackImg;
 
         f->currentTetrimino = f->generateNext(scene);
         f->currentFallen = f->generateFallen(scene);
@@ -92,12 +95,18 @@ void Game::keyPressEvent(QKeyEvent *event) {
 }
 
 
-
-void Game::on_pushButton_clicked()
+void Game::on_pause_clicked()
 {
     if(f->getState() == gameStates::PAUSED) {
+        ui->label_Tetris->clear();
+        ui->label_Tetris->setStyleSheet("background: rgba(255, 255, 255, 0)");
+        ui->pause->setStyleSheet("border-image: url(:/pause.png) stretch;");
         f->gameState = gameStates::INPROCESS;
     } else {
+        ui->label_Tetris->setStyleSheet("background: rgba(255, 255, 255, 255)");
+        QPixmap pix(":/tetris.png");
+        ui->label_Tetris->setPixmap(pix);
+        ui->pause->setStyleSheet("border-image: url(:/continue.png) stretch;");
         f->gameState = gameStates::PAUSED;
     }
 }

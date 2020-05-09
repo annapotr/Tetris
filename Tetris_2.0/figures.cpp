@@ -157,6 +157,7 @@ void Tetrimino::advance(int phase) {
        scene_->removeItem(this);
        field->printFieldTmp();
        if (field->getState() == gameStates::GAMEOVER) {
+           field->changeBlackImg();
            hide();
            GameOver gameover(field,scene_);
            gameover.setModal(true);

@@ -40,6 +40,8 @@
         <file>yellowBlockss.png</file>
         <file>orangeBlocks.png</file>
         <file>greenBlocks.png</file>
+        <file>tetris.png</file>
+        <file>continue.png</file>
     </qresource>
     <qresource prefix="/nq">
         <file>IMG_7403.jpg</file>

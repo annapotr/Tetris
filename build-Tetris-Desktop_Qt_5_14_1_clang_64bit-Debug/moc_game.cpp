@@ -23,7 +23,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Game_t {
     QByteArrayData data[3];
-    char stringdata0[28];
+    char stringdata0[23];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -33,11 +33,11 @@ struct qt_meta_stringdata_Game_t {
 static const qt_meta_stringdata_Game_t qt_meta_stringdata_Game = {
     {
 QT_MOC_LITERAL(0, 0, 4), // "Game"
-QT_MOC_LITERAL(1, 5, 21), // "on_pushButton_clicked"
-QT_MOC_LITERAL(2, 27, 0) // ""
+QT_MOC_LITERAL(1, 5, 16), // "on_pause_clicked"
+QT_MOC_LITERAL(2, 22, 0) // ""
 
     },
-    "Game\0on_pushButton_clicked\0"
+    "Game\0on_pause_clicked\0"
 };
 #undef QT_MOC_LITERAL
 
@@ -69,7 +69,7 @@ void Game::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void *
         auto *_t = static_cast<Game *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->on_pushButton_clicked(); break;
+        case 0: _t->on_pause_clicked(); break;
         default: ;
         }
     }

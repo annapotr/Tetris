@@ -24,10 +24,12 @@ public:
     QGraphicsView *graphicsView;
     QPushButton *Close_game;
     QLabel *label_score;
-    QPushButton *pushButton;
+    QPushButton *pause;
     QLabel *label;
     QLabel *label_figure;
     QLabel *label_score_numbers;
+    QLabel *blackImg;
+    QLabel *label_Tetris;
 
     void setupUi(QDialog *Game)
     {
@@ -56,10 +58,10 @@ public:
         label_score->setStyleSheet(QString::fromUtf8("background-image: url(:/score.png);\n"
 "border: none;"));
         label_score->setAlignment(Qt::AlignCenter);
-        pushButton = new QPushButton(Game);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
-        pushButton->setGeometry(QRect(310, 470, 170, 60));
-        pushButton->setStyleSheet(QString::fromUtf8("background-image: url(:/pause.png);\n"
+        pause = new QPushButton(Game);
+        pause->setObjectName(QString::fromUtf8("pause"));
+        pause->setGeometry(QRect(310, 470, 170, 60));
+        pause->setStyleSheet(QString::fromUtf8("\n"
 "border: none;"));
         label = new QLabel(Game);
         label->setObjectName(QString::fromUtf8("label"));
@@ -77,6 +79,16 @@ public:
         label_score_numbers->setGeometry(QRect(330, 400, 151, 41));
         label_score_numbers->setStyleSheet(QString::fromUtf8("font: 36pt \"Optima\";\n"
 "color:rgb(0, 225, 216);"));
+        blackImg = new QLabel(Game);
+        blackImg->setObjectName(QString::fromUtf8("blackImg"));
+        blackImg->setGeometry(QRect(-200, 0, 503, 574));
+        blackImg->setMinimumSize(QSize(503, 574));
+        blackImg->setMaximumSize(QSize(503, 574));
+        blackImg->setStyleSheet(QString::fromUtf8("background: rgba(255,255,255,0);"));
+        label_Tetris = new QLabel(Game);
+        label_Tetris->setObjectName(QString::fromUtf8("label_Tetris"));
+        label_Tetris->setGeometry(QRect(20, 20, 251, 511));
+        label_Tetris->setStyleSheet(QString::fromUtf8("background: rgba(255,255,255,0);"));
 
         retranslateUi(Game);
         QObject::connect(Close_game, SIGNAL(clicked()), Game, SLOT(close()));
@@ -89,10 +101,12 @@ public:
         Game->setWindowTitle(QCoreApplication::translate("Game", "Dialog", nullptr));
         Close_game->setText(QString());
         label_score->setText(QString());
-        pushButton->setText(QString());
+        pause->setText(QString());
         label->setText(QString());
         label_figure->setText(QString());
         label_score_numbers->setText(QString());
+        blackImg->setText(QString());
+        label_Tetris->setText(QString());
     } // retranslateUi
 
 };
