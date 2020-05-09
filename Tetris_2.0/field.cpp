@@ -20,20 +20,14 @@ Field::Field(int level) :
     gameState(gameStates::INPROCESS), curLevel(level), score(0), highestNotEmpty(FIELD_Ht) {
     QPixmap pix(":/red_block.png");
 
-    __field.resize(FIELD_Ht + 2, std::vector<QPixmap>(FIELD_W + 2));
+    _field.resize(FIELD_Ht + 2, std::vector<QPixmap>(FIELD_W + 2));
 
     for (size_t i = 0; i <= FIELD_Ht; i++) {
-//        _field[i].fill(QPixmap());
-//        _field[i][0] = pix;
-//        _field[i][FIELD_W + 1] = pix;
-
-        __field[i].assign(FIELD_W + 1, QPixmap());
-        __field[i][0] = pix;
-        __field[i][FIELD_W + 1] = pix;
+        std::fill(_field[i].begin() + 1, _field[i].end() - 1, QPixmap());
+        _field[i][0] = pix;
+        _field[i][FIELD_W + 1] = pix;
     }
-    //_field[FIELD_Ht + 1].fill(pix);
-    __field[FIELD_Ht + 1].assign(FIELD_W + 1, pix);
-
+    std::fill(_field[FIELD_Ht + 1].begin() + 1, _field[FIELD_Ht + 1].end() - 1, pix);
     generateNextId();
 }
 
@@ -50,9 +44,9 @@ void Field::updateField(int level) {
 }
 
 void Field::printFieldTmp() const {
-    for (size_t i = 0; i <= FIELD_Ht; i++) {
-        for (size_t j = 0; j < FIELD_W; j++) {
-            std::cout << !(__field[i][j].isNull()) << ' ';
+    for (size_t i = 1; i <= FIELD_Ht; i++) {
+        for (size_t j = 1; j <= FIELD_W; j++) {
+            std::cout << !(_field[i][j].isNull()) << ' ';
         }
         std::cout << '\n' ;
     }
@@ -70,21 +64,16 @@ void Field::checkRow() {
     int cnt = 0;
     for (size_t i = highestNotEmpty; i <= FIELD_Ht; i++) {
         bool row = true;
-        for (auto &cell: __field[i]) {
+        for (auto &cell: _field[i]) {
             row &= !(cell.isNull());
         }
         if (row) {
             cnt++;
-            __field[i].assign(FIELD_W + 2, QPixmap());
-            __field[i][0] = pix;
-            __field[i][FIELD_W + 1] = pix;
+            std::fill(_field[i].begin() + 1, _field[i].end() - 1, QPixmap());
             for (int j = i - 1; j >= highestNotEmpty; j--) {
-                __field[j + 1] = move(__field[j]);
+                _field[j + 1] = move(_field[j]);
             }
-            __field[highestNotEmpty].assign(FIELD_W + 2, QPixmap());
-            __field[highestNotEmpty][0] = pix;
-            __field[highestNotEmpty][FIELD_W + 1] = pix;
-
+            std::fill(_field[i].begin() + 1, _field[i].end() - 1, QPixmap());
             highestNotEmpty++;
             calculateScore(cnt);
         }
@@ -132,7 +121,7 @@ Fallen *Field::generateFallen(QGraphicsScene *scene) {
 }
 
 bool Field::getCell(std::pair<int, int> coords) {
-    return !(__field[coords.first][coords.second].isNull());
+    return !(_field[coords.first][coords.second].isNull());
 }
 
 gameStates Field::getState() {
@@ -141,7 +130,7 @@ gameStates Field::getState() {
 }
 
 void Field::setCell(std::pair<int, int> coords, QPixmap pix) {
-    __field[coords.first][coords.second] = QPixmap(pix);
+    _field[coords.first][coords.second] = QPixmap(pix);
 }
 
 int Field::getScore() {
@@ -149,7 +138,7 @@ int Field::getScore() {
 }
 
 QPixmap Field::get(int x, int y) {
-    return __field[x][y];
+    return _field[x][y];
 }
 
 std::size_t Field::getFIELD_Ht(){

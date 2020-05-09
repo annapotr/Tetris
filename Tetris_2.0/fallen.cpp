@@ -1,8 +1,7 @@
 #include "fallen.h"
 #include <QBrush>
 
-Fallen::Fallen(Field *f, QGraphicsScene *scene)
-{
+Fallen::Fallen(Field *f, QGraphicsScene *scene) {
     this->field = f;
     this->scene_ = scene;
 }

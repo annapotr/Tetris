@@ -17,7 +17,7 @@ extern int PADDING;
 
 constexpr std::size_t NUM_OF_BLOCKS = 4;
 
-extern std::vector<std::vector<int>> tetriminoesInit;
+extern std::vector<std::vector<std::pair<int, int>>> tetriminoesInit;
 enum class tetriminoes: int {
     I = 0,
     J = 1,
@@ -32,7 +32,7 @@ QColor make_color(tetriminoes t);
 
 class Tetrimino : public QGraphicsItem {
 public:
-    Tetrimino(std::vector<int> blocks, tetriminoes type, Field *f, QGraphicsScene *scene);//, QGraphicsScene *scene);
+    Tetrimino(std::vector<std::pair<int, int>> blocks, tetriminoes type, Field *f, QGraphicsScene *scene);//, QGraphicsScene *scene);
 
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
@@ -63,7 +63,7 @@ private:
     QGraphicsScene *scene_;
 
     QRect boundingRectangale;
-    std::size_t max_col = 0, max_row = 0;
+    int max_col = 0, max_row = 0;
 
     bool isVertical = 0;
 

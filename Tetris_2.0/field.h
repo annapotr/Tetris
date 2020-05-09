@@ -72,7 +72,7 @@ private:
     gameStates gameState;
     int curLevel, score, highestNotEmpty, nextFigure;
     //std::array<std::array<QPixmap, FIELD_W + 2>, FIELD_Ht + 2> _field;
-    std::vector<std::vector<QPixmap>> __field;
+    std::vector<std::vector<QPixmap>> _field;
 };
 
 #endif // FIELD_H
