@@ -62,7 +62,7 @@ public:
 
     gameStates gameState;
 
-    void updateField(int level);
+    void updateField(int level,QGraphicsScene *scene);
 
 private:
     static const std::size_t FIELD_Ht = 20;

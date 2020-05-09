@@ -23,7 +23,7 @@ GameOver::~GameOver()
 void GameOver::on_pushButton_clicked()
 {
     close();
-    f->updateField(0);
+    f->updateField(0, scene_);
 
     f->currentTetrimino = f->generateNext(scene_);
     f->currentFallen = f->generateFallen(scene_);
@@ -34,6 +34,12 @@ void GameOver::on_pushButton_clicked()
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), scene_, SLOT(advance()));
     timer->start(25);
+    /*
+    hide();
+    Field *f = new Field(0);
+    Game game(f);
+    game.setModal(true);
+    game.exec();*/
 
 }
 

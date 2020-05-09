@@ -27,7 +27,7 @@ Field::Field(int level) :
     generateNextId();
 }
 
-void Field::updateField(int level) {
+void Field::updateField(int level,QGraphicsScene *scene) {
     gameState = gameStates::INPROCESS, curLevel = level , score = 0 , highestNotEmpty = FIELD_Ht;
     _blackImg->setStyleSheet("background: rgba(255, 255, 255, 0)");
     for (size_t i = 0; i <= FIELD_Ht; i++) {
@@ -37,6 +37,7 @@ void Field::updateField(int level) {
     _field[FIELD_Ht + 1].fill(pix);
 
     generateNextId();
+    currentTetrimino->updateTetrimino(tetriminoesInit[nextFigure], static_cast<tetriminoes>(nextFigure), this, scene);
 }
 
 void Field::printFieldTmp() const {
