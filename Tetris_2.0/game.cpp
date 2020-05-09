@@ -26,11 +26,7 @@ Game::Game(Field *f, QWidget *parent) :
 
     ui->graphicsView->setScene(scene);
     ui->graphicsView->setRenderHint(QPainter::Antialiasing);
-<<<<<<< HEAD
     scene->setSceneRect(BLOCK_PX, BLOCK_PX, 260, 520);
-=======
-    scene->setSceneRect(0,25,260,520);
->>>>>>> upstream/master
 
     QBrush br(QImage(":\background.png"));
     QPalette plt = this->palette();

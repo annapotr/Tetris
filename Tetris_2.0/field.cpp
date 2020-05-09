@@ -35,10 +35,10 @@ void Field::updateField(int level) {
     gameState = gameStates::INPROCESS, curLevel = level , score = 0 , highestNotEmpty = FIELD_Ht;
     _blackImg->setStyleSheet("background: rgba(255, 255, 255, 0)");
     for (size_t i = 0; i <= FIELD_Ht; i++) {
-        _field[i].fill(QPixmap());
+        std::fill(_field[i].begin() + 1, _field[i].end() - 1, QPixmap());
     }
     QPixmap pix(":/red_block.png");
-    _field[FIELD_Ht + 1].fill(pix);
+    std::fill(_field[FIELD_Ht + 1].begin() + 1, _field[FIELD_Ht + 1].end() - 1, pix);
 
     generateNextId();
 }

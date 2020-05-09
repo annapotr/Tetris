@@ -69,7 +69,6 @@ private:
     static constexpr std::size_t FIELD_W = 10;
     static constexpr int START_POS = 4;
 
-    gameStates gameState;
     int curLevel, score, highestNotEmpty, nextFigure;
     //std::array<std::array<QPixmap, FIELD_W + 2>, FIELD_Ht + 2> _field;
     std::vector<std::vector<QPixmap>> _field;
