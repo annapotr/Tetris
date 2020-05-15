@@ -141,6 +141,15 @@ void Tetrimino::right() {
     return;
 }
 
+void Tetrimino::fastLanding() {
+    while (!field->doCollision()
+           && (topLeftCorner.ry() + (max_row + 1) < field->getFIELD_Ht() + 1)) {
+        topLeftCorner.ry()++;
+        //setPos(mapToScene(topLeftCorner.rx() * BLOCK_PX, topLeftCorner.ry() * BLOCK_PX));
+        setPos(topLeftCorner.rx() * BLOCK_PX, topLeftCorner.ry() * BLOCK_PX);
+    }
+}
+
 void Tetrimino::advance(int phase) {
     if(!phase) return;
     //qDebug() << "X of tLC: " << topLeftCorner.rx() << "Y of tLC: " << topLeftCorner.ry();
@@ -156,7 +165,6 @@ void Tetrimino::advance(int phase) {
     }
 
     if (field->doCollision()) {
-       //--topLeftCorner.ry();
        field->fill(pix_);
        speed = 0;
        scene_->removeItem(this);
