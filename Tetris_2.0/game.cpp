@@ -62,6 +62,7 @@ void Game::doEnd(){
 
 Game::~Game() {
     delete ui;
+    delete scene;
 }
 
 void Game::keyPressEvent(QKeyEvent *event) {
