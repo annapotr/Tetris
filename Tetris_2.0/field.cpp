@@ -83,8 +83,8 @@ void Field::checkRow() {
 bool Field::doCollision() {
    bool hasFilled = false;
    for (auto &item: currentTetrimino->_blocks) {
-       hasFilled |= getCell({(int)(currentTetrimino->topLeftCorner.ry() + item.first + 1),
-                             (int)(currentTetrimino->topLeftCorner.rx() + item.second)});
+       hasFilled |= getCell({static_cast<int>(currentTetrimino->topLeftCorner.ry() + item.first + 1),
+                             static_cast<int>(currentTetrimino->topLeftCorner.rx() + item.second)});
 
        /*if (hasFilled) {
           qDebug() << "collision Y: " << (currentTetrimino->topLeftCorner.ry()+item.first + 1) << " collision X: " << (currentTetrimino->topLeftCorner.rx()+item.second);
@@ -92,6 +92,15 @@ bool Field::doCollision() {
 
    }
    return hasFilled;
+}
+
+bool Field::banRotate() {
+    bool banRotate = false;
+    for (auto &item: currentTetrimino->_blocks) {
+        banRotate |= getCell({static_cast<int>(currentTetrimino->topLeftCorner.ry() + item.first),
+                              static_cast<int>(currentTetrimino->topLeftCorner.rx() + item.second)});
+    }
+    return banRotate;
 }
 
 void Field::fill(QPixmap pix) {
@@ -121,6 +130,8 @@ Fallen *Field::generateFallen(QGraphicsScene *scene) {
 }
 
 bool Field::getCell(std::pair<int, int> coords) {
+    if (coords.first < 0 || coords.first > (int)FIELD_Ht) return true;
+    if (coords.second < 1 || coords.second > (int)FIELD_W) return true;
     return !(_field[coords.first][coords.second].isNull());
 }
 

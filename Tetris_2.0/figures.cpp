@@ -9,6 +9,7 @@
 #include <iostream>
 #include <QPainter>
 #include <iostream>
+#include <algorithm>
 #include "gameover.h"
 
 using std::vector;
@@ -124,19 +125,6 @@ int Tetrimino::maxParam(bool param) {
     return maxP;
 }
 
-int Tetrimino::minParam(bool param) {
-    int minP = 5;
-
-    for (std::size_t i = 0; i < this->_blocks.size(); i++) {
-        if (!param) {
-            minP = std::max(minP, _blocks[i].first);//Rows
-        } else {
-            minP = std::max(minP, _blocks[i].second);//Cols
-        }
-    }
-    return minP;
-}
-
 void Tetrimino::left() {
     if (topLeftCorner.rx() > 1){
         topLeftCorner.rx()--;
@@ -168,6 +156,7 @@ void Tetrimino::advance(int phase) {
     }
 
     if (field->doCollision()) {
+       //--topLeftCorner.ry();
        field->fill(pix_);
        speed = 0;
        scene_->removeItem(this);
@@ -189,9 +178,16 @@ void Tetrimino::advance(int phase) {
 
 void Tetrimino::turn90back() {
     //забанить повороты после коллизии
+    std::vector<std::pair<int, int>> prevs;
     if(field->getState() == gameStates::INPROCESS) {
+        prevs = _blocks;
         for (std::size_t i = 0; i < _blocks.size(); i++) {
             _blocks[i] = {max_col - _blocks[i].second, _blocks[i].first};
+        }
+
+        if (field->banRotate()) {
+            swap(_blocks, prevs);
+            return;
         }
 
         max_row = maxParam(0);
@@ -203,9 +199,16 @@ void Tetrimino::turn90back() {
 
 void Tetrimino::turn90up() {
     //забанить повороты после коллизии
+    std::vector<std::pair<int, int>> prevs;
     if(field->getState() == gameStates::INPROCESS) {
+        prevs = _blocks;
         for (std::size_t i = 0; i < _blocks.size(); i++) {
             _blocks[i] = {_blocks[i].second, max_row - _blocks[i].first};
+        }
+
+        if (field->banRotate()) {
+            swap(_blocks, prevs);
+            return;
         }
 
         max_row = maxParam(0);
