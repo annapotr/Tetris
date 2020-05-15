@@ -45,6 +45,7 @@ public:
     void calculateScore(int cnt);
     void fill(QPixmap pix);
     bool doCollision();
+    bool banRotate();
     Tetrimino *generateNext(QGraphicsScene *scene);
     Fallen *generateFallen(QGraphicsScene *scene);
     void generateNextId();

@@ -41,12 +41,12 @@ public:
     void setCoordinates(int start);
     void left();
     void right();
+    void fastLanding();
 
     std::vector<std::pair<int, int>> _blocks;
     QPointF topLeftCorner;
 
     int maxParam(bool param);
-    int minParam(bool param);
     void turn90back();
     void turn90up();
 
