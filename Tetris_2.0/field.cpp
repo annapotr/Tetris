@@ -31,7 +31,7 @@ Field::Field(int level) :
     generateNextId();
 }
 
-void Field::updateField(int level,QGraphicsScene *scene) {
+void Field::updateField(int level, QGraphicsScene *scene) {
     gameState = gameStates::INPROCESS, curLevel = level , score = 0 , highestNotEmpty = FIELD_Ht;
     _blackImg->setStyleSheet("background: rgba(255, 255, 255, 0)");
     for (size_t i = 0; i <= FIELD_Ht; i++) {
@@ -60,20 +60,17 @@ void Field::calculateScore(int cnt) {
 }
 
 void Field::checkRow() {
-    QPixmap pix(":/red_block.png");
     int cnt = 0;
-    for (size_t i = highestNotEmpty; i <= FIELD_Ht; i++) {
-        bool row = true;
-        for (auto &cell: _field[i]) {
-            row &= !(cell.isNull());
-        }
-        if (row) {
+    for (size_t row = highestNotEmpty; row <= FIELD_Ht; row++) {
+        bool fullRow = true;
+        for (auto &cell: _field[row]) fullRow &= !(cell.isNull());
+
+        if (fullRow) {
             cnt++;
-            std::fill(_field[i].begin() + 1, _field[i].end() - 1, QPixmap());
-            for (int j = i - 1; j >= highestNotEmpty; j--) {
-                _field[j + 1] = move(_field[j]);
+            for (int j = row; j > highestNotEmpty; j--) {
+                _field[j] = _field[j - 1];
             }
-            std::fill(_field[i].begin() + 1, _field[i].end() - 1, QPixmap());
+            std::fill(_field[highestNotEmpty].begin() + 1, _field[highestNotEmpty].end() - 1, QPixmap());
             highestNotEmpty++;
             calculateScore(cnt);
         }
