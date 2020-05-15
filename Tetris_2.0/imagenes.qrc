@@ -42,6 +42,8 @@
         <file>greenBlocks.png</file>
         <file>tetris.png</file>
         <file>continue.png</file>
+        <file>new_back.png</file>
+        <file>new_tetris.png</file>
     </qresource>
     <qresource prefix="/nq">
         <file>IMG_7403.jpg</file>

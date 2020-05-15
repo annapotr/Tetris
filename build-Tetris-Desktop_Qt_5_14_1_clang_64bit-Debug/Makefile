@@ -719,6 +719,7 @@ qrc_imagenes.o: ../Tetris_2.0/imagenes.qrc \
 		../Tetris_2.0/yellow.png \
 		../Tetris_2.0/dackk.png \
 		../Tetris_2.0/blue_blue_block.png \
+		../Tetris_2.0/new_back.png \
 		../Tetris_2.0/pink_block.png \
 		../Tetris_2.0/high_score.png \
 		../Tetris_2.0/orangeBlocks.png \
@@ -733,6 +734,7 @@ qrc_imagenes.o: ../Tetris_2.0/imagenes.qrc \
 		../Tetris_2.0/menu.png \
 		../Tetris_2.0/yellowBlocks.png \
 		../Tetris_2.0/tetris.png \
+		../Tetris_2.0/new_tetris.png \
 		../Tetris_2.0/darck.png \
 		../Tetris_2.0/blueBlockss.png \
 		../Tetris_2.0/blue1.png \

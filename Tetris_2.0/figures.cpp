@@ -65,7 +65,7 @@ QPixmap make_pix(tetriminoes t) {
 
 Tetrimino::Tetrimino(std::vector<pair<int, int>> blocks, tetriminoes type, Field *f, QGraphicsScene *scene)
     : type_(type), pix_(make_pix(type_)), field(f), scene_(scene),
-      speed(5), paused_speed(5) {
+      speed(2), paused_speed(2) {
     for (auto &k: blocks) {
         _blocks.push_back(k);
         if (max_row < k.first) max_row = k.first;
