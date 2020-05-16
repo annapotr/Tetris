@@ -168,6 +168,7 @@ void Tetrimino::advance(int phase) {
        field->fill(pix_);
        speed = 0;
        scene_->removeItem(this);
+       field->checkRow();
        field->printFieldTmp();
        if (field->getState() == gameStates::GAMEOVER) {
            field->changeBlackImg();
