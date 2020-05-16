@@ -745,6 +745,7 @@ qrc_imagenes.o: ../Tetris_2.0/imagenes.qrc \
 		../Tetris_2.0/orange.png \
 		../Tetris_2.0/pause.png \
 		../Tetris_2.0/pinkBlockss.png \
+		../Tetris_2.0/empty.jpeg \
 		../Tetris_2.0/BlueBlocks.png \
 		../Tetris_2.0/level.png \
 		../Tetris_2.0/pinkBlocks.png \

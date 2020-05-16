@@ -17,8 +17,9 @@ public:
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
 
-private:
+    //void advance(int phase);
 
+private:
 
     Field *field;
     QGraphicsScene *scene_;

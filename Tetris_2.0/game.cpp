@@ -49,6 +49,7 @@ Game::Game(Field *f, QWidget *parent) :
         timer->start(10);
 
     //}
+    f->score_ = ui->label_score_numbers;
     ui->label_score_numbers->setNum(f->getScore());
     ui->label_score_numbers->setAlignment(Qt::AlignCenter);
 
@@ -113,3 +114,20 @@ void Game::on_pause_clicked()
         f->gameState = gameStates::PAUSED;
     }
 }
+/*
+void Game::update()
+{
+    if(f->getState() == gameStates::PAUSED) {
+        ui->label_Tetris->clear();
+        ui->label_Tetris->setStyleSheet("background: rgba(255, 255, 255, 0)");
+        ui->pause->setStyleSheet("border-image: url(:/pause.png) stretch;");
+        f->gameState = gameStates::INPROCESS;
+    } else {
+        ui->label_Tetris->setStyleSheet("background: rgba(255, 255, 255, 255)");
+        QPixmap pix(":/tetris.png");
+        ui->label_Tetris->setPixmap(pix);
+        ui->pause->setStyleSheet("border-image: url(:/continue.png) stretch;");
+        f->gameState = gameStates::PAUSED;
+    }
+}
+*/

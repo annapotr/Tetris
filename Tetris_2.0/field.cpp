@@ -57,9 +57,10 @@ void Field::printFieldTmp() const {
 void Field::calculateScore(int cnt) {
     if (cnt > 4) cnt = 4;
     score += points[cnt - 1] * (curLevel + 1);
+    score_->setNum(score);
 }
 
-void Field::checkRow() {
+void Field::checkRow(QGraphicsScene *scene) {
     int cnt = 0;
     for (size_t row = highestNotEmpty; row <= FIELD_Ht; row++) {
         bool fullRow = true;
@@ -73,6 +74,10 @@ void Field::checkRow() {
             std::fill(_field[highestNotEmpty].begin() + 1, _field[highestNotEmpty].end() - 1, QPixmap());
             highestNotEmpty++;
             calculateScore(cnt);
+
+            scene->removeItem(currentFallen);
+            currentFallen = generateFallen(scene);
+            scene->addItem(currentFallen);
         }
     }
 }

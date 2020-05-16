@@ -160,7 +160,7 @@ void Tetrimino::advance(int phase) {
        field->fill(pix_);
        speed = 0;
        scene_->removeItem(this);
-       field->checkRow();
+       field->checkRow(scene_);
        field->printFieldTmp();
        if (field->getState() == gameStates::GAMEOVER) {
            field->changeBlackImg();
@@ -172,6 +172,8 @@ void Tetrimino::advance(int phase) {
        }
        field->currentTetrimino = field->generateNext(scene_);
        scene_->addItem(field->currentTetrimino);
+
+
     }
     setPos(mapToParent(0,speed));
     topLeftCorner.ry() += speed/25;
@@ -216,7 +218,7 @@ void Tetrimino::turn90up() {
         max_row = maxParam(0);
         max_col = maxParam(0);
 
-        setPos(mapToScene(BLOCK_PX * (max_col + 1), BLOCK_PX * (max_row + 1)));
+        //setPos(mapToScene(BLOCK_PX * (max_col + 1), BLOCK_PX * (max_row + 1)));
 
         boundingRectangale.setRect(0, 0, BLOCK_PX * (max_col + 1), BLOCK_PX * (max_row + 1));
     }

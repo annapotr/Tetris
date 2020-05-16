@@ -41,7 +41,7 @@ public:
 
     void printFieldTmp() const;
 
-    void checkRow();
+    void checkRow(QGraphicsScene *scene);
     void calculateScore(int cnt);
     void fill(QPixmap pix);
     bool doCollision();
@@ -54,6 +54,8 @@ public:
     Fallen *currentFallen;
 
     int getNextFigure();
+
+    QLabel* score_;
 
     QLabel* _lf;
     QLabel* _blackImg ;
