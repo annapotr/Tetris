@@ -41,8 +41,10 @@ public:
         Game->setStyleSheet(QString::fromUtf8("background-image: url(:/background1.png);"));
         graphicsView = new QGraphicsView(Game);
         graphicsView->setObjectName(QString::fromUtf8("graphicsView"));
-        graphicsView->setGeometry(QRect(20, 14, 261, 521));
-        graphicsView->setStyleSheet(QString::fromUtf8("background-image: url(:/background.png);\n"
+        graphicsView->setGeometry(QRect(30, 20, 258, 516));
+        graphicsView->setMinimumSize(QSize(258, 516));
+        graphicsView->setMaximumSize(QSize(258, 516));
+        graphicsView->setStyleSheet(QString::fromUtf8("background-image: url(:/new_back.png);\n"
 "border: none;"));
         Close_game = new QPushButton(Game);
         Close_game->setObjectName(QString::fromUtf8("Close_game"));
@@ -81,13 +83,15 @@ public:
 "color:rgb(0, 225, 216);"));
         blackImg = new QLabel(Game);
         blackImg->setObjectName(QString::fromUtf8("blackImg"));
-        blackImg->setGeometry(QRect(-200, 0, 503, 574));
+        blackImg->setGeometry(QRect(-210, 0, 503, 574));
         blackImg->setMinimumSize(QSize(503, 574));
         blackImg->setMaximumSize(QSize(503, 574));
         blackImg->setStyleSheet(QString::fromUtf8("background: rgba(255,255,255,0);"));
         label_Tetris = new QLabel(Game);
         label_Tetris->setObjectName(QString::fromUtf8("label_Tetris"));
-        label_Tetris->setGeometry(QRect(20, 20, 251, 511));
+        label_Tetris->setGeometry(QRect(30, 20, 258, 516));
+        label_Tetris->setMinimumSize(QSize(258, 516));
+        label_Tetris->setMaximumSize(QSize(258, 516));
         label_Tetris->setStyleSheet(QString::fromUtf8("background: rgba(255,255,255,0);"));
 
         retranslateUi(Game);

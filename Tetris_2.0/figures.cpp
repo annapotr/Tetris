@@ -82,14 +82,6 @@ Tetrimino::Tetrimino(std::vector<pair<int, int>> blocks, tetriminoes type, Field
     qDebug() << "Max y & x: " << max_row << ' ' << max_col << '\n';*/
 }
 
-void Tetrimino::updateTetrimino(vector<pair<int, int>> blocks, tetriminoes type, Field *f, QGraphicsScene *scene) {
-    type_ = type, pix_ = make_pix(type_), field = f, scene_ = scene , speed = 5, paused_speed = 5;
-    for (auto &k: blocks) {
-        _blocks.push_back(k);
-        if (max_row < k.first) max_row = k.first;
-        if (max_col < k.second) max_col = k.second;
-    }
-}
 
 void Tetrimino::setCoordinates(int start) {
     topLeftCorner.rx() += start;
@@ -199,7 +191,8 @@ void Tetrimino::turn90back() {
         }
 
         max_row = maxParam(0);
-        max_col = maxParam(1);
+        max_col = maxParam(0);
+
 
         boundingRectangale.setRect(0, 0, BLOCK_PX * (max_col + 1), BLOCK_PX * (max_row + 1));
     }
@@ -220,7 +213,9 @@ void Tetrimino::turn90up() {
         }
 
         max_row = maxParam(0);
-        max_col = maxParam(1);
+        max_col = maxParam(0);
+
+        setPos(mapToScene(BLOCK_PX * (max_col + 1), BLOCK_PX * (max_row + 1)));
 
         boundingRectangale.setRect(0, 0, BLOCK_PX * (max_col + 1), BLOCK_PX * (max_row + 1));
     }

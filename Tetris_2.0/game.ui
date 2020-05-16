@@ -31,14 +31,26 @@
   <widget class="QGraphicsView" name="graphicsView">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>14</y>
-     <width>261</width>
-     <height>521</height>
+     <x>30</x>
+     <y>20</y>
+     <width>258</width>
+     <height>516</height>
     </rect>
    </property>
+   <property name="minimumSize">
+    <size>
+     <width>258</width>
+     <height>516</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>258</width>
+     <height>516</height>
+    </size>
+   </property>
    <property name="styleSheet">
-    <string notr="true">background-image: url(:/background.png);
+    <string notr="true">background-image: url(:/new_back.png);
 border: none;</string>
    </property>
   </widget>
@@ -177,7 +189,7 @@ color:rgb(0, 225, 216);</string>
   <widget class="QLabel" name="blackImg">
    <property name="geometry">
     <rect>
-     <x>-200</x>
+     <x>-210</x>
      <y>0</y>
      <width>503</width>
      <height>574</height>
@@ -205,11 +217,23 @@ color:rgb(0, 225, 216);</string>
   <widget class="QLabel" name="label_Tetris">
    <property name="geometry">
     <rect>
-     <x>20</x>
+     <x>30</x>
      <y>20</y>
-     <width>251</width>
-     <height>511</height>
+     <width>258</width>
+     <height>516</height>
     </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>258</width>
+     <height>516</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>258</width>
+     <height>516</height>
+    </size>
    </property>
    <property name="styleSheet">
     <string notr="true">background: rgba(255,255,255,0);</string>
