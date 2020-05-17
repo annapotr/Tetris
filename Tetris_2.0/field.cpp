@@ -17,7 +17,7 @@ using std::size_t;
 std::vector<int> points = {40, 100, 300, 1200};
 
 Field::Field(int level) :
-    gameState(gameStates::INPROCESS), curLevel(level), score(0), highestNotEmpty(FIELD_Ht) {
+    gameState(gameStates::INPROCESS), curLevel(level), score(0), highestNotEmpty(FIELD_Ht), deleteRows(0) {
     QPixmap pix(":/red_block.png");
 
     _field.resize(FIELD_Ht + 2, std::vector<QPixmap>(FIELD_W + 2));
@@ -73,13 +73,15 @@ void Field::checkRow(QGraphicsScene *scene) {
             }
             std::fill(_field[highestNotEmpty].begin() + 1, _field[highestNotEmpty].end() - 1, QPixmap());
             highestNotEmpty++;
-            calculateScore(cnt);
 
             scene->removeItem(currentFallen);
             currentFallen = generateFallen(scene);
             scene->addItem(currentFallen);
         }
     }
+    if (cnt) calculateScore(cnt);
+    deleteRows += cnt;
+    levelUp();
 }
 
 bool Field::doCollision() {
@@ -87,11 +89,6 @@ bool Field::doCollision() {
    for (auto &item: currentTetrimino->_blocks) {
        hasFilled |= getCell({static_cast<int>(currentTetrimino->topLeftCorner.ry() + item.first + 1),
                              static_cast<int>(currentTetrimino->topLeftCorner.rx() + item.second)});
-
-       /*if (hasFilled) {
-          qDebug() << "collision Y: " << (currentTetrimino->topLeftCorner.ry()+item.first + 1) << " collision X: " << (currentTetrimino->topLeftCorner.rx()+item.second);
-       }*/
-
    }
    return hasFilled;
 }
@@ -131,7 +128,7 @@ Fallen *Field::generateFallen(QGraphicsScene *scene) {
     return F;
 }
 
-bool Field::getCell(std::pair<int, int> coords) {
+bool Field::getCell(std::pair<int, int> coords) const {
     if (coords.first < 0 || coords.first > (int)FIELD_Ht) return true;
     if (coords.second < 1 || coords.second > (int)FIELD_W) return true;
     return !(_field[coords.first][coords.second].isNull());
@@ -146,20 +143,27 @@ void Field::setCell(std::pair<int, int> coords, QPixmap pix) {
     _field[coords.first][coords.second] = QPixmap(pix);
 }
 
-int Field::getScore() {
+int Field::getScore() const {
     return score;
 }
 
-QPixmap Field::get(int x, int y) {
+QPixmap Field::get(int x, int y) const {
     return _field[x][y];
 }
 
-std::size_t Field::getFIELD_Ht(){
+std::size_t Field::getFIELD_Ht() const {
     return FIELD_Ht;
 }
 
-std::size_t Field::getFIELD_W(){
+std::size_t Field::getFIELD_W() const {
     return FIELD_W;
+}
+
+int Field::levelUp() {
+    if (deleteRows >= (curLevel + 1) * 10) {
+        curLevel++;
+    }
+    return curLevel;
 }
 
 void Field::changeImage(int nextFigure) {
