@@ -43,6 +43,7 @@ public:
 
     void checkRow(QGraphicsScene *scene);
     void calculateScore(int cnt);
+    void addToScore(int num);
     void fill(QPixmap pix);
     bool doCollision();
     bool banRotate();

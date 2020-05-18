@@ -72,14 +72,6 @@ Tetrimino::Tetrimino(std::vector<pair<int, int>> blocks, tetriminoes type, Field
         if (max_row < k.first) max_row = k.first;
         if (max_col < k.second) max_col = k.second;
     }
-
-    /*qDebug() << "L\n";
-
-    for (std::size_t i = 0; i < _blocks.size(); i++) {
-        qDebug() << _blocks[i].first << ' ' << _blocks[i].second;
-    }
-
-    qDebug() << "Max y & x: " << max_row << ' ' << max_col << '\n';*/
 }
 
 
@@ -140,6 +132,7 @@ void Tetrimino::fastLanding() {
         //setPos(mapToScene(topLeftCorner.rx() * BLOCK_PX, topLeftCorner.ry() * BLOCK_PX));
         setPos(topLeftCorner.rx() * BLOCK_PX, topLeftCorner.ry() * BLOCK_PX);
     }
+    isFastLanding = true;
 }
 
 void Tetrimino::advance(int phase) {
@@ -159,6 +152,9 @@ void Tetrimino::advance(int phase) {
     if (field->doCollision()) {
        field->fill(pix_);
        speed = 0;
+       int addToScore = static_cast<int>(topLeftCorner.ry());
+       if (isFastLanding) field->addToScore(2 * addToScore);
+       else field->addToScore(addToScore);
        scene_->removeItem(this);
        field->checkRow(scene_);
        field->printFieldTmp();
@@ -180,7 +176,6 @@ void Tetrimino::advance(int phase) {
 }
 
 void Tetrimino::turn90back() {
-    //забанить повороты после коллизии
     std::vector<std::pair<int, int>> prevs;
     if(field->getState() == gameStates::INPROCESS) {
         prevs = _blocks;
@@ -193,16 +188,13 @@ void Tetrimino::turn90back() {
             return;
         }
 
-        max_row = maxParam(0);
-        max_col = maxParam(0);
-
+        std::swap(max_row, max_col);
 
         boundingRectangale.setRect(0, 0, BLOCK_PX * (max_col + 1), BLOCK_PX * (max_row + 1));
     }
 }
 
 void Tetrimino::turn90up() {
-    //забанить повороты после коллизии
     std::vector<std::pair<int, int>> prevs;
     if(field->getState() == gameStates::INPROCESS) {
         prevs = _blocks;
@@ -215,8 +207,7 @@ void Tetrimino::turn90up() {
             return;
         }
 
-        max_row = maxParam(0);
-        max_col = maxParam(0);
+        std::swap(max_row, max_col);
 
         //setPos(mapToScene(BLOCK_PX * (max_col + 1), BLOCK_PX * (max_row + 1)));
 

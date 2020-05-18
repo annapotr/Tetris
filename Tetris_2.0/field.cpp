@@ -60,6 +60,11 @@ void Field::calculateScore(int cnt) {
     score_->setNum(score);
 }
 
+void Field::addToScore(int num) {
+    score += num;
+    score_->setNum(score);
+}
+
 void Field::checkRow(QGraphicsScene *scene) {
     int cnt = 0;
     for (size_t row = highestNotEmpty; row <= FIELD_Ht; row++) {
