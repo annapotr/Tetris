@@ -8,11 +8,11 @@
 #include <QAbstractScrollArea>
 #include <random>
 
-unsigned int SEED =  std::chrono::system_clock::now().time_since_epoch().count();
-std::mt19937 getRand(SEED);
-
 using std::move;
 using std::size_t;
+
+unsigned int SEED =  std::chrono::system_clock::now().time_since_epoch().count();
+std::mt19937 getRand(SEED);
 
 std::vector<int> points = {40, 100, 300, 1200};
 
@@ -119,7 +119,7 @@ void Field::generateNextId() {
 }
 
 Tetrimino *Field::generateNext(QGraphicsScene *scene) {
-    Tetrimino *F = new Tetrimino(tetriminoesInit[nextFigure], static_cast<tetriminoes>(nextFigure), this, scene);
+    Tetrimino *F = new Tetrimino(tetriminoesInit[nextFigure], nextFigure, this, scene);
     F->setCoordinates(START_POS);
     generateNextId();
     changeImage(nextFigure);

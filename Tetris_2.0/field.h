@@ -15,8 +15,9 @@
 #include <QLabel>
 
 class Tetrimino;
-
 class Fallen;
+
+extern unsigned int SEED;
 
 enum class gameStates {
     INPROCESS,

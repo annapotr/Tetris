@@ -33,33 +33,24 @@ Game::Game(Field *f, QWidget *parent) :
     plt.setBrush(QPalette::Background, br);
     this->setPalette(plt);
 
-    //while(f->getState() == gameStates::INPROCESS) {
-        //timer->stop();
-        f->_lf = ui->label_figure;
-        f->_blackImg = ui->blackImg;
+    f->_lf = ui->label_figure;
+    f->_blackImg = ui->blackImg;
 
-        f->currentTetrimino = f->generateNext(scene);
-        f->currentFallen = f->generateFallen(scene);
+    f->currentTetrimino = f->generateNext(scene);
+    f->currentFallen = f->generateFallen(scene);
 
-        scene->addItem(f->currentTetrimino);
-        scene->addItem(f->currentFallen);
+    scene->addItem(f->currentTetrimino);
+    scene->addItem(f->currentFallen);
 
-        timer = new QTimer(this);
-        connect(timer, SIGNAL(timeout()), scene, SLOT(advance()));
-        timer->start(10);
+    timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), scene, SLOT(advance()));
+    timer->start(100);
 
-    //}
     f->score_ = ui->label_score_numbers;
     ui->label_score_numbers->setNum(f->getScore());
     ui->label_score_numbers->setAlignment(Qt::AlignCenter);
 
 }
-
-/*
-void Game::doEnd(){
-    timer->stop();
-}*/
-
 
 Game::~Game() {
     delete ui;
@@ -67,33 +58,23 @@ Game::~Game() {
 }
 
 void Game::keyPressEvent(QKeyEvent *event) {
-
-    //qDebug() << "In KPE\n" << "f->currentTetrimino: " << f->currentTetrimino << "currT->field->currentTetrimino: " << currT->field->currentTetrimino << ", currT: " << currT << ", currT->field: " << currT->field << '\n';
-
     if (event->key() == Qt::Key_W) {
-        //qDebug() << "Up!\n";
         f->currentTetrimino->turn90up();
     }
 
     if (event->key() == Qt::Key_S) {
-        qDebug() << "Back!\n";
         f->currentTetrimino->turn90back();
     }
 
     if (event->key() == Qt::Key_A) {
-        qDebug() << "Left!\n";
         f->currentTetrimino->left();
     }
 
     if (event->key() == Qt::Key_D) {
-        //calling the function of right moving
-        //
-        qDebug() << "Right!\n";
         f->currentTetrimino->right();
     }
 
     if (event->key() == Qt::Key_Space) {
-        qDebug() << "Fast landing!\n";
         f->currentTetrimino->fastLanding();
     }
 }
