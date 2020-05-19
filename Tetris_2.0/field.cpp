@@ -8,11 +8,11 @@
 #include <QAbstractScrollArea>
 #include <random>
 
-unsigned int SEED =  std::chrono::system_clock::now().time_since_epoch().count();
-std::mt19937 getRand(SEED);
-
 using std::move;
 using std::size_t;
+
+unsigned int SEED =  std::chrono::system_clock::now().time_since_epoch().count();
+std::mt19937 getRand(SEED);
 
 std::vector<int> points = {40, 100, 300, 1200};
 
@@ -33,7 +33,6 @@ Field::Field(int level) :
 
 void Field::updateField(int level, QGraphicsScene *scene) {
     gameState = gameStates::INPROCESS, curLevel = level , score = 0 , highestNotEmpty = FIELD_Ht;
-    _blackImg->setStyleSheet("background: rgba(255, 255, 255, 0)");
     for (size_t i = 0; i <= FIELD_Ht; i++) {
         std::fill(_field[i].begin() + 1, _field[i].end() - 1, QPixmap());
     }
@@ -110,7 +109,7 @@ void Field::generateNextId() {
 }
 
 Tetrimino *Field::generateNext(QGraphicsScene *scene) {
-    Tetrimino *F = new Tetrimino(tetriminoesInit[nextFigure], static_cast<tetriminoes>(nextFigure), this, scene);
+    Tetrimino *F = new Tetrimino(tetriminoesInit[nextFigure], nextFigure, this, scene);
     F->setCoordinates(START_POS);
     generateNextId();
     changeImage(nextFigure);
@@ -158,11 +157,5 @@ void Field::changeImage(int nextFigure) {
     _lf->setPixmap(pix);
 }
 
-void Field::changeBlackImg() {
-    QLabel* bblackImg = new QLabel();
-    bblackImg->resize(50,50);
-    bblackImg->setStyleSheet("background: rgba(188, 188, 188, 92)");
-    _blackImg = bblackImg;
-}
 
 

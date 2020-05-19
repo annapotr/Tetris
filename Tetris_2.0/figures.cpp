@@ -3,6 +3,7 @@
 #include "fallen.h"
 #include "game.h"
 #include <QColor>
+#include <QString>
 #include <QDebug>
 #include <QKeyEvent>
 #include <array>
@@ -10,6 +11,7 @@
 #include <QPainter>
 #include <iostream>
 #include <algorithm>
+#include <random>
 #include "gameover.h"
 
 using std::vector;
@@ -18,6 +20,9 @@ using std::pair;
 
 int BLOCK_PX = 25;
 int PADDING = 5;
+int START_NUM_SHAPES = 7;
+
+std::mt19937 getRandColour(SEED);
 
 vector<vector<pair<int, int>>> tetriminoesInit = {
     {
@@ -31,42 +36,25 @@ vector<vector<pair<int, int>>> tetriminoesInit = {
     }
 };
 
-QPixmap make_pix(tetriminoes t) {
-    switch(t) {
-        case(tetriminoes::I):{
-            QPixmap pix(":/reddd.png");
-            return pix;
-        }
-        case(tetriminoes::J):{
-            QPixmap pix(":/orange.png");
-            return pix;
-        }
-        case(tetriminoes::L):{
-            QPixmap pix(":/yellow_block.png");
-            return pix;
-        }
-        case(tetriminoes::O):{
-            QPixmap pix(":/green_block.png");
-            return pix;
-        }
-        case(tetriminoes::S): {
-            QPixmap pix(":/blue_blue_block.png");
-            return pix;
-        }
-        case(tetriminoes::T): {
-            QPixmap pix(":/blue_block.png");
-            return pix;
-        }
-        case(tetriminoes::Z): {
-            QPixmap pix(":/pink_block.png");
-            return pix;
-        }
-    }
+vector<QString> tetriminoesColours = {
+    ":/reddd.png",
+    ":/orange.png",
+    ":/yellow_block.png",
+    ":/green_block.png",
+    ":/blue_blue_block.png",
+    ":/blue_block.png",
+    ":/pink_block.png"
+};
+
+QPixmap make_pix(int t) {
+   if (t >= START_NUM_SHAPES) t = getRandColour() % START_NUM_SHAPES;
+   QPixmap pix(tetriminoesColours[t]);
+   return pix;
 }
 
-Tetrimino::Tetrimino(std::vector<pair<int, int>> blocks, tetriminoes type, Field *f, QGraphicsScene *scene)
-    : type_(type), pix_(make_pix(type_)), field(f), scene_(scene),
-      speed(2), paused_speed(2) {
+Tetrimino::Tetrimino(std::vector<std::pair<int, int>> blocks, int t, Field *f, QGraphicsScene *scene)
+    : pix_(make_pix(t)), field(f), scene_(scene),
+      speed(1), paused_speed(1) {
     for (auto &k: blocks) {
         _blocks.push_back(k);
         if (max_row < k.first) max_row = k.first;
@@ -108,7 +96,7 @@ int Tetrimino::maxParam(bool param) {
     int maxP = 0;
 
     for (std::size_t i = 0; i < this->_blocks.size(); i++) {
-        if (!param) {
+        if (!param) { //== 0
             maxP = std::max(maxP, _blocks[i].first);//Rows
         } else {
             maxP = std::max(maxP, _blocks[i].second);//Cols
@@ -140,11 +128,12 @@ void Tetrimino::right() {
 void Tetrimino::fastLanding() {
     while (!field->doCollision()
            && (topLeftCorner.ry() + (max_row + 1) < field->getFIELD_Ht() + 2)) {
-        topLeftCorner.ry()++;
-        setPos(topLeftCorner.rx() * BLOCK_PX, topLeftCorner.ry() * BLOCK_PX);
+        speed = 2;
+        setPos(mapToParent(0,speed));
+        topLeftCorner.ry() += speed/25;
+        std::cout << 1 << std::endl;
     }
     topLeftCorner.ry()--;
-    setPos(topLeftCorner.rx() * BLOCK_PX, topLeftCorner.ry() * BLOCK_PX);
 }
 
 void Tetrimino::advance(int phase) {
@@ -171,7 +160,6 @@ void Tetrimino::advance(int phase) {
        field->checkRow(scene_);
        field->printFieldTmp();
        if (field->getState() == gameStates::GAMEOVER) {
-           field->changeBlackImg();
            hide();
            GameOver gameover(field,scene_);
            gameover.setModal(true);
@@ -180,6 +168,10 @@ void Tetrimino::advance(int phase) {
        }
        field->currentTetrimino = field->generateNext(scene_);
        scene_->addItem(field->currentTetrimino);
+       scene_->removeItem(field->currentFallen);
+       field->currentFallen = field->generateFallen(scene_);
+       scene_->addItem(field->currentFallen);
+
     } else {
       topLeftCorner.ry() += speed/25 - 1;
       setPos(mapToParent(0, speed));
@@ -226,6 +218,7 @@ void Tetrimino::turn90up() {
 
         //qDebug() << "br.tl.rx: " << boundingRectangale.topLeft().rx() << " br.tl.ry: " << boundingRectangale.topLeft().ry() << '\n';
         //qDebug() << "tl.rx: " << topLeftCorner.rx() << " tl.ry: " << topLeftCorner.ry() << '\n';
+        //setPos(mapToScene(BLOCK_PX * (max_col + 1), BLOCK_PX * (max_row +1)));
 
         boundingRectangale.setRect(0, 0, BLOCK_PX * (max_col + 1), BLOCK_PX * (max_row + 1));
     }

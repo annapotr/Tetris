@@ -28,8 +28,8 @@ public:
     QLabel *label;
     QLabel *label_figure;
     QLabel *label_score_numbers;
-    QLabel *blackImg;
     QLabel *label_Tetris;
+    QLabel *label_level_numbers;
 
     void setupUi(QDialog *Game)
     {
@@ -81,18 +81,17 @@ public:
         label_score_numbers->setGeometry(QRect(330, 400, 151, 41));
         label_score_numbers->setStyleSheet(QString::fromUtf8("font: 36pt \"Optima\";\n"
 "color:rgb(0, 225, 216);"));
-        blackImg = new QLabel(Game);
-        blackImg->setObjectName(QString::fromUtf8("blackImg"));
-        blackImg->setGeometry(QRect(-210, 0, 503, 574));
-        blackImg->setMinimumSize(QSize(503, 574));
-        blackImg->setMaximumSize(QSize(503, 574));
-        blackImg->setStyleSheet(QString::fromUtf8("background: rgba(255,255,255,0);"));
         label_Tetris = new QLabel(Game);
         label_Tetris->setObjectName(QString::fromUtf8("label_Tetris"));
         label_Tetris->setGeometry(QRect(30, 20, 258, 516));
         label_Tetris->setMinimumSize(QSize(258, 516));
         label_Tetris->setMaximumSize(QSize(258, 516));
         label_Tetris->setStyleSheet(QString::fromUtf8("background: rgba(255,255,255,0);"));
+        label_level_numbers = new QLabel(Game);
+        label_level_numbers->setObjectName(QString::fromUtf8("label_level_numbers"));
+        label_level_numbers->setGeometry(QRect(330, 140, 141, 51));
+        label_level_numbers->setStyleSheet(QString::fromUtf8("font: 36pt \"Optima\";\n"
+"color:rgb(0, 225, 216);"));
 
         retranslateUi(Game);
         QObject::connect(Close_game, SIGNAL(clicked()), Game, SLOT(close()));
@@ -109,8 +108,8 @@ public:
         label->setText(QString());
         label_figure->setText(QString());
         label_score_numbers->setText(QString());
-        blackImg->setText(QString());
         label_Tetris->setText(QString());
+        label_level_numbers->setText(QString());
     } // retranslateUi
 
 };

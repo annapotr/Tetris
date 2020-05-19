@@ -33,33 +33,24 @@ Game::Game(Field *f, QWidget *parent) :
     plt.setBrush(QPalette::Background, br);
     this->setPalette(plt);
 
-    //while(f->getState() == gameStates::INPROCESS) {
-        //timer->stop();
-        f->_lf = ui->label_figure;
-        f->_blackImg = ui->blackImg;
+    f->_lf = ui->label_figure;
 
-        f->currentTetrimino = f->generateNext(scene);
-        f->currentFallen = f->generateFallen(scene);
+    f->currentTetrimino = f->generateNext(scene);
+    f->currentFallen = f->generateFallen(scene);
 
-        scene->addItem(f->currentTetrimino);
-        scene->addItem(f->currentFallen);
+    scene->addItem(f->currentTetrimino);
+    scene->addItem(f->currentFallen);
 
-        timer = new QTimer(this);
-        connect(timer, SIGNAL(timeout()), scene, SLOT(advance()));
-        timer->start(20);
+    timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), scene, SLOT(advance()));
+    timer->start(20);
 
-    //}
+    f->level_ = ui->label_level_numbers;
     f->score_ = ui->label_score_numbers;
     ui->label_score_numbers->setNum(f->getScore());
     ui->label_score_numbers->setAlignment(Qt::AlignCenter);
 
 }
-
-/*
-void Game::doEnd(){
-    timer->stop();
-}*/
-
 
 Game::~Game() {
     delete ui;
@@ -105,20 +96,3 @@ void Game::on_pause_clicked()
         f->gameState = gameStates::PAUSED;
     }
 }
-/*
-void Game::update()
-{
-    if(f->getState() == gameStates::PAUSED) {
-        ui->label_Tetris->clear();
-        ui->label_Tetris->setStyleSheet("background: rgba(255, 255, 255, 0)");
-        ui->pause->setStyleSheet("border-image: url(:/pause.png) stretch;");
-        f->gameState = gameStates::INPROCESS;
-    } else {
-        ui->label_Tetris->setStyleSheet("background: rgba(255, 255, 255, 255)");
-        QPixmap pix(":/tetris.png");
-        ui->label_Tetris->setPixmap(pix);
-        ui->pause->setStyleSheet("border-image: url(:/continue.png) stretch;");
-        f->gameState = gameStates::PAUSED;
-    }
-}
-*/
