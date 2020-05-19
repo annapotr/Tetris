@@ -60,21 +60,14 @@ Tetrimino::Tetrimino(std::vector<std::pair<int, int>> blocks, int t, Field *f, Q
         if (max_row < k.first) max_row = k.first;
         if (max_col < k.second) max_col = k.second;
     }
-
-    /*qDebug() << "L\n";
-
-    for (std::size_t i = 0; i < _blocks.size(); i++) {
-        qDebug() << _blocks[i].first << ' ' << _blocks[i].second;
-    }
-
-    qDebug() << "Max y & x: " << max_row << ' ' << max_col << '\n';*/
 }
 
 
 void Tetrimino::setCoordinates(int start) {
     topLeftCorner.rx() += start;
     setPos(topLeftCorner.rx() * BLOCK_PX, PADDING * 1.5);
-    boundingRectangale.setRect(0, 0, BLOCK_PX * (max_col + 1), BLOCK_PX * (max_row + 1));
+    int rectSize = BLOCK_PX * (std::max(max_col, max_row) + 1);
+    boundingRectangale.setRect(0, 0, rectSize, rectSize);
 }
 
 QRectF Tetrimino::boundingRect() const {
@@ -92,7 +85,7 @@ void Tetrimino::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
 
 }
 
-int Tetrimino::maxParam(bool param) {
+/*int Tetrimino::maxParam(bool param) {
     int maxP = 0;
 
     for (std::size_t i = 0; i < this->_blocks.size(); i++) {
@@ -103,7 +96,7 @@ int Tetrimino::maxParam(bool param) {
         }
     }
     return maxP;
-}
+}*/
 
 void Tetrimino::left() {
     topLeftCorner.rx()--;
@@ -126,19 +119,16 @@ void Tetrimino::right() {
 }
 
 void Tetrimino::fastLanding() {
-    while (!field->doCollision()
-           && (topLeftCorner.ry() + (max_row + 1) < field->getFIELD_Ht() + 2)) {
-        speed = 2;
-        setPos(mapToParent(0,speed));
-        topLeftCorner.ry() += speed/25;
-        std::cout << 1 << std::endl;
+    while (!field->doCollision()) {
+        speed = 1;
+        setPos(mapToScene(0,speed));
+        topLeftCorner.ry() += speed;
     }
     topLeftCorner.ry()--;
 }
 
 void Tetrimino::advance(int phase) {
     if(!phase) return;
-    //qDebug() << "X of tLC: " << topLeftCorner.rx() << "Y of tLC: " << topLeftCorner.ry();
 
     if (field->getState() == gameStates::PAUSED) {
         if(speed != 0) paused_speed = speed;
@@ -158,7 +148,7 @@ void Tetrimino::advance(int phase) {
        speed = 0;
        scene_->removeItem(this);
        field->checkRow(scene_);
-       field->printFieldTmp();
+       //field->printFieldTmp();
        if (field->getState() == gameStates::GAMEOVER) {
            hide();
            GameOver gameover(field,scene_);
@@ -174,12 +164,11 @@ void Tetrimino::advance(int phase) {
 
     } else {
       topLeftCorner.ry() += speed/25 - 1;
-      setPos(mapToParent(0, speed));
+      setPos(mapToScene(0, speed));
     }
 }
 
 void Tetrimino::turn90back() {
-    //забанить повороты после коллизии
     std::vector<std::pair<int, int>> prevs;
     if(field->getState() == gameStates::INPROCESS) {
         prevs = _blocks;
@@ -188,19 +177,15 @@ void Tetrimino::turn90back() {
         }
 
         if (field->doCollision()) {
-            swap(_blocks, prevs);
+            std::swap(_blocks, prevs);
             return;
         }
 
-        max_row = maxParam(0);
-        max_col = maxParam(1);
-
-        boundingRectangale.setRect(0, 0, BLOCK_PX * (max_col + 1), BLOCK_PX * (max_row + 1));
+        std::swap(max_col, max_row);
     }
 }
 
 void Tetrimino::turn90up() {
-    //забанить повороты после коллизии
     std::vector<std::pair<int, int>> prevs;
     if(field->getState() == gameStates::INPROCESS) {
         prevs = _blocks;
@@ -209,18 +194,10 @@ void Tetrimino::turn90up() {
         }
 
         if (field->doCollision()) {
-            swap(_blocks, prevs);
+            std::swap(_blocks, prevs);
             return;
         }
 
-        max_row = maxParam(0);
-        max_col = maxParam(1);
-
-        //qDebug() << "br.tl.rx: " << boundingRectangale.topLeft().rx() << " br.tl.ry: " << boundingRectangale.topLeft().ry() << '\n';
-        //qDebug() << "tl.rx: " << topLeftCorner.rx() << " tl.ry: " << topLeftCorner.ry() << '\n';
-        //setPos(mapToScene(BLOCK_PX * (max_col + 1), BLOCK_PX * (max_row +1)));
-
-        boundingRectangale.setRect(0, 0, BLOCK_PX * (max_col + 1), BLOCK_PX * (max_row + 1));
+        std::swap(max_col, max_row);
     }
-    //setPos(topLeftCorner);
 }

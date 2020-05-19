@@ -86,11 +86,6 @@ bool Field::doCollision() {
    for (auto &item: currentTetrimino->_blocks) {
        hasFilled |= getCell({static_cast<int>(currentTetrimino->topLeftCorner.ry() + item.first),
                              static_cast<int>(currentTetrimino->topLeftCorner.rx() + item.second)});
-
-       /*if (hasFilled) {
-          qDebug() << "collision Y: " << (currentTetrimino->topLeftCorner.ry()+item.first + 1) << " collision X: " << (currentTetrimino->topLeftCorner.rx()+item.second);
-       }*/
-
    }
    return hasFilled;
 }

@@ -43,7 +43,7 @@ Game::Game(Field *f, QWidget *parent) :
 
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), scene, SLOT(advance()));
-    timer->start(20);
+    timer->start(25);
 
     f->level_ = ui->label_level_numbers;
     f->score_ = ui->label_score_numbers;
@@ -75,7 +75,7 @@ void Game::keyPressEvent(QKeyEvent *event) {
         f->currentTetrimino->right();
     }
 
-    if (event->key() == Qt::Key_F) {
+    if (event->key() == Qt::Key_G) {
         f->currentTetrimino->fastLanding();
     }
 }
