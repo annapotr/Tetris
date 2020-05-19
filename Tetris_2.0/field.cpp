@@ -162,7 +162,7 @@ int Field::levelUp() {
 }
 
 void Field::changeImage(int nextFigure) {
-    QPixmap pix(ImgSrc[nextFigure].c_str());
+    QPixmap pix(ImgSrc[nextFigure]);
     _lf->setPixmap(pix);
 }
 

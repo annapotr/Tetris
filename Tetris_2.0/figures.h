@@ -61,6 +61,7 @@ private:
     QPixmap pix_;
     Field *field;
     QGraphicsScene *scene_;
+    QPointF startFastLanding;
 
     QRect boundingRectangale;
     int max_col = 0, max_row = 0;

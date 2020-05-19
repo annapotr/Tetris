@@ -13,6 +13,7 @@
 #include <fallen.h>
 #include <game.h>
 #include <QLabel>
+#include <QString>
 
 class Tetrimino;
 class Fallen;
@@ -62,7 +63,7 @@ public:
 
     QLabel* _lf;
     void changeImage(int nextFigure);
-    std::string ImgSrc[7] = {":/redBlockss.png",":/orangeBlocks.png",":/yellowBlockss.png",":/greenBlocks.png",":/blueBlockss.png",":/blueblueBlocks.png",":/pinkBlockss.png"};
+    std::vector<QString> ImgSrc = {":/redBlockss.png",":/orangeBlocks.png",":/yellowBlockss.png",":/greenBlocks.png",":/blueBlockss.png",":/blueblueBlocks.png",":/pinkBlockss.png"};
 
     gameStates gameState;
 
