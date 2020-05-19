@@ -46,7 +46,7 @@ Game::Game(Field *f, QWidget *parent) :
 
         timer = new QTimer(this);
         connect(timer, SIGNAL(timeout()), scene, SLOT(advance()));
-        timer->start(10);
+        timer->start(20);
 
     //}
     f->score_ = ui->label_score_numbers;
@@ -68,32 +68,23 @@ Game::~Game() {
 
 void Game::keyPressEvent(QKeyEvent *event) {
 
-    //qDebug() << "In KPE\n" << "f->currentTetrimino: " << f->currentTetrimino << "currT->field->currentTetrimino: " << currT->field->currentTetrimino << ", currT: " << currT << ", currT->field: " << currT->field << '\n';
-
     if (event->key() == Qt::Key_W) {
-        //qDebug() << "Up!\n";
         f->currentTetrimino->turn90up();
     }
 
     if (event->key() == Qt::Key_S) {
-        qDebug() << "Back!\n";
         f->currentTetrimino->turn90back();
     }
 
     if (event->key() == Qt::Key_A) {
-        qDebug() << "Left!\n";
         f->currentTetrimino->left();
     }
 
     if (event->key() == Qt::Key_D) {
-        //calling the function of right moving
-        //
-        qDebug() << "Right!\n";
         f->currentTetrimino->right();
     }
 
-    if (event->key() == Qt::Key_Space) {
-        qDebug() << "Fast landing!\n";
+    if (event->key() == Qt::Key_F) {
         f->currentTetrimino->fastLanding();
     }
 }

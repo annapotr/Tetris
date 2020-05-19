@@ -85,7 +85,7 @@ void Field::checkRow(QGraphicsScene *scene) {
 bool Field::doCollision() {
    bool hasFilled = false;
    for (auto &item: currentTetrimino->_blocks) {
-       hasFilled |= getCell({static_cast<int>(currentTetrimino->topLeftCorner.ry() + item.first + 1),
+       hasFilled |= getCell({static_cast<int>(currentTetrimino->topLeftCorner.ry() + item.first),
                              static_cast<int>(currentTetrimino->topLeftCorner.rx() + item.second)});
 
        /*if (hasFilled) {
@@ -94,15 +94,6 @@ bool Field::doCollision() {
 
    }
    return hasFilled;
-}
-
-bool Field::banRotate() {
-    bool banRotate = false;
-    for (auto &item: currentTetrimino->_blocks) {
-        banRotate |= getCell({static_cast<int>(currentTetrimino->topLeftCorner.ry() + item.first),
-                              static_cast<int>(currentTetrimino->topLeftCorner.rx() + item.second)});
-    }
-    return banRotate;
 }
 
 void Field::fill(QPixmap pix) {

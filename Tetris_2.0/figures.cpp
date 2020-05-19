@@ -118,28 +118,33 @@ int Tetrimino::maxParam(bool param) {
 }
 
 void Tetrimino::left() {
-    if (topLeftCorner.rx() > 1){
-        topLeftCorner.rx()--;
-        setPos(mapToScene(-BLOCK_PX, 0));
+    topLeftCorner.rx()--;
+    if (field->doCollision()){
+        topLeftCorner.rx()++;
+        return;
     }
+    setPos(mapToScene(-BLOCK_PX, 0));
     return;
 }
 
 void Tetrimino::right() {
-    if (topLeftCorner.rx() + max_col < field->getFIELD_W()){
-        topLeftCorner.rx()++;
-        setPos(mapToScene(BLOCK_PX, 0));
+    topLeftCorner.rx()++;
+    if (field->doCollision()){
+        topLeftCorner.rx()--;
+        return;
     }
+    setPos(mapToScene(BLOCK_PX, 0));
     return;
 }
 
 void Tetrimino::fastLanding() {
     while (!field->doCollision()
-           && (topLeftCorner.ry() + (max_row + 1) < field->getFIELD_Ht() + 1)) {
+           && (topLeftCorner.ry() + (max_row + 1) < field->getFIELD_Ht() + 2)) {
         topLeftCorner.ry()++;
-        //setPos(mapToScene(topLeftCorner.rx() * BLOCK_PX, topLeftCorner.ry() * BLOCK_PX));
         setPos(topLeftCorner.rx() * BLOCK_PX, topLeftCorner.ry() * BLOCK_PX);
     }
+    topLeftCorner.ry()--;
+    setPos(topLeftCorner.rx() * BLOCK_PX, topLeftCorner.ry() * BLOCK_PX);
 }
 
 void Tetrimino::advance(int phase) {
@@ -156,7 +161,10 @@ void Tetrimino::advance(int phase) {
         speed = paused_speed;
     }
 
+    topLeftCorner.ry()++;
+
     if (field->doCollision()) {
+       topLeftCorner.ry()--;
        field->fill(pix_);
        speed = 0;
        scene_->removeItem(this);
@@ -172,11 +180,10 @@ void Tetrimino::advance(int phase) {
        }
        field->currentTetrimino = field->generateNext(scene_);
        scene_->addItem(field->currentTetrimino);
-
-
+    } else {
+      topLeftCorner.ry() += speed/25 - 1;
+      setPos(mapToParent(0, speed));
     }
-    setPos(mapToParent(0,speed));
-    topLeftCorner.ry() += speed/25;
 }
 
 void Tetrimino::turn90back() {
@@ -188,14 +195,13 @@ void Tetrimino::turn90back() {
             _blocks[i] = {max_col - _blocks[i].second, _blocks[i].first};
         }
 
-        if (field->banRotate()) {
+        if (field->doCollision()) {
             swap(_blocks, prevs);
             return;
         }
 
         max_row = maxParam(0);
-        max_col = maxParam(0);
-
+        max_col = maxParam(1);
 
         boundingRectangale.setRect(0, 0, BLOCK_PX * (max_col + 1), BLOCK_PX * (max_row + 1));
     }
@@ -210,16 +216,18 @@ void Tetrimino::turn90up() {
             _blocks[i] = {_blocks[i].second, max_row - _blocks[i].first};
         }
 
-        if (field->banRotate()) {
+        if (field->doCollision()) {
             swap(_blocks, prevs);
             return;
         }
 
         max_row = maxParam(0);
-        max_col = maxParam(0);
+        max_col = maxParam(1);
 
-        //setPos(mapToScene(BLOCK_PX * (max_col + 1), BLOCK_PX * (max_row + 1)));
+        //qDebug() << "br.tl.rx: " << boundingRectangale.topLeft().rx() << " br.tl.ry: " << boundingRectangale.topLeft().ry() << '\n';
+        //qDebug() << "tl.rx: " << topLeftCorner.rx() << " tl.ry: " << topLeftCorner.ry() << '\n';
 
         boundingRectangale.setRect(0, 0, BLOCK_PX * (max_col + 1), BLOCK_PX * (max_row + 1));
     }
+    //setPos(topLeftCorner);
 }
