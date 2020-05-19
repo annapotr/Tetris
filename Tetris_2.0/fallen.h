@@ -20,13 +20,9 @@ public:
     //void advance(int phase);
 
 private:
-
     Field *field;
     QGraphicsScene *scene_;
 
 };
-
-
-
 
 #endif // FALLEN_H

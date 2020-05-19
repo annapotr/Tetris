@@ -59,14 +59,14 @@ private:
 
     tetriminoes type_;
     QPixmap pix_;
-    //QColor color_;
     Field *field;
     QGraphicsScene *scene_;
+    QPointF startFastLanding;
 
     QRect boundingRectangale;
     int max_col = 0, max_row = 0;
 
-    bool isVertical = 0;
+    bool isFastLanding = false;
 
     qreal angle, speed, paused_speed;
 };

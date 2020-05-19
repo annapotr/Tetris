@@ -119,12 +119,14 @@ void Tetrimino::right() {
 }
 
 void Tetrimino::fastLanding() {
+    startFastLanding.ry() = topLeftCorner.y();
     while (!field->doCollision()) {
         speed = 1;
         setPos(mapToScene(0, speed));
         topLeftCorner.ry() += speed;
     }
     topLeftCorner.ry()--;
+    isFastLanding = true;
 }
 
 void Tetrimino::advance(int phase) {
@@ -146,9 +148,14 @@ void Tetrimino::advance(int phase) {
        topLeftCorner.ry()--;
        field->fill(pix_);
        speed = 0;
+       int addToScore = static_cast<int>(topLeftCorner.ry());
+       if (isFastLanding) {
+           field->addToScore(2 * (addToScore - 1 - static_cast<int>(startFastLanding.ry())));
+           field->addToScore(static_cast<int>(startFastLanding.ry() + 1));
+       }
+       else field->addToScore(addToScore);
        scene_->removeItem(this);
        field->checkRow(scene_);
-       //field->printFieldTmp();
        if (field->getState() == gameStates::GAMEOVER) {
            hide();
            GameOver gameover(field,scene_);
@@ -180,7 +187,6 @@ void Tetrimino::turn90back() {
             std::swap(_blocks, prevs);
             return;
         }
-
         std::swap(max_col, max_row);
     }
 }
@@ -197,7 +203,6 @@ void Tetrimino::turn90up() {
             std::swap(_blocks, prevs);
             return;
         }
-
         std::swap(max_col, max_row);
     }
 }
