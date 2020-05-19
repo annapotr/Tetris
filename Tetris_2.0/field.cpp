@@ -123,7 +123,7 @@ bool Field::getCell(std::pair<int, int> coords) {
 }
 
 gameStates Field::getState() {
-    if (highestNotEmpty <= 1) gameState = gameStates::GAMEOVER;
+    if (highestNotEmpty < 1) gameState = gameStates::GAMEOVER;
     return gameState;
 }
 
