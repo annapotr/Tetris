@@ -124,15 +124,17 @@ void Tetrimino::right() {
 void Tetrimino::fastLanding() {
     while (!field->doCollision()
            && (topLeftCorner.ry() + (max_row + 1) < field->getFIELD_Ht() + 1)) {
-        /*
-        topLeftCorner.ry()++;
-        //setPos(mapToScene(topLeftCorner.rx() * BLOCK_PX, topLeftCorner.ry() * BLOCK_PX));
-        setPos(topLeftCorner.rx() * BLOCK_PX, topLeftCorner.ry() * BLOCK_PX);*/
         speed = 2;
         setPos(mapToParent(0,speed));
         topLeftCorner.ry() += speed/25;
-        std::cout << 1 << std::endl;
     }
+    /*
+    if(!field->checkRow(scene_)){
+        scene_->removeItem(field->currentFallen);
+        field->currentFallen = field->generateFallen(scene_);
+        scene_->addItem(field->currentFallen);
+    }
+    field->printFieldTmp();*/
 }
 
 void Tetrimino::advance(int phase) {
@@ -153,6 +155,12 @@ void Tetrimino::advance(int phase) {
        field->fill(pix_);
        speed = 0;
        scene_->removeItem(this);
+       /*
+       scene_->removeItem(field->currentFallen);
+       field->currentFallen = field->generateFallen(scene_);
+       scene_->addItem(field->currentFallen);*/
+
+
        field->checkRow(scene_);
        field->printFieldTmp();
        if (field->getState() == gameStates::GAMEOVER) {
@@ -168,7 +176,6 @@ void Tetrimino::advance(int phase) {
        scene_->removeItem(field->currentFallen);
        field->currentFallen = field->generateFallen(scene_);
        scene_->addItem(field->currentFallen);
-
 
     }
     setPos(mapToParent(0,speed));

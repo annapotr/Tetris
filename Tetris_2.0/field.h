@@ -42,7 +42,7 @@ public:
 
     void printFieldTmp() const;
 
-    void checkRow(QGraphicsScene *scene);
+    bool checkRow(QGraphicsScene *scene);
     void calculateScore(int cnt);
     void fill(QPixmap pix);
     bool doCollision();

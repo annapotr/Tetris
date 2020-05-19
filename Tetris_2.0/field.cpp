@@ -18,7 +18,7 @@ std::vector<int> points = {40, 100, 300, 1200};
 
 Field::Field(int level) :
     gameState(gameStates::INPROCESS), curLevel(level), score(0), highestNotEmpty(FIELD_Ht) {
-    QPixmap pix(":/red_block.png");
+    QPixmap pix(":/empty.jpeg");
 
     _field.resize(FIELD_Ht + 2, std::vector<QPixmap>(FIELD_W + 2));
 
@@ -33,10 +33,10 @@ Field::Field(int level) :
 
 void Field::updateField(int level, QGraphicsScene *scene) {
     gameState = gameStates::INPROCESS, curLevel = level , score = 0 , highestNotEmpty = FIELD_Ht;
+    QPixmap pix(":/empty.jpeg");
     for (size_t i = 0; i <= FIELD_Ht; i++) {
         std::fill(_field[i].begin() + 1, _field[i].end() - 1, QPixmap());
     }
-    QPixmap pix(":/red_block.png");
     std::fill(_field[FIELD_Ht + 1].begin() + 1, _field[FIELD_Ht + 1].end() - 1, pix);
 
     generateNextId();
@@ -59,10 +59,11 @@ void Field::calculateScore(int cnt) {
     score_->setNum(score);
 }
 
-void Field::checkRow(QGraphicsScene *scene) {
+bool Field::checkRow(QGraphicsScene *scene) {
     int cnt = 0;
+    bool fullRow = true;
     for (size_t row = highestNotEmpty; row <= FIELD_Ht; row++) {
-        bool fullRow = true;
+        fullRow = true;
         for (auto &cell: _field[row]) fullRow &= !(cell.isNull());
 
         if (fullRow) {
@@ -73,12 +74,13 @@ void Field::checkRow(QGraphicsScene *scene) {
             std::fill(_field[highestNotEmpty].begin() + 1, _field[highestNotEmpty].end() - 1, QPixmap());
             highestNotEmpty++;
             calculateScore(cnt);
-
+            /*
             scene->removeItem(currentFallen);
             currentFallen = generateFallen(scene);
-            scene->addItem(currentFallen);
+            scene->addItem(currentFallen);*/
         }
     }
+    return fullRow;
 }
 
 bool Field::doCollision() {
@@ -119,6 +121,7 @@ void Field::generateNextId() {
 
 Tetrimino *Field::generateNext(QGraphicsScene *scene) {
     Tetrimino *F = new Tetrimino(tetriminoesInit[nextFigure], nextFigure, this, scene);
+    //F->setZValue(10000000000000000);
     F->setCoordinates(START_POS);
     generateNextId();
     changeImage(nextFigure);
@@ -127,6 +130,7 @@ Tetrimino *Field::generateNext(QGraphicsScene *scene) {
 
 Fallen *Field::generateFallen(QGraphicsScene *scene) {
     Fallen *F = new Fallen(this, scene);
+    //F->setZValue(z);
     return F;
 }
 
