@@ -33,7 +33,6 @@ Field::Field(int level) :
 
 void Field::updateField(int level, QGraphicsScene *scene) {
     gameState = gameStates::INPROCESS, curLevel = level , score = 0 , highestNotEmpty = FIELD_Ht;
-    _blackImg->setStyleSheet("background: rgba(255, 255, 255, 0)");
     for (size_t i = 0; i <= FIELD_Ht; i++) {
         std::fill(_field[i].begin() + 1, _field[i].end() - 1, QPixmap());
     }
@@ -167,11 +166,5 @@ void Field::changeImage(int nextFigure) {
     _lf->setPixmap(pix);
 }
 
-void Field::changeBlackImg() {
-    QLabel* bblackImg = new QLabel();
-    bblackImg->resize(50,50);
-    bblackImg->setStyleSheet("background: rgba(188, 188, 188, 92)");
-    _blackImg = bblackImg;
-}
 
 

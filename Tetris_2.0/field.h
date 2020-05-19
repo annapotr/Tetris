@@ -56,10 +56,9 @@ public:
     int getNextFigure();
 
     QLabel* score_;
+    QLabel* level_;
 
     QLabel* _lf;
-    QLabel* _blackImg ;
-    void changeBlackImg();
     void changeImage(int nextFigure);
     std::string ImgSrc[7] = {":/redBlockss.png",":/orangeBlocks.png",":/yellowBlockss.png",":/greenBlocks.png",":/blueBlockss.png",":/blueblueBlocks.png",":/pinkBlockss.png"};
 
