@@ -52,9 +52,9 @@ QPixmap make_pix(int t) {
    return pix;
 }
 
-Tetrimino::Tetrimino(std::vector<pair<int, int>> blocks, int t, Field *f, QGraphicsScene *scene)
+Tetrimino::Tetrimino(std::vector<std::pair<int, int>> blocks, int t, Field *f, QGraphicsScene *scene)
     : pix_(make_pix(t)), field(f), scene_(scene),
-      speed(2), paused_speed(2) {
+      speed(1), paused_speed(1) {
     for (auto &k: blocks) {
         _blocks.push_back(k);
         if (max_row < k.first) max_row = k.first;
@@ -96,7 +96,7 @@ int Tetrimino::maxParam(bool param) {
     int maxP = 0;
 
     for (std::size_t i = 0; i < this->_blocks.size(); i++) {
-        if (!param) {
+        if (!param) { //== 0
             maxP = std::max(maxP, _blocks[i].first);//Rows
         } else {
             maxP = std::max(maxP, _blocks[i].second);//Cols
@@ -124,9 +124,14 @@ void Tetrimino::right() {
 void Tetrimino::fastLanding() {
     while (!field->doCollision()
            && (topLeftCorner.ry() + (max_row + 1) < field->getFIELD_Ht() + 1)) {
+        /*
         topLeftCorner.ry()++;
         //setPos(mapToScene(topLeftCorner.rx() * BLOCK_PX, topLeftCorner.ry() * BLOCK_PX));
-        setPos(topLeftCorner.rx() * BLOCK_PX, topLeftCorner.ry() * BLOCK_PX);
+        setPos(topLeftCorner.rx() * BLOCK_PX, topLeftCorner.ry() * BLOCK_PX);*/
+        speed = 2;
+        setPos(mapToParent(0,speed));
+        topLeftCorner.ry() += speed/25;
+        std::cout << 1 << std::endl;
     }
 }
 
@@ -159,6 +164,10 @@ void Tetrimino::advance(int phase) {
        }
        field->currentTetrimino = field->generateNext(scene_);
        scene_->addItem(field->currentTetrimino);
+
+       scene_->removeItem(field->currentFallen);
+       field->currentFallen = field->generateFallen(scene_);
+       scene_->addItem(field->currentFallen);
 
 
     }

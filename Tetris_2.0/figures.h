@@ -32,7 +32,7 @@ QColor make_color(tetriminoes t);
 
 class Tetrimino : public QGraphicsItem {
 public:
-    Tetrimino(std::vector<std::pair<int, int>> blocks, tetriminoes type, Field *f, QGraphicsScene *scene);//, QGraphicsScene *scene);
+    Tetrimino(std::vector<std::pair<int, int>> blocks, int t, Field *f, QGraphicsScene *scene);
 
 
     QRectF boundingRect() const override;

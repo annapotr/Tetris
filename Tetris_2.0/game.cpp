@@ -43,7 +43,7 @@ Game::Game(Field *f, QWidget *parent) :
 
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), scene, SLOT(advance()));
-    timer->start(100);
+    timer->start(10);
 
     f->level_ = ui->label_level_numbers;
     f->score_ = ui->label_score_numbers;
