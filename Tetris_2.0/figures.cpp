@@ -3,6 +3,7 @@
 #include "fallen.h"
 #include "game.h"
 #include <QColor>
+#include <QString>
 #include <QDebug>
 #include <QKeyEvent>
 #include <array>
@@ -10,6 +11,7 @@
 #include <QPainter>
 #include <iostream>
 #include <algorithm>
+#include <random>
 #include "gameover.h"
 
 using std::vector;
@@ -18,6 +20,9 @@ using std::pair;
 
 int BLOCK_PX = 25;
 int PADDING = 5;
+int START_NUM_SHAPES = 7;
+
+std::mt19937 getRandColour(SEED);
 
 vector<vector<pair<int, int>>> tetriminoesInit = {
     {
@@ -31,41 +36,24 @@ vector<vector<pair<int, int>>> tetriminoesInit = {
     }
 };
 
-QPixmap make_pix(tetriminoes t) {
-    switch(t) {
-        case(tetriminoes::I):{
-            QPixmap pix(":/reddd.png");
-            return pix;
-        }
-        case(tetriminoes::J):{
-            QPixmap pix(":/orange.png");
-            return pix;
-        }
-        case(tetriminoes::L):{
-            QPixmap pix(":/yellow_block.png");
-            return pix;
-        }
-        case(tetriminoes::O):{
-            QPixmap pix(":/green_block.png");
-            return pix;
-        }
-        case(tetriminoes::S): {
-            QPixmap pix(":/blue_blue_block.png");
-            return pix;
-        }
-        case(tetriminoes::T): {
-            QPixmap pix(":/blue_block.png");
-            return pix;
-        }
-        case(tetriminoes::Z): {
-            QPixmap pix(":/pink_block.png");
-            return pix;
-        }
-    }
+vector<QString> tetriminoesColours = {
+    ":/reddd.png",
+    ":/orange.png",
+    ":/yellow_block.png",
+    ":/green_block.png",
+    ":/blue_blue_block.png",
+    ":/blue_block.png",
+    ":/pink_block.png"
+};
+
+QPixmap make_pix(int t) {
+   if (t >= START_NUM_SHAPES) t = getRandColour() % START_NUM_SHAPES;
+   QPixmap pix(tetriminoesColours[t]);
+   return pix;
 }
 
-Tetrimino::Tetrimino(std::vector<pair<int, int>> blocks, tetriminoes type, Field *f, QGraphicsScene *scene)
-    : type_(type), pix_(make_pix(type_)), field(f), scene_(scene),
+Tetrimino::Tetrimino(std::vector<pair<int, int>> blocks, int t, Field *f, QGraphicsScene *scene)
+    : pix_(make_pix(t)), field(f), scene_(scene),
       speed(2), paused_speed(2) {
     for (auto &k: blocks) {
         _blocks.push_back(k);
