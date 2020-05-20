@@ -60,21 +60,14 @@ Tetrimino::Tetrimino(std::vector<std::pair<int, int>> blocks, int t, Field *f, Q
         if (max_row < k.first) max_row = k.first;
         if (max_col < k.second) max_col = k.second;
     }
-
-    /*qDebug() << "L\n";
-
-    for (std::size_t i = 0; i < _blocks.size(); i++) {
-        qDebug() << _blocks[i].first << ' ' << _blocks[i].second;
-    }
-
-    qDebug() << "Max y & x: " << max_row << ' ' << max_col << '\n';*/
 }
 
 
 void Tetrimino::setCoordinates(int start) {
     topLeftCorner.rx() += start;
-    setPos(topLeftCorner.rx() * BLOCK_PX, PADDING * 1.5);
-    boundingRectangale.setRect(0, 0, BLOCK_PX * (max_col + 1), BLOCK_PX * (max_row + 1));
+    setPos(topLeftCorner.rx() * BLOCK_PX, 0);
+    int rectSize = BLOCK_PX * (std::max(max_col, max_row) + 1);
+    boundingRectangale.setRect(0, 0, rectSize, rectSize);
 }
 
 QRectF Tetrimino::boundingRect() const {
@@ -92,7 +85,7 @@ void Tetrimino::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
 
 }
 
-int Tetrimino::maxParam(bool param) {
+/*int Tetrimino::maxParam(bool param) {
     int maxP = 0;
 
     for (std::size_t i = 0; i < this->_blocks.size(); i++) {
@@ -103,43 +96,55 @@ int Tetrimino::maxParam(bool param) {
         }
     }
     return maxP;
-}
+}*/
 
 void Tetrimino::left() {
-    if (topLeftCorner.rx() > 1){
+    if(field->getState() == gameStates::INPROCESS){
         topLeftCorner.rx()--;
+        if (field->doCollision()){
+            topLeftCorner.rx()++;
+            return;
+        }
         setPos(mapToScene(-BLOCK_PX, 0));
+        return;
     }
-    return;
 }
 
 void Tetrimino::right() {
-    if (topLeftCorner.rx() + max_col < field->getFIELD_W()){
+    if(field->getState() == gameStates::INPROCESS){
         topLeftCorner.rx()++;
+        if (field->doCollision()){
+            topLeftCorner.rx()--;
+            return;
+        }
         setPos(mapToScene(BLOCK_PX, 0));
+        return;
     }
-    return;
 }
 
 void Tetrimino::fastLanding() {
-    while (!field->doCollision()
-           && (topLeftCorner.ry() + (max_row + 1) < field->getFIELD_Ht() + 1)) {
-        speed = 2;
-        setPos(mapToParent(0,speed));
-        topLeftCorner.ry() += speed/25;
+    if(field->getState() == gameStates::INPROCESS){
+        startFastLanding.ry() = topLeftCorner.y();
+        while (!field->doCollision()) {
+            speed = 1;
+            setPos(mapToScene(0, speed));
+            topLeftCorner.ry() += speed;
+        }
+        topLeftCorner.ry()--;
+        isFastLanding = true;
     }
-    /*
-    if(!field->checkRow(scene_)){
-        scene_->removeItem(field->currentFallen);
-        field->currentFallen = field->generateFallen(scene_);
-        scene_->addItem(field->currentFallen);
-    }
-    field->printFieldTmp();*/
 }
 
 void Tetrimino::advance(int phase) {
     if(!phase) return;
-    //qDebug() << "X of tLC: " << topLeftCorner.rx() << "Y of tLC: " << topLeftCorner.ry();
+
+    if (field->getState() == gameStates::GAMEOVER) {
+        hide();
+        GameOver gameover(field,scene_);
+        gameover.setModal(true);
+        gameover.exec();
+        return;
+    }
 
     if (field->getState() == gameStates::PAUSED) {
         if(speed != 0) paused_speed = speed;
@@ -151,39 +156,33 @@ void Tetrimino::advance(int phase) {
         speed = paused_speed;
     }
 
+    topLeftCorner.ry()++;
+
     if (field->doCollision()) {
+       topLeftCorner.ry()--;
        field->fill(pix_);
        speed = 0;
-       scene_->removeItem(this);
-       /*
-       scene_->removeItem(field->currentFallen);
-       field->currentFallen = field->generateFallen(scene_);
-       scene_->addItem(field->currentFallen);*/
-
-
-       field->checkRow(scene_);
-       field->printFieldTmp();
-       if (field->getState() == gameStates::GAMEOVER) {
-           hide();
-           GameOver gameover(field,scene_);
-           gameover.setModal(true);
-           gameover.exec();
-           return;
+       int addToScore = static_cast<int>(topLeftCorner.ry());
+       if (isFastLanding) {
+           field->addToScore(2 * (addToScore - 1 - static_cast<int>(startFastLanding.ry())));
+           field->addToScore(static_cast<int>(startFastLanding.ry() + 1));
        }
+       else field->addToScore(addToScore);
+       scene_->removeItem(this);
+       field->checkRow(scene_);
        field->currentTetrimino = field->generateNext(scene_);
        scene_->addItem(field->currentTetrimino);
-
        scene_->removeItem(field->currentFallen);
        field->currentFallen = field->generateFallen(scene_);
        scene_->addItem(field->currentFallen);
 
+    } else {
+      topLeftCorner.ry() += speed/25 - 1;
+      setPos(mapToScene(0, speed));
     }
-    setPos(mapToParent(0,speed));
-    topLeftCorner.ry() += speed/25;
 }
 
 void Tetrimino::turn90back() {
-    //забанить повороты после коллизии
     std::vector<std::pair<int, int>> prevs;
     if(field->getState() == gameStates::INPROCESS) {
         prevs = _blocks;
@@ -191,21 +190,15 @@ void Tetrimino::turn90back() {
             _blocks[i] = {max_col - _blocks[i].second, _blocks[i].first};
         }
 
-        if (field->banRotate()) {
-            swap(_blocks, prevs);
+        if (field->doCollision()) {
+            std::swap(_blocks, prevs);
             return;
         }
-
-        max_row = maxParam(0);
-        max_col = maxParam(1);
-
-
-        boundingRectangale.setRect(0, 0, BLOCK_PX * (max_col + 1), BLOCK_PX * (max_row + 1));
+        std::swap(max_col, max_row);
     }
 }
 
 void Tetrimino::turn90up() {
-    //забанить повороты после коллизии
     std::vector<std::pair<int, int>> prevs;
     if(field->getState() == gameStates::INPROCESS) {
         prevs = _blocks;
@@ -213,16 +206,10 @@ void Tetrimino::turn90up() {
             _blocks[i] = {_blocks[i].second, max_row - _blocks[i].first};
         }
 
-        if (field->banRotate()) {
-            swap(_blocks, prevs);
+        if (field->doCollision()) {
+            std::swap(_blocks, prevs);
             return;
         }
-
-        max_row = maxParam(0);
-        max_col = maxParam(1);
-
-        //setPos(mapToScene(BLOCK_PX * (max_col + 1), BLOCK_PX * (max_row +1)));
-
-        boundingRectangale.setRect(0, 0, BLOCK_PX * (max_col + 1), BLOCK_PX * (max_row + 1));
+        std::swap(max_col, max_row);
     }
 }
