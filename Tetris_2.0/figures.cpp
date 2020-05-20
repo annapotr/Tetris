@@ -65,7 +65,7 @@ Tetrimino::Tetrimino(std::vector<std::pair<int, int>> blocks, int t, Field *f, Q
 
 void Tetrimino::setCoordinates(int start) {
     topLeftCorner.rx() += start;
-    setPos(topLeftCorner.rx() * BLOCK_PX, 0);
+    setPos(topLeftCorner.rx() * BLOCK_PX, PADDING * 1.5);
     int rectSize = BLOCK_PX * (std::max(max_col, max_row) + 1);
     boundingRectangale.setRect(0, 0, rectSize, rectSize);
 }
@@ -122,7 +122,7 @@ void Tetrimino::fastLanding() {
     startFastLanding.ry() = topLeftCorner.y();
     while (!field->doCollision()) {
         speed = 1;
-        setPos(mapToScene(0, speed));
+        setPos(mapToScene(0,speed));
         topLeftCorner.ry() += speed;
     }
     topLeftCorner.ry()--;

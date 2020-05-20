@@ -166,7 +166,7 @@ int Field::levelUp() {
     return curLevel;
 }
 
-void Field::changeImage(int nextFigure) { 
+void Field::changeImage(int nextFigure) {
     if (nextFigure < 7) {
         QPixmap pix(ImgSrc[nextFigure]);
         _lf->setPixmap(pix);
