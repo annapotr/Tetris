@@ -52,6 +52,7 @@ public:
     Fallen *generateFallen(QGraphicsScene *scene);
     void generateNextId();
     int levelUp();
+    std::vector<std::pair<int, int>> addToTetriminoesInit();
 
     Tetrimino *currentTetrimino;
     Fallen *currentFallen;
@@ -67,7 +68,7 @@ public:
 
     gameStates gameState;
 
-    void updateField(int level,QGraphicsScene *scene);
+    void updateField(int level, QGraphicsScene *scene);
 
 private:
     static constexpr std::size_t FIELD_Ht = 20;

@@ -11,10 +11,13 @@
 using std::move;
 using std::size_t;
 
+constexpr int Tetris = 4;
+
 unsigned int SEED =  std::chrono::system_clock::now().time_since_epoch().count();
 std::mt19937 getRand(SEED);
 
 std::vector<int> points = {40, 100, 300, 1200};
+std::vector<size_t> possibleSize = {1, 3, 5};
 
 Field::Field(int level) :
     gameState(gameStates::INPROCESS), curLevel(level), score(0), highestNotEmpty(FIELD_Ht), deleteRows(0) {
@@ -32,7 +35,8 @@ Field::Field(int level) :
 }
 
 void Field::updateField(int level, QGraphicsScene *scene) {
-    gameState = gameStates::INPROCESS, curLevel = level , score = 0 , highestNotEmpty = FIELD_Ht;
+    gameState = gameStates::INPROCESS, curLevel = level, deleteRows = 0, score = 0 , highestNotEmpty = FIELD_Ht;
+    tetriminoesInit.resize(7);
     for (size_t i = 0; i <= FIELD_Ht; i++) {
         std::fill(_field[i].begin() + 1, _field[i].end() - 1, QPixmap());
     }
@@ -54,7 +58,7 @@ void Field::printFieldTmp() const {
 
 
 void Field::calculateScore(int cnt) {
-    if (cnt > 4) cnt = 4;
+    if (cnt > Tetris) cnt = Tetris;
     score += points[cnt - 1] * (curLevel + 1);
     score_->setNum(score);
 }
@@ -157,11 +161,26 @@ std::size_t Field::getFIELD_W() const {
 int Field::levelUp() {
     if (deleteRows >= (curLevel + 1) * 10) {
         curLevel++;
+        tetriminoesInit.emplace_back(addToTetriminoesInit());
     }
     return curLevel;
 }
 
 void Field::changeImage(int nextFigure) {
-    QPixmap pix(ImgSrc[nextFigure]);
-    _lf->setPixmap(pix);
+    if (nextFigure < 7) {
+        QPixmap pix(ImgSrc[nextFigure]);
+        _lf->setPixmap(pix);
+    }
+
+}
+
+std::vector<std::pair<int, int>> Field::addToTetriminoesInit() {
+    size_t blocks = getRand() % possibleSize.size();
+    std::vector<std::pair<int, int>> newFigure;
+    while (newFigure.size() < possibleSize[blocks]) {
+        int x = getRand() % NUM_OF_BLOCKS;
+        int y = getRand() % NUM_OF_BLOCKS;
+        newFigure.emplace_back(std::make_pair(x, y));
+    }
+    return newFigure;
 }
