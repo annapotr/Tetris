@@ -170,7 +170,7 @@ void Tetrimino::advance(int phase) {
        scene_->addItem(field->currentFallen);
 
     } else {
-      topLeftCorner.ry() += speed/25 - 1;
+      topLeftCorner.ry() += speed / BLOCK_PX - 1;
       setPos(mapToScene(0, speed));
     }
 }
