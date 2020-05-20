@@ -43,7 +43,7 @@ public:
 
     void printFieldTmp() const;
 
-    bool checkRow(QGraphicsScene *scene);
+    void checkRow(QGraphicsScene *scene);
     void calculateScore(int cnt);
     void addToScore(int num);
     void fill(QPixmap pix);

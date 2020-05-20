@@ -19,6 +19,9 @@ public:
 private slots:
     void on_play_clicked();
 
+protected:
+    void keyPressEvent(QKeyEvent *event);
+
 private:
     Ui::MainWindow *ui;
 };

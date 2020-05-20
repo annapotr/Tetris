@@ -43,3 +43,14 @@ void GameOver::on_pushButton_2_clicked()
 {
     QApplication::quit();
 }
+
+void GameOver::keyPressEvent(QKeyEvent *event) {
+
+    if(event->key() == Qt::Key_Escape){
+        QApplication::quit();
+    }
+
+    if(event->key() == Qt::Key_Space){
+        on_pushButton_clicked();
+    }
+}

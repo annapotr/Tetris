@@ -78,6 +78,14 @@ void Game::keyPressEvent(QKeyEvent *event) {
     if (event->key() == Qt::Key_G) {
         f->currentTetrimino->fastLanding();
     }
+
+    if(event->key() == Qt::Key_P){
+        on_pause_clicked();
+    }
+
+    if(event->key() == Qt::Key_Escape){
+        f->gameState = gameStates::GAMEOVER;
+    }
 }
 
 

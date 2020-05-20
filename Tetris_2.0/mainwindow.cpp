@@ -15,6 +15,13 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::keyPressEvent(QKeyEvent *event) {
+
+    if (event->key() == Qt::Key_Space) {
+        on_play_clicked();
+    }
+}
+
 
 void MainWindow::on_play_clicked()
 {
@@ -25,3 +32,6 @@ void MainWindow::on_play_clicked()
     game.setStyleSheet("background-color:black;");
     game.exec();
 }
+
+
+

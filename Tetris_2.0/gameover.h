@@ -27,6 +27,9 @@ private slots:
 private:
     Ui::GameOver *ui;
     QGraphicsScene *scene_;
+
+protected:
+    void keyPressEvent(QKeyEvent *event);
 };
 
 #endif // GAMEOVER_H
