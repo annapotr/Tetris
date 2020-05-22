@@ -56,6 +56,7 @@ public:
 
     Tetrimino *currentTetrimino;
     Fallen *currentFallen;
+    QTimer *timer;
 
     int getNextFigure();
 

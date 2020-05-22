@@ -13,6 +13,8 @@
 #include <QIcon>
 #include <random>
 
+int START_INTERVAL = 100;
+int MINIMAL_INTERVAL = 12;
 
 Game::Game(Field *f, QWidget *parent) :
     QDialog(parent),
@@ -34,7 +36,6 @@ Game::Game(Field *f, QWidget *parent) :
     this->setPalette(plt);
 
     f->_lf = ui->label_figure;
-
     f->currentTetrimino = f->generateNext(scene);
     f->currentFallen = f->generateFallen(scene);
 
@@ -42,8 +43,9 @@ Game::Game(Field *f, QWidget *parent) :
     scene->addItem(f->currentFallen);
 
     timer = new QTimer(this);
+    f->timer = timer;
     connect(timer, SIGNAL(timeout()), scene, SLOT(advance()));
-    timer->start(25);
+    timer->start(START_INTERVAL);
 
     f->level_ = ui->label_level_numbers;
     f->score_ = ui->label_score_numbers;

@@ -5,8 +5,12 @@
 #include <utility>
 #include <QDebug>
 #include <QPainter>
+#include <QTimer>
+#include <deque>
 #include <QAbstractScrollArea>
 #include <random>
+
+class QTimer;
 
 using std::move;
 using std::size_t;
@@ -17,7 +21,7 @@ unsigned int SEED =  std::chrono::system_clock::now().time_since_epoch().count()
 std::mt19937 getRand(SEED);
 
 std::vector<int> points = {40, 100, 300, 1200};
-std::vector<size_t> possibleSize = {1, 3, 5};
+std::deque<size_t> possibleSize = {1, 3, 5};
 
 Field::Field(int level) :
     gameState(gameStates::INPROCESS), curLevel(level), score(0), highestNotEmpty(FIELD_Ht), deleteRows(0) {
@@ -161,7 +165,8 @@ std::size_t Field::getFIELD_W() const {
 int Field::levelUp() {
     if (deleteRows >= (curLevel + 1) * 10) {
         curLevel++;
-        tetriminoesInit.emplace_back(addToTetriminoesInit());
+        if (curLevel > 5) tetriminoesInit.emplace_back(addToTetriminoesInit());
+        timer->setInterval(std::max(MINIMAL_INTERVAL, START_INTERVAL - curLevel * 20));
     }
     return curLevel;
 }
@@ -182,5 +187,6 @@ std::vector<std::pair<int, int>> Field::addToTetriminoesInit() {
         int y = getRand() % NUM_OF_BLOCKS;
         newFigure.emplace_back(std::make_pair(x, y));
     }
+    if (possibleSize[blocks] == 1) possibleSize.pop_front();
     return newFigure;
 }
