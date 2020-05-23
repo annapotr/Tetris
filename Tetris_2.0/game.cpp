@@ -51,6 +51,8 @@ Game::Game(Field *f, QWidget *parent) :
     f->score_ = ui->label_score_numbers;
     ui->label_score_numbers->setNum(f->getScore());
     ui->label_score_numbers->setAlignment(Qt::AlignCenter);
+    ui->label_level_numbers->setNum(f->getLevel());
+    ui->label_level_numbers->setAlignment(Qt::AlignCenter);
 
 }
 
@@ -60,7 +62,7 @@ Game::~Game() {
 }
 
 void Game::keyPressEvent(QKeyEvent *event) {
-
+    qDebug() << "here!\n";
     if (event->key() == Qt::Key_W) {
         f->currentTetrimino->turn90up();
     }

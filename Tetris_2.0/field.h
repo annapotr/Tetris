@@ -35,6 +35,7 @@ public:
     void setCell(std::pair<int, int> coords, QPixmap pix);
     bool getCell(std::pair<int, int> coords) const;
     int getScore() const;
+    int getLevel() const;
     gameStates getState();
     QPixmap get(int x, int y) const;
     std::size_t getFIELD_Ht() const;

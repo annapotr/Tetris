@@ -147,6 +147,10 @@ int Field::getScore() const {
     return score;
 }
 
+int Field::getLevel() const {
+    return curLevel;
+}
+
 QPixmap Field::get(int x, int y) const {
     return _field[x][y];
 }
@@ -165,6 +169,7 @@ int Field::levelUp() {
         if (curLevel > Tetris) tetriminoesInit.emplace_back(addToTetriminoesInit());
         timer->setInterval(std::max(MINIMAL_INTERVAL, START_INTERVAL - curLevel * 20));
     }
+    level_->setNum(curLevel);
     return curLevel;
 }
 
