@@ -43,7 +43,7 @@ void Field::updateField(int level, QGraphicsScene *scene) {
     }
     QPixmap pix(":/red_block.png");
     std::fill(_field[FIELD_Ht + 1].begin() + 1, _field[FIELD_Ht + 1].end() - 1, pix);
-
+    timer->setInterval(START_INTERVAL);
     generateNextId();
 }
 
@@ -112,7 +112,7 @@ void Field::fill(QPixmap pix) {
 }
 
 void Field::generateNextId() {
-    nextFigure = getRand() % tetriminoesInit.size();
+    nextFigure = 3;//getRand() % tetriminoesInit.size();
 }
 
 Tetrimino *Field::generateNext(QGraphicsScene *scene) {
