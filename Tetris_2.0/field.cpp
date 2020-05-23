@@ -10,9 +10,6 @@
 #include <QAbstractScrollArea>
 #include <random>
 
-class QTimer;
-
-using std::move;
 using std::size_t;
 
 constexpr int Tetris = 4;
@@ -132,8 +129,8 @@ Fallen *Field::generateFallen(QGraphicsScene *scene) {
 }
 
 bool Field::getCell(std::pair<int, int> coords) const {
-    if (coords.first < 0 || coords.first > (int)FIELD_Ht) return true;
-    if (coords.second < 1 || coords.second > (int)FIELD_W) return true;
+    if (coords.first < 0 || coords.first > static_cast<int>(FIELD_Ht)) return true;
+    if (coords.second < 1 || coords.second > static_cast<int>(FIELD_W)) return true;
     return !(_field[coords.first][coords.second].isNull());
 }
 
@@ -165,18 +162,17 @@ std::size_t Field::getFIELD_W() const {
 int Field::levelUp() {
     if (deleteRows >= (curLevel + 1) * 10) {
         curLevel++;
-        if (curLevel > 5) tetriminoesInit.emplace_back(addToTetriminoesInit());
+        if (curLevel > Tetris) tetriminoesInit.emplace_back(addToTetriminoesInit());
         timer->setInterval(std::max(MINIMAL_INTERVAL, START_INTERVAL - curLevel * 20));
     }
     return curLevel;
 }
 
 void Field::changeImage(int nextFigure) {
-    if (nextFigure < 7) {
+    if (nextFigure < START_NUM_SHAPES) {
         QPixmap pix(ImgSrc[nextFigure]);
         _lf->setPixmap(pix);
     }
-
 }
 
 std::vector<std::pair<int, int>> Field::addToTetriminoesInit() {

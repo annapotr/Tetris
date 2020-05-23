@@ -85,19 +85,6 @@ void Tetrimino::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
 
 }
 
-/*int Tetrimino::maxParam(bool param) {
-    int maxP = 0;
-
-    for (std::size_t i = 0; i < this->_blocks.size(); i++) {
-        if (!param) { //== 0
-            maxP = std::max(maxP, _blocks[i].first);//Rows
-        } else {
-            maxP = std::max(maxP, _blocks[i].second);//Cols
-        }
-    }
-    return maxP;
-}*/
-
 void Tetrimino::left() {
     if(field->getState() == gameStates::INPROCESS){
         topLeftCorner.rx()--;
