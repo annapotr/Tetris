@@ -167,8 +167,7 @@ std::size_t Field::getFIELD_W() const {
 int Field::levelUp() {
     if (deleteRows >= (curLevel + 1) * 10) {
         curLevel++;
-        //if (curLevel > Tetris)
-        tetriminoesInit.emplace_back(addToTetriminoesInit());
+       if (curLevel > Tetris) tetriminoesInit.emplace_back(addToTetriminoesInit());
         timer->setInterval(std::max(MINIMAL_INTERVAL, START_INTERVAL - curLevel * 20));
     }
     level_->setNum(curLevel);
