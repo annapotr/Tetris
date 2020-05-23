@@ -112,7 +112,7 @@ void Field::fill(QPixmap pix) {
 }
 
 void Field::generateNextId() {
-    nextFigure = 3;//getRand() % tetriminoesInit.size();
+    nextFigure = getRand() % tetriminoesInit.size();
 }
 
 Tetrimino *Field::generateNext(QGraphicsScene *scene) {
@@ -166,7 +166,8 @@ std::size_t Field::getFIELD_W() const {
 int Field::levelUp() {
     if (deleteRows >= (curLevel + 1) * 10) {
         curLevel++;
-        if (curLevel > Tetris) tetriminoesInit.emplace_back(addToTetriminoesInit());
+        //if (curLevel > Tetris)
+        tetriminoesInit.emplace_back(addToTetriminoesInit());
         timer->setInterval(std::max(MINIMAL_INTERVAL, START_INTERVAL - curLevel * 20));
     }
     level_->setNum(curLevel);
@@ -183,11 +184,15 @@ void Field::changeImage(int nextFigure) {
 std::vector<std::pair<int, int>> Field::addToTetriminoesInit() {
     size_t blocks = getRand() % possibleSize.size();
     std::vector<std::pair<int, int>> newFigure;
+    if (possibleSize[blocks] == 1) {
+        newFigure.emplace_back(std::make_pair(0, 0));
+        possibleSize.pop_front();
+        return newFigure;
+    }
     while (newFigure.size() < possibleSize[blocks]) {
         int x = getRand() % NUM_OF_BLOCKS;
         int y = getRand() % NUM_OF_BLOCKS;
         newFigure.emplace_back(std::make_pair(x, y));
     }
-    if (possibleSize[blocks] == 1) possibleSize.pop_front();
     return newFigure;
 }
