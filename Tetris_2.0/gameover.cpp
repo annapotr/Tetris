@@ -34,9 +34,7 @@ void GameOver::on_pushButton_clicked()
 
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), scene_, SLOT(advance()));
-    timer->start(25);
-
-
+    timer->start(START_INTERVAL);
 }
 
 void GameOver::on_pushButton_2_clicked()

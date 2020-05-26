@@ -5,10 +5,11 @@
 #include <utility>
 #include <QDebug>
 #include <QPainter>
+#include <QTimer>
+#include <deque>
 #include <QAbstractScrollArea>
 #include <random>
 
-using std::move;
 using std::size_t;
 
 constexpr int Tetris = 4;
@@ -17,7 +18,7 @@ unsigned int SEED =  std::chrono::system_clock::now().time_since_epoch().count()
 std::mt19937 getRand(SEED);
 
 std::vector<int> points = {40, 100, 300, 1200};
-std::vector<size_t> possibleSize = {1, 3, 5};
+std::deque<size_t> possibleSize = {1, 3, 5};
 
 Field::Field(int level) :
     gameState(gameStates::INPROCESS), curLevel(level), score(0), highestNotEmpty(FIELD_Ht), deleteRows(0) {
@@ -42,6 +43,7 @@ void Field::updateField(int level, QGraphicsScene *scene) {
     }
     QPixmap pix(":/red_block.png");
     std::fill(_field[FIELD_Ht + 1].begin() + 1, _field[FIELD_Ht + 1].end() - 1, pix);
+    timer->setInterval(START_INTERVAL);
 
     generateNextId();
 }
@@ -133,8 +135,8 @@ Fallen *Field::generateFallen(QGraphicsScene *scene) {
 }
 
 bool Field::getCell(std::pair<int, int> coords) const {
-    if (coords.first < 0 || coords.first > (int)FIELD_Ht) return true;
-    if (coords.second < 1 || coords.second > (int)FIELD_W) return true;
+    if (coords.first < 0 || coords.first > static_cast<int>(FIELD_Ht)) return true;
+    if (coords.second < 1 || coords.second > static_cast<int>(FIELD_W)) return true;
     return !(_field[coords.first][coords.second].isNull());
 }
 
@@ -170,22 +172,28 @@ std::size_t Field::getFIELD_W() const {
 int Field::levelUp() {
     if (deleteRows >= (curLevel + 1) * 10) {
         curLevel++;
-        tetriminoesInit.emplace_back(addToTetriminoesInit());
+       if (curLevel > Tetris) tetriminoesInit.emplace_back(addToTetriminoesInit());
+        timer->setInterval(std::max(MINIMAL_INTERVAL, START_INTERVAL - curLevel * 20));
     }
+    level_->setNum(curLevel);
     return curLevel;
 }
 
 void Field::changeImage(int nextFigure) {
-    if (nextFigure < 7) {
+    if (nextFigure < START_NUM_SHAPES) {
         QPixmap pix(ImgSrc[nextFigure]);
         _lf->setPixmap(pix);
     }
-
 }
 
 std::vector<std::pair<int, int>> Field::addToTetriminoesInit() {
     size_t blocks = getRand() % possibleSize.size();
     std::vector<std::pair<int, int>> newFigure;
+    if (possibleSize[blocks] == 1) {
+        newFigure.emplace_back(std::make_pair(0, 0));
+        possibleSize.pop_front();
+        return newFigure;
+    }
     while (newFigure.size() < possibleSize[blocks]) {
         int x = getRand() % NUM_OF_BLOCKS;
         int y = getRand() % NUM_OF_BLOCKS;

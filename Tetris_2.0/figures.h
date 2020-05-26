@@ -14,6 +14,7 @@ class Field;
 
 extern int BLOCK_PX;
 extern int PADDING;
+extern int START_NUM_SHAPES;
 
 constexpr std::size_t NUM_OF_BLOCKS = 4;
 

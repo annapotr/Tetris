@@ -12,6 +12,7 @@
 #include <iostream>
 #include <algorithm>
 #include <random>
+#include <chrono>
 #include "gameover.h"
 
 using std::vector;
@@ -85,23 +86,10 @@ void Tetrimino::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
 
 }
 
-/*int Tetrimino::maxParam(bool param) {
-    int maxP = 0;
-
-    for (std::size_t i = 0; i < this->_blocks.size(); i++) {
-        if (!param) { //== 0
-            maxP = std::max(maxP, _blocks[i].first);//Rows
-        } else {
-            maxP = std::max(maxP, _blocks[i].second);//Cols
-        }
-    }
-    return maxP;
-}*/
-
 void Tetrimino::left() {
     if(field->getState() == gameStates::INPROCESS){
         topLeftCorner.rx()--;
-        if (field->doCollision()){
+        if (field->doCollision()) {
             topLeftCorner.rx()++;
             return;
         }
@@ -113,7 +101,7 @@ void Tetrimino::left() {
 void Tetrimino::right() {
     if(field->getState() == gameStates::INPROCESS){
         topLeftCorner.rx()++;
-        if (field->doCollision()){
+        if (field->doCollision()) {
             topLeftCorner.rx()--;
             return;
         }
@@ -159,22 +147,40 @@ void Tetrimino::advance(int phase) {
     topLeftCorner.ry()++;
 
     if (field->doCollision()) {
-       topLeftCorner.ry()--;
-       field->fill(pix_);
-       speed = 0;
-       int addToScore = static_cast<int>(topLeftCorner.ry());
-       if (isFastLanding) {
-           field->addToScore(2 * (addToScore - 1 - static_cast<int>(startFastLanding.ry())));
-           field->addToScore(static_cast<int>(startFastLanding.ry() + 1));
-       }
-       else field->addToScore(addToScore);
-       scene_->removeItem(this);
-       field->checkRow(scene_);
-       field->currentTetrimino = field->generateNext(scene_);
-       scene_->addItem(field->currentTetrimino);
-       scene_->removeItem(field->currentFallen);
-       field->currentFallen = field->generateFallen(scene_);
-       scene_->addItem(field->currentFallen);
+        topLeftCorner.ry()--;
+        /*qDebug() << "tLC is ok\n";
+        qDebug() << "In 1st if in advance (just doC)\n";
+        std::chrono::time_point<std::chrono::system_clock> didCollision(std::chrono::system_clock::now());
+        auto moment = std::chrono::system_clock::now();
+        std::chrono::duration<double> thinkingInterval = moment - didCollision;
+
+        while (thinkingInterval.count() < 1) {
+            canMove = true;
+            moment = std::chrono::system_clock::now();
+            thinkingInterval = moment - didCollision;
+            qDebug() << "Changes of ti: " << thinkingInterval.count() << '\n';
+            //return;
+        }
+
+        //if (thinkingInterval.count() > 1) {
+            qDebug() << "In 2nd if in advance (thinkingInterval.count() > 1)\n";
+            canMove = false;*/
+
+        field->fill(pix_);
+        speed = 0;
+        int addToScore = static_cast<int>(topLeftCorner.ry());
+        if (isFastLanding) {
+        field->addToScore(2 * (addToScore - 1 - static_cast<int>(startFastLanding.ry())));
+        field->addToScore(static_cast<int>(startFastLanding.ry() + 1));
+      }
+      else field->addToScore(addToScore);
+      scene_->removeItem(this);
+      field->checkRow(scene_);
+      field->currentTetrimino = field->generateNext(scene_);
+      scene_->addItem(field->currentTetrimino);
+      scene_->removeItem(field->currentFallen);
+      field->currentFallen = field->generateFallen(scene_);
+      scene_->addItem(field->currentFallen);
 
     } else {
       topLeftCorner.ry() += speed / BLOCK_PX - 1;
