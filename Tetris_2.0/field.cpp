@@ -37,6 +37,8 @@ Field::Field(int level) :
 void Field::updateField(int level, QGraphicsScene *scene) {
     gameState = gameStates::INPROCESS, curLevel = level, deleteRows = 0, score = 0 , highestNotEmpty = FIELD_Ht;
     tetriminoesInit.resize(7);
+    score_->setNum(0);
+    score_->setNum(0);
     for (size_t i = 0; i <= FIELD_Ht; i++) {
         std::fill(_field[i].begin() + 1, _field[i].end() - 1, QPixmap());
     }
@@ -67,11 +69,6 @@ void Field::addToScore(int num) {
     score += num;
     score_->setNum(score);
 }
-/*
-void Field::addTolevel(int num) {
-    level += num;
-    level_->setNum(level);
-}*/
 
 void Field::checkRow(QGraphicsScene *scene) {
     int cnt = 0;

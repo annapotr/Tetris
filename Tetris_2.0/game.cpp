@@ -86,6 +86,7 @@ void Game::keyPressEvent(QKeyEvent *event) {
     }
 
     if(event->key() == Qt::Key_Escape){
+        on_pause_clicked();
         f->gameState = gameStates::GAMEOVER;
     }
 }
