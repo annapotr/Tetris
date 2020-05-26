@@ -13,17 +13,12 @@
 #include <QIcon>
 #include <random>
 
-int START_INTERVAL = 120;
-int MINIMAL_INTERVAL = 12;
 
 Game::Game(Field *f, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Game),
     f(f)
 {
-    grabKeyboard();
-    //setFocusPolicy(Qt::ClickFocus);
-
     ui->setupUi(this);
     scene = new QGraphicsScene(this);
 
@@ -39,6 +34,7 @@ Game::Game(Field *f, QWidget *parent) :
     this->setPalette(plt);
 
     f->_lf = ui->label_figure;
+
     f->currentTetrimino = f->generateNext(scene);
     f->currentFallen = f->generateFallen(scene);
 
@@ -46,9 +42,8 @@ Game::Game(Field *f, QWidget *parent) :
     scene->addItem(f->currentFallen);
 
     timer = new QTimer(this);
-    f->timer = timer;
     connect(timer, SIGNAL(timeout()), scene, SLOT(advance()));
-    timer->start(START_INTERVAL);
+    timer->start(25);
 
     f->level_ = ui->label_level_numbers;
     ui->label_level_numbers->setNum(f->getLevel());
@@ -56,8 +51,6 @@ Game::Game(Field *f, QWidget *parent) :
     f->score_ = ui->label_score_numbers;
     ui->label_score_numbers->setNum(f->getScore());
     ui->label_score_numbers->setAlignment(Qt::AlignCenter);
-    ui->label_level_numbers->setNum(f->getLevel());
-    ui->label_level_numbers->setAlignment(Qt::AlignCenter);
 
 }
 
@@ -68,23 +61,23 @@ Game::~Game() {
 
 void Game::keyPressEvent(QKeyEvent *event) {
 
-    if (event->key() == Qt::Key_Up) {
+    if (event->key() == Qt::Key_W) {
         f->currentTetrimino->turn90up();
     }
 
-    if (event->key() == Qt::Key_Down) {
+    if (event->key() == Qt::Key_S) {
         f->currentTetrimino->turn90back();
     }
 
-    if (event->key() == Qt::Key_Left) {
+    if (event->key() == Qt::Key_A) {
         f->currentTetrimino->left();
     }
 
-    if (event->key() == Qt::Key_Right) {
+    if (event->key() == Qt::Key_D) {
         f->currentTetrimino->right();
     }
 
-    if (event->key() == Qt::Key_Space) {
+    if (event->key() == Qt::Key_G) {
         f->currentTetrimino->fastLanding();
     }
 
