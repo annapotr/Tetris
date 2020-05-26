@@ -11,6 +11,8 @@
 extern int START_INTERVAL;
 extern int MINIMAL_INTERVAL;
 
+class Field;
+
 namespace Ui {
     class Game;
 }

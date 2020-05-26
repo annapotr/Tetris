@@ -13,7 +13,7 @@
 #include <QIcon>
 #include <random>
 
-int START_INTERVAL = 100;
+int START_INTERVAL = 120;
 int MINIMAL_INTERVAL = 12;
 
 Game::Game(Field *f, QWidget *parent) :
@@ -21,6 +21,9 @@ Game::Game(Field *f, QWidget *parent) :
     ui(new Ui::Game),
     f(f)
 {
+    grabKeyboard();
+    //setFocusPolicy(Qt::ClickFocus);
+
     ui->setupUi(this);
     scene = new QGraphicsScene(this);
 
@@ -62,24 +65,24 @@ Game::~Game() {
 }
 
 void Game::keyPressEvent(QKeyEvent *event) {
-    qDebug() << "here!\n";
-    if (event->key() == Qt::Key_W) {
+
+    if (event->key() == Qt::Key_Up) {
         f->currentTetrimino->turn90up();
     }
 
-    if (event->key() == Qt::Key_S) {
+    if (event->key() == Qt::Key_Down) {
         f->currentTetrimino->turn90back();
     }
 
-    if (event->key() == Qt::Key_A) {
+    if (event->key() == Qt::Key_Left) {
         f->currentTetrimino->left();
     }
 
-    if (event->key() == Qt::Key_D) {
+    if (event->key() == Qt::Key_Right) {
         f->currentTetrimino->right();
     }
 
-    if (event->key() == Qt::Key_G) {
+    if (event->key() == Qt::Key_Space) {
         f->currentTetrimino->fastLanding();
     }
 

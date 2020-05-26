@@ -32,6 +32,3 @@ void MainWindow::on_play_clicked()
     game.setStyleSheet("background-color:black;");
     game.exec();
 }
-
-
-
