@@ -67,6 +67,11 @@ void Field::addToScore(int num) {
     score += num;
     score_->setNum(score);
 }
+/*
+void Field::addTolevel(int num) {
+    level += num;
+    level_->setNum(level);
+}*/
 
 void Field::checkRow(QGraphicsScene *scene) {
     int cnt = 0;
@@ -144,6 +149,10 @@ void Field::setCell(std::pair<int, int> coords, QPixmap pix) {
 
 int Field::getScore() const {
     return score;
+}
+
+int Field::getLevel() const {
+    return curLevel;
 }
 
 QPixmap Field::get(int x, int y) const {

@@ -46,6 +46,8 @@ Game::Game(Field *f, QWidget *parent) :
     timer->start(25);
 
     f->level_ = ui->label_level_numbers;
+    ui->label_level_numbers->setNum(f->getLevel());
+    ui->label_level_numbers->setAlignment(Qt::AlignCenter);
     f->score_ = ui->label_score_numbers;
     ui->label_score_numbers->setNum(f->getScore());
     ui->label_score_numbers->setAlignment(Qt::AlignCenter);
