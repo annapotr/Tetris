@@ -8,6 +8,7 @@
 #include <QTimer>
 #include <QAbstractScrollArea>
 #include <random>
+#include <chrono>
 
 using std::move;
 using std::size_t;
