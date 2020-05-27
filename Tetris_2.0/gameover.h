@@ -6,7 +6,7 @@
 #include <game.h>
 
 namespace Ui {
-class GameOver;
+    class GameOver;
 }
 
 class GameOver : public QDialog

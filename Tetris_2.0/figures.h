@@ -8,27 +8,15 @@
 #include <QPointF>
 #include <vector>
 #include <utility>
+#include <vector>
 #include "field.h"
 
 class Field;
 
 extern int BLOCK_PX;
 extern int PADDING;
-
-constexpr std::size_t NUM_OF_BLOCKS = 4;
-
 extern std::vector<std::vector<std::pair<int, int>>> tetriminoesInit;
-enum class tetriminoes: int {
-    I = 0,
-    J = 1,
-    L = 2,
-    O = 3,
-    S = 4,
-    T = 5,
-    Z = 6
-};
-
-QColor make_color(tetriminoes t);
+constexpr std::size_t NUM_OF_BLOCKS = 4;
 
 class Tetrimino : public QGraphicsItem {
 public:
@@ -57,7 +45,6 @@ private:
     static const std::size_t BLOCK_H = 2;
     static const std::size_t BLOCK_W = 4;
 
-    tetriminoes type_;
     QPixmap pix_;
     Field *field;
     QGraphicsScene *scene_;
