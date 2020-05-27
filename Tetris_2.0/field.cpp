@@ -171,6 +171,9 @@ void Field::changeImage(int nextFigure) {
     if (nextFigure < START_NUM_SHAPES) {
        QPixmap pix(ImgSrc[nextFigure]);
        _lf->setPixmap(pix);
+    }else{
+        QPixmap pix(":/?.png");
+        _lf->setPixmap(pix);
     }
 }
 

@@ -17,7 +17,7 @@ CXX           = /Library/Developer/CommandLineTools/usr/bin/clang++
 DEFINES       = -DQT_DEPRECATED_WARNINGS -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -O2 $(EXPORT_ARCH_ARGS) -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk -mmacosx-version-min=10.13 -Wall -Wextra -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -stdlib=libc++ -O2 -std=gnu++11 $(EXPORT_ARCH_ARGS) -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk -mmacosx-version-min=10.13 -Wall -Wextra -fPIC $(DEFINES)
-INCPATH       = -I../Tetris_2.0 -I. -I../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers -I../../../Desktop/Tetris/5.14.1/clang_64/lib/QtGui.framework/Headers -I../../../Desktop/Tetris/5.14.1/clang_64/lib/QtCore.framework/Headers -I. -I/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/OpenGL.framework/Headers -I/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/AGL.framework/Headers -I. -I../../../Desktop/Tetris/5.14.1/clang_64/mkspecs/macx-clang -F/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/lib
+INCPATH       = -I../Tetris_2.0 -I. -Igui -Iwidgets -I../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers -I../../../Desktop/Tetris/5.14.1/clang_64/lib/QtGui.framework/Headers -I../../../Desktop/Tetris/5.14.1/clang_64/lib/QtCore.framework/Headers -I. -I/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/OpenGL.framework/Headers -I/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/AGL.framework/Headers -I. -I../../../Desktop/Tetris/5.14.1/clang_64/mkspecs/macx-clang -F/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/lib
 QMAKE         = /Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -220,6 +220,7 @@ DIST          = ../../../Desktop/Tetris/5.14.1/clang_64/mkspecs/features/spec_pr
 		../../../Desktop/Tetris/5.14.1/clang_64/mkspecs/features/qt_config.prf \
 		../../../Desktop/Tetris/5.14.1/clang_64/mkspecs/macx-clang/qmake.conf \
 		../../../Desktop/Tetris/5.14.1/clang_64/mkspecs/features/spec_post.prf \
+		../Tetris_2.0/.qmake.stash \
 		../../../Desktop/Tetris/5.14.1/clang_64/mkspecs/features/exclusive_builds.prf \
 		../../../Desktop/Tetris/5.14.1/clang_64/mkspecs/features/mac/sdk.prf \
 		../../../Desktop/Tetris/5.14.1/clang_64/mkspecs/features/toolchain.prf \
@@ -430,6 +431,7 @@ Makefile: ../Tetris_2.0/Tetris.pro ../../../Desktop/Tetris/5.14.1/clang_64/mkspe
 		../../../Desktop/Tetris/5.14.1/clang_64/mkspecs/features/qt_config.prf \
 		../../../Desktop/Tetris/5.14.1/clang_64/mkspecs/macx-clang/qmake.conf \
 		../../../Desktop/Tetris/5.14.1/clang_64/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		../../../Desktop/Tetris/5.14.1/clang_64/mkspecs/features/exclusive_builds.prf \
 		../../../Desktop/Tetris/5.14.1/clang_64/mkspecs/features/mac/sdk.prf \
 		../../../Desktop/Tetris/5.14.1/clang_64/mkspecs/features/toolchain.prf \
@@ -612,6 +614,7 @@ Makefile: ../Tetris_2.0/Tetris.pro ../../../Desktop/Tetris/5.14.1/clang_64/mkspe
 ../../../Desktop/Tetris/5.14.1/clang_64/mkspecs/features/qt_config.prf:
 ../../../Desktop/Tetris/5.14.1/clang_64/mkspecs/macx-clang/qmake.conf:
 ../../../Desktop/Tetris/5.14.1/clang_64/mkspecs/features/spec_post.prf:
+.qmake.stash:
 ../../../Desktop/Tetris/5.14.1/clang_64/mkspecs/features/exclusive_builds.prf:
 ../../../Desktop/Tetris/5.14.1/clang_64/mkspecs/features/mac/sdk.prf:
 ../../../Desktop/Tetris/5.14.1/clang_64/mkspecs/features/toolchain.prf:
@@ -688,6 +691,7 @@ clean: compiler_clean
 
 distclean: clean 
 	-$(DEL_FILE) -r Tetris.app
+	-$(DEL_FILE) .qmake.stash
 	-$(DEL_FILE) Makefile
 
 
@@ -732,6 +736,7 @@ qrc_imagenes.o: ../Tetris_2.0/imagenes.qrc \
 		../Tetris_2.0/restart1.png \
 		../Tetris_2.0/gameooover.png \
 		../Tetris_2.0/reddd.png \
+		../Tetris_2.0/unidentified.png.jpeg \
 		../Tetris_2.0/menu.png \
 		../Tetris_2.0/yellowBlocks.png \
 		../Tetris_2.0/tetris.png \
@@ -740,6 +745,7 @@ qrc_imagenes.o: ../Tetris_2.0/imagenes.qrc \
 		../Tetris_2.0/blueBlockss.png \
 		../Tetris_2.0/blue1.png \
 		../Tetris_2.0/score.png \
+		../Tetris_2.0/q.png \
 		../Tetris_2.0/close_gameover.png \
 		../Tetris_2.0/background.png \
 		../Tetris_2.0/red1.png \
@@ -804,7 +810,7 @@ moc_game.cpp: ../Tetris_2.0/game.h \
 		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtCore.framework/Headers/qstring.h \
 		moc_predefs.h \
 		../../../Desktop/Tetris/5.14.1/clang_64/bin/moc
-	/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/bin/moc $(DEFINES) --include /Users/annapotryasaeva/CLionProjects/Tetris/build-Tetris-Desktop_Qt_5_14_1_clang_64bit-Release/moc_predefs.h -I/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/mkspecs/macx-clang -I/Users/annapotryasaeva/CLionProjects/Tetris/Tetris_2.0 -I/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers -I/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/lib/QtGui.framework/Headers -I/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/lib/QtCore.framework/Headers -I. -I/Library/Developer/CommandLineTools/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/10.0.0/include -I/Library/Developer/CommandLineTools/usr/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include -F/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/lib ../Tetris_2.0/game.h -o moc_game.cpp
+	/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/bin/moc $(DEFINES) --include /Users/annapotryasaeva/CLionProjects/Tetris/build-Tetris-Desktop_Qt_5_14_1_clang_64bit-Release/moc_predefs.h -I/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/mkspecs/macx-clang -I/Users/annapotryasaeva/CLionProjects/Tetris/Tetris_2.0 -I/Users/annapotryasaeva/CLionProjects/Tetris/Tetris_2.0/gui -I/Users/annapotryasaeva/CLionProjects/Tetris/Tetris_2.0/widgets -I/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers -I/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/lib/QtGui.framework/Headers -I/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/lib/QtCore.framework/Headers -I. -I/Library/Developer/CommandLineTools/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/10.0.0/include -I/Library/Developer/CommandLineTools/usr/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include -F/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/lib ../Tetris_2.0/game.h -o moc_game.cpp
 
 moc_gameover.cpp: ../Tetris_2.0/gameover.h \
 		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/QDialog \
@@ -837,14 +843,14 @@ moc_gameover.cpp: ../Tetris_2.0/gameover.h \
 		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtCore.framework/Headers/qstring.h \
 		moc_predefs.h \
 		../../../Desktop/Tetris/5.14.1/clang_64/bin/moc
-	/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/bin/moc $(DEFINES) --include /Users/annapotryasaeva/CLionProjects/Tetris/build-Tetris-Desktop_Qt_5_14_1_clang_64bit-Release/moc_predefs.h -I/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/mkspecs/macx-clang -I/Users/annapotryasaeva/CLionProjects/Tetris/Tetris_2.0 -I/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers -I/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/lib/QtGui.framework/Headers -I/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/lib/QtCore.framework/Headers -I. -I/Library/Developer/CommandLineTools/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/10.0.0/include -I/Library/Developer/CommandLineTools/usr/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include -F/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/lib ../Tetris_2.0/gameover.h -o moc_gameover.cpp
+	/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/bin/moc $(DEFINES) --include /Users/annapotryasaeva/CLionProjects/Tetris/build-Tetris-Desktop_Qt_5_14_1_clang_64bit-Release/moc_predefs.h -I/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/mkspecs/macx-clang -I/Users/annapotryasaeva/CLionProjects/Tetris/Tetris_2.0 -I/Users/annapotryasaeva/CLionProjects/Tetris/Tetris_2.0/gui -I/Users/annapotryasaeva/CLionProjects/Tetris/Tetris_2.0/widgets -I/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers -I/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/lib/QtGui.framework/Headers -I/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/lib/QtCore.framework/Headers -I. -I/Library/Developer/CommandLineTools/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/10.0.0/include -I/Library/Developer/CommandLineTools/usr/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include -F/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/lib ../Tetris_2.0/gameover.h -o moc_gameover.cpp
 
 moc_mainwindow.cpp: ../Tetris_2.0/mainwindow.h \
 		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
 		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
 		moc_predefs.h \
 		../../../Desktop/Tetris/5.14.1/clang_64/bin/moc
-	/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/bin/moc $(DEFINES) --include /Users/annapotryasaeva/CLionProjects/Tetris/build-Tetris-Desktop_Qt_5_14_1_clang_64bit-Release/moc_predefs.h -I/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/mkspecs/macx-clang -I/Users/annapotryasaeva/CLionProjects/Tetris/Tetris_2.0 -I/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers -I/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/lib/QtGui.framework/Headers -I/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/lib/QtCore.framework/Headers -I. -I/Library/Developer/CommandLineTools/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/10.0.0/include -I/Library/Developer/CommandLineTools/usr/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include -F/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/lib ../Tetris_2.0/mainwindow.h -o moc_mainwindow.cpp
+	/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/bin/moc $(DEFINES) --include /Users/annapotryasaeva/CLionProjects/Tetris/build-Tetris-Desktop_Qt_5_14_1_clang_64bit-Release/moc_predefs.h -I/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/mkspecs/macx-clang -I/Users/annapotryasaeva/CLionProjects/Tetris/Tetris_2.0 -I/Users/annapotryasaeva/CLionProjects/Tetris/Tetris_2.0/gui -I/Users/annapotryasaeva/CLionProjects/Tetris/Tetris_2.0/widgets -I/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers -I/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/lib/QtGui.framework/Headers -I/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/lib/QtCore.framework/Headers -I. -I/Library/Developer/CommandLineTools/usr/include/c++/v1 -I/Library/Developer/CommandLineTools/usr/lib/clang/10.0.0/include -I/Library/Developer/CommandLineTools/usr/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include -F/Users/annapotryasaeva/Desktop/Tetris/5.14.1/clang_64/lib ../Tetris_2.0/mainwindow.h -o moc_mainwindow.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -939,6 +945,8 @@ field.o: ../Tetris_2.0/field.cpp ../Tetris_2.0/field.h \
 		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtCore.framework/Headers/qstring.h \
 		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtCore.framework/Headers/QDebug \
 		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtCore.framework/Headers/qdebug.h \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtCore.framework/Headers/QTimer \
+		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtCore.framework/Headers/qtimer.h \
 		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/QAbstractScrollArea \
 		../../../Desktop/Tetris/5.14.1/clang_64/lib/QtWidgets.framework/Headers/qabstractscrollarea.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o field.o ../Tetris_2.0/field.cpp

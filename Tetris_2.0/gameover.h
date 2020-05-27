@@ -14,7 +14,7 @@ class GameOver : public QDialog
     Q_OBJECT
 
 public:
-    explicit GameOver(Field *f, QGraphicsScene *scene, QWidget *parent = nullptr);
+    explicit GameOver(Field *f, int score, QGraphicsScene *scene, QWidget *parent = nullptr);
     ~GameOver();
     Field *f;
     QTimer *timer;

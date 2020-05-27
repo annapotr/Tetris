@@ -147,7 +147,7 @@ border: none;</string>
   <widget class="QLabel" name="label_figure">
    <property name="geometry">
     <rect>
-     <x>350</x>
+     <x>330</x>
      <y>200</y>
      <width>150</width>
      <height>100</height>

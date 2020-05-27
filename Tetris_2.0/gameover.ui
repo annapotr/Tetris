@@ -86,6 +86,26 @@ background: rgba(255,255,255,0);</string>
     <string/>
    </property>
   </widget>
+  <widget class="QLabel" name="score">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>10</y>
+     <width>81</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background: rgba(255,255,255,0);
+font: 42pt &quot;Optima&quot;;
+color:rgb(211, 182, 142);
+
+</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

@@ -73,7 +73,7 @@ public:
         label->setStyleSheet(QString::fromUtf8("background-image: url(:/level.png);"));
         label_figure = new QLabel(Game);
         label_figure->setObjectName(QString::fromUtf8("label_figure"));
-        label_figure->setGeometry(QRect(350, 200, 150, 100));
+        label_figure->setGeometry(QRect(330, 200, 150, 100));
         label_figure->setMinimumSize(QSize(150, 100));
         label_figure->setMaximumSize(QSize(150, 100));
         label_score_numbers = new QLabel(Game);

@@ -12,6 +12,7 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QDialog>
+#include <QtWidgets/QLabel>
 #include <QtWidgets/QPushButton>
 
 QT_BEGIN_NAMESPACE
@@ -21,6 +22,7 @@ class Ui_GameOver
 public:
     QPushButton *pushButton;
     QPushButton *pushButton_2;
+    QLabel *score;
 
     void setupUi(QDialog *GameOver)
     {
@@ -44,6 +46,14 @@ public:
         pushButton_2->setMaximumSize(QSize(130, 50));
         pushButton_2->setStyleSheet(QString::fromUtf8("border: none;\n"
 "background: rgba(255,255,255,0);"));
+        score = new QLabel(GameOver);
+        score->setObjectName(QString::fromUtf8("score"));
+        score->setGeometry(QRect(20, 10, 81, 51));
+        score->setStyleSheet(QString::fromUtf8("background: rgba(255,255,255,0);\n"
+"font: 42pt \"Optima\";\n"
+"color:rgb(211, 182, 142);\n"
+"\n"
+""));
 
         retranslateUi(GameOver);
 
@@ -55,6 +65,7 @@ public:
         GameOver->setWindowTitle(QCoreApplication::translate("GameOver", "Dialog", nullptr));
         pushButton->setText(QString());
         pushButton_2->setText(QString());
+        score->setText(QString());
     } // retranslateUi
 
 };

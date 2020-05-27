@@ -60,6 +60,7 @@ public:
 
     QLabel* score_;
     QLabel* level_;
+    int score;
 
     QLabel* _lf;
     void changeImage(int nextFigure);
@@ -74,7 +75,7 @@ private:
     static constexpr std::size_t FIELD_W = 10;
     static constexpr int START_POS = 4;
 
-    int curLevel, score, highestNotEmpty, nextFigure, deleteRows;
+    int curLevel, highestNotEmpty, nextFigure, deleteRows;
     std::vector<std::vector<QPixmap>> _field;
 };
 

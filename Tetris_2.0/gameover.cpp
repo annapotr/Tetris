@@ -6,7 +6,7 @@
 #include <QGraphicsScene>
 #include <QTimer>
 
-GameOver::GameOver(Field *f, QGraphicsScene *scene, QWidget *parent) :
+GameOver::GameOver(Field *f,int score_, QGraphicsScene *scene, QWidget *parent) :
     QDialog(parent),
     f(f),
     ui(new Ui::GameOver),
@@ -14,6 +14,8 @@ GameOver::GameOver(Field *f, QGraphicsScene *scene, QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowFlags(Qt::CustomizeWindowHint);
+    ui->score->setNum(score_);
+    ui->score->setAlignment(Qt::AlignCenter);
 }
 
 GameOver::~GameOver()

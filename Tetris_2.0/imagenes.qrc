@@ -45,6 +45,8 @@
         <file>new_back.png</file>
         <file>new_tetris.png</file>
         <file>empty.jpeg</file>
+        <file>unidentified.png.jpeg</file>
+        <file>q.png</file>
     </qresource>
     <qresource prefix="/nq">
         <file>IMG_7403.jpg</file>
