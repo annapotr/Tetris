@@ -1,5 +1,6 @@
 #include "fallen.h"
 #include <QBrush>
+#include <QPixmap>
 
 Fallen::Fallen(Field *f, QGraphicsScene *scene) {
     this->field = f;
@@ -7,11 +8,10 @@ Fallen::Fallen(Field *f, QGraphicsScene *scene) {
 }
 
 QRectF Fallen::boundingRect() const {
-    //return QRectF(BLOCK_PX, BLOCK_PX, BLOCK_PX * field->getFIELD_Ht(), BLOCK_PX * field->getFIELD_W()); это одна из баг, почему не отрисовывалась
-    return QRectF(0, 0, 280, 534); // не знаю какие должны быть тут цифры, но чем больше, тем лучше оно отрисовывается)
+    return QRectF(0, 0, 280, 534);
 }
 
-void Fallen::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
+void Fallen::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) {
     for (size_t i = 0; i <= 20; i++) {
         for (size_t j = 0; j <= 10; j++) {
             QRectF rec = QRectF(BLOCK_PX * j, BLOCK_PX * i + 10, BLOCK_PX, BLOCK_PX);

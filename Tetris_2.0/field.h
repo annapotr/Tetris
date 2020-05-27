@@ -1,19 +1,17 @@
 #ifndef FIELD_H
 #define FIELD_H
-#include "QGraphicsItem"
+
+#include "game.h"
 #include "figures.h"
+#include "fallen.h"
+#include <QGraphicsItem>
 #include <QObject>
-#include <QColor>
-#include <iosfwd>
-#include <vector>
-#include <utility>
-#include <array>
-#include <QWidget>
-#include <QPainter>
-#include <fallen.h>
-#include <game.h>
 #include <QLabel>
 #include <QString>
+#include <QWidget>
+#include <QPainter>
+#include <vector>
+#include <utility>
 
 class Tetrimino;
 class Fallen;
@@ -68,7 +66,7 @@ public:
 
     gameStates gameState;
 
-    void updateField(int level, QGraphicsScene *scene);
+    void updateField(int level, QGraphicsScene *);
 
 private:
     static constexpr std::size_t FIELD_Ht = 20;

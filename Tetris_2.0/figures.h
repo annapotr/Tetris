@@ -1,12 +1,11 @@
 #ifndef FIGURES_H
 #define FIGURES_H
 
-#include <QColor>
 #include <QGraphicsScene>
 #include <QPainter>
 #include <QGraphicsItem>
 #include <QPointF>
-#include <vector>
+#include <QPixmap>
 #include <utility>
 #include <vector>
 #include "field.h"
@@ -22,9 +21,8 @@ class Tetrimino : public QGraphicsItem {
 public:
     Tetrimino(std::vector<std::pair<int, int>> blocks, int t, Field *f, QGraphicsScene *scene);
 
-
     QRectF boundingRect() const override;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) override;
     void setCoordinates(int start);
     void left();
     void right();

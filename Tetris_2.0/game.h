@@ -11,6 +11,8 @@
 extern int START_INTERVAL;
 extern int MINIMAL_INTERVAL;
 
+class Field;
+
 namespace Ui {
     class Game;
 }
@@ -26,7 +28,6 @@ public:
     QGraphicsScene *scene;
     QTimer *timer;
     Field *f;
-
 
 protected:
     void keyPressEvent(QKeyEvent *event);

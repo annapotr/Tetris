@@ -1,4 +1,3 @@
-#include "iostream"
 #include "game.h"
 #include "ui_game.h"
 #include "myitem.h"
@@ -65,7 +64,6 @@ Game::~Game() {
 }
 
 void Game::keyPressEvent(QKeyEvent *event) {
-
     if (event->key() == Qt::Key_Up) {
         f->currentTetrimino->turn90up();
     }
@@ -97,8 +95,7 @@ void Game::keyPressEvent(QKeyEvent *event) {
 }
 
 
-void Game::on_pause_clicked()
-{
+void Game::on_pause_clicked() {
     if(f->getState() == gameStates::PAUSED) {
         ui->label_Tetris->clear();
         ui->label_Tetris->setStyleSheet("background: rgba(255, 255, 255, 0)");

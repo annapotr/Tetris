@@ -1,12 +1,10 @@
 #include "field.h"
 #include "figures.h"
-#include <iostream>
 #include <deque>
 #include <utility>
 #include <QDebug>
 #include <QPainter>
 #include <QTimer>
-#include <QAbstractScrollArea>
 #include <random>
 #include <chrono>
 
@@ -23,7 +21,7 @@ std::vector<int> points = {40, 100, 300, 1200};
 std::deque<size_t> possibleSize = {1, 3, 5};
 
 Field::Field(int level) :
-    gameState(gameStates::INPROCESS), curLevel(level), score(0), highestNotEmpty(FIELD_Ht), deleteRows(0) {
+     score(0), gameState(gameStates::INPROCESS), curLevel(level),  highestNotEmpty(FIELD_Ht), deleteRows(0) {
     QPixmap pix(":/red_block.png");
 
     _field.resize(FIELD_Ht + 2, std::vector<QPixmap>(FIELD_W + 2));
@@ -37,7 +35,7 @@ Field::Field(int level) :
     generateNextId();
 }
 
-void Field::updateField(int level, QGraphicsScene *scene) {
+void Field::updateField(int level, QGraphicsScene *) {
     gameState = gameStates::INPROCESS, curLevel = level, deleteRows = 0, score = 0 , highestNotEmpty = FIELD_Ht;
     tetriminoesInit.resize(START_NUM_SHAPES);
 
@@ -172,7 +170,7 @@ void Field::changeImage(int nextFigure) {
     if (nextFigure < START_NUM_SHAPES) {
        QPixmap pix(ImgSrc[nextFigure]);
        _lf->setPixmap(pix);
-    }else{
+    } else {
         QPixmap pix(":/?.png");
         _lf->setPixmap(pix);
     }
@@ -186,7 +184,7 @@ std::vector<std::pair<int, int>> Field::addToTetriminoesInit() {
         possibleSize.pop_front();
         return newFigure;
     }
-    while (newFigure.size() < possibleSize[blocks]) {
+    while (newFigure.size() < 5) {
         int x = getRand() % NUM_OF_BLOCKS;
         int y = getRand() % NUM_OF_BLOCKS;
         newFigure.emplace_back(std::make_pair(x, y));

@@ -2,17 +2,14 @@
 #include "field.h"
 #include "fallen.h"
 #include "game.h"
-#include <QColor>
+#include "gameover.h"
 #include <QString>
 #include <QDebug>
 #include <QKeyEvent>
-#include <array>
-#include <iostream>
 #include <QPainter>
-#include <iostream>
+#include <QPixmap>
 #include <algorithm>
 #include <random>
-#include "gameover.h"
 
 using std::vector;
 using std::size_t;
@@ -74,7 +71,7 @@ QRectF Tetrimino::boundingRect() const {
     return boundingRectangale;
 }
 
-void Tetrimino::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
+void Tetrimino::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) {
     QPixmap pix(pix_);
     for (auto &item: _blocks) {
         QRectF rec = QRectF(BLOCK_PX * item.second,
@@ -124,7 +121,6 @@ void Tetrimino::fastLanding() {
 
 void Tetrimino::advance(int phase) {
     if(!phase) return;
-
     if (field->getState() == gameStates::GAMEOVER) {
         scene_->removeItem(this);
         hide();
@@ -133,13 +129,11 @@ void Tetrimino::advance(int phase) {
         gameover.exec();
         return;
     }
-
     if (field->getState() == gameStates::PAUSED) {
         if(speed != 0) paused_speed = speed;
         speed = 0;
         return;
     }
-
     if (field->getState() == gameStates::INPROCESS) {
         speed = paused_speed;
     }
