@@ -20,6 +20,7 @@ Game::Game(Field *f, QWidget *parent) :
     f(f)
 {
     ui->setupUi(this);
+    this->setWindowTitle("Tetris");
     scene = new QGraphicsScene(this);
 
     ui->pause->setStyleSheet("border-image: url(:/pause.png) stretch;");

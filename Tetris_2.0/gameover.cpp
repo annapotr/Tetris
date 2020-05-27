@@ -13,6 +13,7 @@ GameOver::GameOver(Field *f, QGraphicsScene *scene, QWidget *parent) :
     scene_(scene)
 {
     ui->setupUi(this);
+    this->setWindowFlags(Qt::CustomizeWindowHint);
 }
 
 GameOver::~GameOver()
