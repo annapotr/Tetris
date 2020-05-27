@@ -41,9 +41,6 @@ public:
     std::size_t getFIELD_Ht() const;
     std::size_t getFIELD_W() const;
 
-
-    void printFieldTmp() const;
-
     void checkRow(QGraphicsScene *scene);
     void calculateScore(int cnt);
     void addToScore(int num);
@@ -57,6 +54,7 @@ public:
 
     Tetrimino *currentTetrimino;
     Fallen *currentFallen;
+    QTimer *timer;
 
     int getNextFigure();
 

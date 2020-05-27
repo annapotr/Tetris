@@ -13,6 +13,8 @@
 #include <QIcon>
 #include <random>
 
+int START_INTERVAL = 100;
+int MINIMAL_INTERVAL = 10;
 
 Game::Game(Field *f, QWidget *parent) :
     QDialog(parent),
@@ -43,8 +45,9 @@ Game::Game(Field *f, QWidget *parent) :
     scene->addItem(f->currentFallen);
 
     timer = new QTimer(this);
+    f->timer = timer;
     connect(timer, SIGNAL(timeout()), scene, SLOT(advance()));
-    timer->start(25);
+    timer->start(START_INTERVAL);
 
     f->level_ = ui->label_level_numbers;
     ui->label_level_numbers->setNum(f->getLevel());

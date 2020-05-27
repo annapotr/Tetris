@@ -8,6 +8,9 @@
 #include <QGraphicsScene>
 #include "field.h"
 
+extern int START_INTERVAL;
+extern int MINIMAL_INTERVAL;
+
 namespace Ui {
     class Game;
 }
