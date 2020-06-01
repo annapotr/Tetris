@@ -178,8 +178,17 @@ border: none;</string>
      <height>41</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Arial Rounded MT Bold</family>
+     <pointsize>24</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
+   </property>
    <property name="styleSheet">
-    <string notr="true">font: 36pt &quot;Optima&quot;;
+    <string notr="true">font: 24pt &quot;Arial Rounded MT Bold&quot;;
 color:rgb(0, 225, 216);</string>
    </property>
    <property name="text">
@@ -224,7 +233,7 @@ color:rgb(0, 225, 216);</string>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">font: 36pt &quot;Optima&quot;;
+    <string notr="true">font: 24pt &quot;Arial Rounded MT Bold&quot;;
 color:rgb(0, 225, 216);</string>
    </property>
    <property name="text">

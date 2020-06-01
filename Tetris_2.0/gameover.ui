@@ -91,13 +91,13 @@ background: rgba(255,255,255,0);</string>
     <rect>
      <x>20</x>
      <y>10</y>
-     <width>81</width>
+     <width>141</width>
      <height>51</height>
     </rect>
    </property>
    <property name="styleSheet">
     <string notr="true">background: rgba(255,255,255,0);
-font: 42pt &quot;Optima&quot;;
+font: 24pt &quot;Arial Rounded MT Bold&quot;;
 color:rgb(211, 182, 142);
 
 </string>
