@@ -1,9 +1,9 @@
 #ifndef GAMEOVER_H
 #define GAMEOVER_H
 
+#include "field.h"
+#include "game.h"
 #include <QDialog>
-#include <field.h>
-#include <game.h>
 
 namespace Ui {
     class GameOver;

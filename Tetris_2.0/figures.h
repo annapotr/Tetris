@@ -48,7 +48,7 @@ private:
     QGraphicsScene *scene_;
     QPointF startFastLanding;
 
-    QRect boundingRectangale;
+    QRectF boundingRectangale;
     int max_col = 0, max_row = 0;
 
     bool isFastLanding = false;
