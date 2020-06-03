@@ -8,7 +8,6 @@
 #include <QElapsedTimer>
 #include <QApplication>
 #include <QKeyEvent>
-#include <QDebug>
 #include <QIcon>
 #include <random>
 
@@ -20,7 +19,7 @@ Game::Game(Field *f, QWidget *parent) :
     ui(new Ui::Game),
     f(f)
 {
-    grabKeyboard();
+    setFocus();
     ui->setupUi(this);
     this->setWindowTitle("Tetris");
     scene = new QGraphicsScene(this);
@@ -89,13 +88,14 @@ void Game::keyPressEvent(QKeyEvent *event) {
     }
 
     if(event->key() == Qt::Key_Escape){
-        on_pause_clicked();
+        if (f->getState() == gameStates::PAUSED) on_pause_clicked();
         f->gameState = gameStates::GAMEOVER;
     }
 }
 
 
 void Game::on_pause_clicked() {
+    setFocus();
     if(f->getState() == gameStates::PAUSED) {
         ui->label_Tetris->clear();
         ui->label_Tetris->setStyleSheet("background: rgba(255, 255, 255, 0)");

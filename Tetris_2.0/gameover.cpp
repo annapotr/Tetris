@@ -11,6 +11,7 @@ GameOver::GameOver(Field *f,int score_, QGraphicsScene *scene, QWidget *parent) 
     ui(new Ui::GameOver),
     scene_(scene)
 {
+    grabKeyboard();
     ui->setupUi(this);
     this->setWindowFlags(Qt::CustomizeWindowHint);
     ui->score->setNum(score_);
@@ -22,6 +23,7 @@ GameOver::~GameOver() {
 }
 
 void GameOver::on_pushButton_clicked() {
+    releaseKeyboard();
     close();
 
     f->updateField(0, scene_);
@@ -34,7 +36,7 @@ void GameOver::on_pushButton_clicked() {
 
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), scene_, SLOT(advance()));
-    timer->start(START_INTERVAL);
+    timer->start(START_INTERVAL);    
 }
 
 void GameOver::on_pushButton_2_clicked() {
